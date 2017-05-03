@@ -120,10 +120,10 @@
     </None>
     <None Include="Web References\GBC_WebService\GBC_WebService.disco" />
     <Content Include="Web.config" />
-    <Content Include="Web References\GBC_WebService\Reference.map">
+    <None Include="Web References\GBC_WebService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Web References\GBC_WebService\Vw_GBCVisaDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
