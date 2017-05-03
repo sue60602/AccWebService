@@ -1968,7 +1968,7 @@ namespace Acc_WebService
 
             return JSON1;
         }
-
+         
         //傳票號碼回填
         [WebMethod]
         public string FillVouNo(string VouNoJSON)
