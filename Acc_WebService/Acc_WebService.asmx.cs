@@ -924,8 +924,8 @@ namespace Acc_WebService
                                 vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                 vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                 vw_GBCVisaDetail.F_批號 = payCash.F_批號;
-                                //是否為以前年度
 
+                               
                                 傳票明細 vouDtl_D = new 傳票明細()
                                 {
                                     借貸別 = "借",
@@ -939,6 +939,7 @@ namespace Acc_WebService
                                     對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                                     對象說明 = vw_GBCVisaDetail.F_受款人
                                 };
+                                //是否為以前年度
                                 if (int.Parse(vw_GBCVisaDetail.PK_動支編號.Substring(0, 3)) < int.Parse(vw_GBCVisaDetail.PK_會計年度))
                                 {
                                     vouDtl_D.用途別代碼 = "91Y";
@@ -2011,7 +2012,8 @@ namespace Acc_WebService
                                 對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                                 對象說明 = vw_GBCVisaDetail.F_受款人
                             };
-                            
+
+                            //是否為以前年度
                             if (int.Parse(vw_GBCVisaDetail.PK_動支編號.Substring(0, 3)) < int.Parse(vw_GBCVisaDetail.PK_會計年度))
                             {
                                 vouDtl_D.用途別代碼 = "91Y";
@@ -2070,7 +2072,21 @@ namespace Acc_WebService
                             傳票內容 = vouCollectionList
                         };
                     }
+                    //紀錄第一張傳票底稿
+                    try
+                    {
+                        jsonDAO.InsertJsonRecord1(vw_GBCVisaDetail, JsonConvert.SerializeObject(vouTop));
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+                    //回傳第一張傳票底稿
+                    JSON1 = jsonDAO.FindJSON1(vw_GBCVisaDetail);
+
+                    return JSON1;
                 }
+
             }
 
             //紀錄第一張傳票底稿
