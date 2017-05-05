@@ -2517,6 +2517,17 @@ namespace Acc_WebService
         }
 
         [WebMethod]
+        //取次數
+        public List<string> GetAccCount(string accYear, string acmWordNum, string accKind)
+        {
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+            List<string> accDetailList = new List<string>(
+                ws.GetAccCount(accYear, acmWordNum, accKind)
+                );
+            return accDetailList;
+        }
+
+        [WebMethod]
         //取明細號
         public List<string> GetAccDetail(string accYear, string acmWordNum, string accKind, string accCount)
         {
