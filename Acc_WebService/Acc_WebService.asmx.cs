@@ -1066,6 +1066,24 @@ namespace Acc_WebService
                                 };
                                 vouPayList.Add(vouPay);
                             }
+                            //重新處理受款人清單,如果有重複受款人名稱,則金額加總
+                            var vouPayGroup = from xxx in vouPayList
+                                              group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
+                                              select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
+                            vouPayList = new List<傳票受款人>();
+                            foreach (var vouPayGroupItem in vouPayGroup)
+                            {
+                                傳票受款人 vouPay = new 傳票受款人();
+                                vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                vouPay.地址 = vouPayGroupItem.地址;
+                                vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                vouPayList.Add(vouPay);
+                            }
                             傳票主檔 vouMain = new 傳票主檔()
                             {
                                 傳票種類 = vouKind,
