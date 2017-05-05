@@ -103,7 +103,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\AccWebService.pubxml" />
-    <None Include="Web References\GBC_WebService\GBC_WebService.wsdl" />
+    <None Include="Web References\GBC_WebService\GBCWebService.wsdl" />
+    <Content Include="Web References\GBC_WebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\GBC_WebService\Vw_GBCVisaDetail.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -118,15 +125,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\GBC_WebService\GBC_WebService.disco" />
+    <None Include="Web References\GBC_WebService\GBCWebService.disco" />
     <Content Include="Web.config" />
-    <None Include="Web References\GBC_WebService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Web References\GBC_WebService\Vw_GBCVisaDetail.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\AccScriptJSON.cs" />
@@ -162,20 +162,20 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:11517/GBC_WebService.asmx">
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost/GBCWebService/GBCWebService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\GBC_WebService\</RelPath>
-      <UpdateFromURL>http://localhost:11517/GBC_WebService.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost/GBCWebService/GBCWebService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Acc_WebService_GBC_WebService_GBC_WebService</CachedSettingsPropName>
+      <CachedSettingsPropName>Acc_WebService_GBC_WebService_GBCWebService</CachedSettingsPropName>
     </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

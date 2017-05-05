@@ -22,7 +22,7 @@ namespace Acc_WebService
         [WebMethod]
         public string GetVw_GBCVisaDetail(string acmWordNum)
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             string JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             最外層 vouTop = null; //宣告輸出JSON格式
             最外層 vouTop2 = null; //宣告輸出JSON2格式
@@ -2487,7 +2487,7 @@ namespace Acc_WebService
         //取年度
         public List<string> GetYear()
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             List<string> yearList = new List<string>(ws.GetYear());
 
             return yearList;
@@ -2497,7 +2497,7 @@ namespace Acc_WebService
         //取動支號
         public List<string> GetAcmWordNum(string accYear)
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             List<string> acmNoList = new List<string>(
                 ws.GetAcmWordNum(accYear)
                 );
@@ -2509,7 +2509,7 @@ namespace Acc_WebService
         //取種類
         public List<string> GetAccKind(string accYear, string acmWordNum)
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             List<string> accKindList = new List<string>(
                 ws.GetAccKind(accYear, acmWordNum)
                 );
@@ -2520,7 +2520,7 @@ namespace Acc_WebService
         //取明細號
         public List<string> GetAccDetail(string accYear, string acmWordNum, string accKind, string accCount)
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             List<string> accDetailList = new List<string>(
                 ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
                 );
@@ -2531,7 +2531,7 @@ namespace Acc_WebService
         //依據KEY值取View
         public string GetByPrimaryKey(string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
         {
-            GBC_WebService.GBC_WebService ws = new GBC_WebService.GBC_WebService();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
             string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
             return getGBCVisaDetail;
         }

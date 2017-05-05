@@ -26,10 +26,10 @@ namespace Acc_WebService.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:11517/GBC_WebService.asmx")]
-        public string Acc_WebService_GBC_WebService_GBC_WebService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/GBCWebService/GBCWebService.asmx")]
+        public string Acc_WebService_GBC_WebService_GBCWebService {
             get {
-                return ((string)(this["Acc_WebService_GBC_WebService_GBC_WebService"]));
+                return ((string)(this["Acc_WebService_GBC_WebService_GBCWebService"]));
             }
         }
     }

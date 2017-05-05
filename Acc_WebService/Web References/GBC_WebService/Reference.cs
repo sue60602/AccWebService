@@ -26,8 +26,8 @@ namespace Acc_WebService.GBC_WebService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="GBC_WebServiceSoap", Namespace="http://tempuri.org/")]
-    public partial class GBC_WebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
+    [System.Web.Services.WebServiceBindingAttribute(Name="GBCWebServiceSoap", Namespace="http://tempuri.org/")]
+    public partial class GBCWebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback getVw_GBCVisaDetailOperationCompleted;
         
@@ -50,8 +50,8 @@ namespace Acc_WebService.GBC_WebService {
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
-        public GBC_WebService() {
-            this.Url = global::Acc_WebService.Properties.Settings.Default.Acc_WebService_GBC_WebService_GBC_WebService;
+        public GBCWebService() {
+            this.Url = global::Acc_WebService.Properties.Settings.Default.Acc_WebService_GBC_WebService_GBCWebService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
