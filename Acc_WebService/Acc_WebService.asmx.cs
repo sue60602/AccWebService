@@ -2454,7 +2454,6 @@ namespace Acc_WebService
             string isPass = "";
             int count = 0;
             
-
             try
             {
                 fillVouScriptList = JsonConvert.DeserializeObject<List<FillVouScript>>(vouNoJSON);  //反序列化JSON
@@ -2503,6 +2502,9 @@ namespace Acc_WebService
                     return fillVouScriptListItem.動支編號 + "-" + fillVouScriptListItem.種類 + "-" + fillVouScriptListItem.次別 + "...回填失敗!  請確認是否已回填完畢。";
                 }
             }
+
+            //回填至預控
+            ws.FillVouNo(vouNoJSON);
 
             return "回填完畢";
         }
