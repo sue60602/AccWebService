@@ -29,11 +29,11 @@ namespace Acc_WebService.GBC_WebService {
     [System.Web.Services.WebServiceBindingAttribute(Name="GBCWebServiceSoap", Namespace="http://tempuri.org/")]
     public partial class GBCWebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
-        private System.Threading.SendOrPostCallback getVw_GBCVisaDetailOperationCompleted;
+        private System.Threading.SendOrPostCallback GetVw_GBCVisaDetailOperationCompleted;
         
-        private System.Threading.SendOrPostCallback getVw_GBCVisaDetailXMLOperationCompleted;
+        private System.Threading.SendOrPostCallback GetVw_GBCVisaDetailXMLOperationCompleted;
         
-        private System.Threading.SendOrPostCallback getVw_GBCVisaDetailJSONOperationCompleted;
+        private System.Threading.SendOrPostCallback GetVw_GBCVisaDetailJSONOperationCompleted;
         
         private System.Threading.SendOrPostCallback FillVouNoOperationCompleted;
         
@@ -88,13 +88,13 @@ namespace Acc_WebService.GBC_WebService {
         }
         
         /// <remarks/>
-        public event getVw_GBCVisaDetailCompletedEventHandler getVw_GBCVisaDetailCompleted;
+        public event GetVw_GBCVisaDetailCompletedEventHandler GetVw_GBCVisaDetailCompleted;
         
         /// <remarks/>
-        public event getVw_GBCVisaDetailXMLCompletedEventHandler getVw_GBCVisaDetailXMLCompleted;
+        public event GetVw_GBCVisaDetailXMLCompletedEventHandler GetVw_GBCVisaDetailXMLCompleted;
         
         /// <remarks/>
-        public event getVw_GBCVisaDetailJSONCompletedEventHandler getVw_GBCVisaDetailJSONCompleted;
+        public event GetVw_GBCVisaDetailJSONCompletedEventHandler GetVw_GBCVisaDetailJSONCompleted;
         
         /// <remarks/>
         public event FillVouNoCompletedEventHandler FillVouNoCompleted;
@@ -118,89 +118,89 @@ namespace Acc_WebService.GBC_WebService {
         public event GetByPrimaryKeyCompletedEventHandler GetByPrimaryKeyCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getVw_GBCVisaDetail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string getVw_GBCVisaDetail(string acmWordNum) {
-            object[] results = this.Invoke("getVw_GBCVisaDetail", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetVw_GBCVisaDetail(string acmWordNum) {
+            object[] results = this.Invoke("GetVw_GBCVisaDetail", new object[] {
                         acmWordNum});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailAsync(string acmWordNum) {
-            this.getVw_GBCVisaDetailAsync(acmWordNum, null);
+        public void GetVw_GBCVisaDetailAsync(string acmWordNum) {
+            this.GetVw_GBCVisaDetailAsync(acmWordNum, null);
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailAsync(string acmWordNum, object userState) {
-            if ((this.getVw_GBCVisaDetailOperationCompleted == null)) {
-                this.getVw_GBCVisaDetailOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetVw_GBCVisaDetailOperationCompleted);
+        public void GetVw_GBCVisaDetailAsync(string acmWordNum, object userState) {
+            if ((this.GetVw_GBCVisaDetailOperationCompleted == null)) {
+                this.GetVw_GBCVisaDetailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetVw_GBCVisaDetailOperationCompleted);
             }
-            this.InvokeAsync("getVw_GBCVisaDetail", new object[] {
-                        acmWordNum}, this.getVw_GBCVisaDetailOperationCompleted, userState);
+            this.InvokeAsync("GetVw_GBCVisaDetail", new object[] {
+                        acmWordNum}, this.GetVw_GBCVisaDetailOperationCompleted, userState);
         }
         
-        private void OngetVw_GBCVisaDetailOperationCompleted(object arg) {
-            if ((this.getVw_GBCVisaDetailCompleted != null)) {
+        private void OnGetVw_GBCVisaDetailOperationCompleted(object arg) {
+            if ((this.GetVw_GBCVisaDetailCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getVw_GBCVisaDetailCompleted(this, new getVw_GBCVisaDetailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetVw_GBCVisaDetailCompleted(this, new GetVw_GBCVisaDetailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getVw_GBCVisaDetailXML", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Vw_GBCVisaDetail[] getVw_GBCVisaDetailXML(string acmWordNum) {
-            object[] results = this.Invoke("getVw_GBCVisaDetailXML", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetailXML", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Vw_GBCVisaDetail[] GetVw_GBCVisaDetailXML(string acmWordNum) {
+            object[] results = this.Invoke("GetVw_GBCVisaDetailXML", new object[] {
                         acmWordNum});
             return ((Vw_GBCVisaDetail[])(results[0]));
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailXMLAsync(string acmWordNum) {
-            this.getVw_GBCVisaDetailXMLAsync(acmWordNum, null);
+        public void GetVw_GBCVisaDetailXMLAsync(string acmWordNum) {
+            this.GetVw_GBCVisaDetailXMLAsync(acmWordNum, null);
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailXMLAsync(string acmWordNum, object userState) {
-            if ((this.getVw_GBCVisaDetailXMLOperationCompleted == null)) {
-                this.getVw_GBCVisaDetailXMLOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetVw_GBCVisaDetailXMLOperationCompleted);
+        public void GetVw_GBCVisaDetailXMLAsync(string acmWordNum, object userState) {
+            if ((this.GetVw_GBCVisaDetailXMLOperationCompleted == null)) {
+                this.GetVw_GBCVisaDetailXMLOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetVw_GBCVisaDetailXMLOperationCompleted);
             }
-            this.InvokeAsync("getVw_GBCVisaDetailXML", new object[] {
-                        acmWordNum}, this.getVw_GBCVisaDetailXMLOperationCompleted, userState);
+            this.InvokeAsync("GetVw_GBCVisaDetailXML", new object[] {
+                        acmWordNum}, this.GetVw_GBCVisaDetailXMLOperationCompleted, userState);
         }
         
-        private void OngetVw_GBCVisaDetailXMLOperationCompleted(object arg) {
-            if ((this.getVw_GBCVisaDetailXMLCompleted != null)) {
+        private void OnGetVw_GBCVisaDetailXMLOperationCompleted(object arg) {
+            if ((this.GetVw_GBCVisaDetailXMLCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getVw_GBCVisaDetailXMLCompleted(this, new getVw_GBCVisaDetailXMLCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetVw_GBCVisaDetailXMLCompleted(this, new GetVw_GBCVisaDetailXMLCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getVw_GBCVisaDetailJSON", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string getVw_GBCVisaDetailJSON(string acmWordNum) {
-            object[] results = this.Invoke("getVw_GBCVisaDetailJSON", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetailJSON", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetVw_GBCVisaDetailJSON(string acmWordNum) {
+            object[] results = this.Invoke("GetVw_GBCVisaDetailJSON", new object[] {
                         acmWordNum});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailJSONAsync(string acmWordNum) {
-            this.getVw_GBCVisaDetailJSONAsync(acmWordNum, null);
+        public void GetVw_GBCVisaDetailJSONAsync(string acmWordNum) {
+            this.GetVw_GBCVisaDetailJSONAsync(acmWordNum, null);
         }
         
         /// <remarks/>
-        public void getVw_GBCVisaDetailJSONAsync(string acmWordNum, object userState) {
-            if ((this.getVw_GBCVisaDetailJSONOperationCompleted == null)) {
-                this.getVw_GBCVisaDetailJSONOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetVw_GBCVisaDetailJSONOperationCompleted);
+        public void GetVw_GBCVisaDetailJSONAsync(string acmWordNum, object userState) {
+            if ((this.GetVw_GBCVisaDetailJSONOperationCompleted == null)) {
+                this.GetVw_GBCVisaDetailJSONOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetVw_GBCVisaDetailJSONOperationCompleted);
             }
-            this.InvokeAsync("getVw_GBCVisaDetailJSON", new object[] {
-                        acmWordNum}, this.getVw_GBCVisaDetailJSONOperationCompleted, userState);
+            this.InvokeAsync("GetVw_GBCVisaDetailJSON", new object[] {
+                        acmWordNum}, this.GetVw_GBCVisaDetailJSONOperationCompleted, userState);
         }
         
-        private void OngetVw_GBCVisaDetailJSONOperationCompleted(object arg) {
-            if ((this.getVw_GBCVisaDetailJSONCompleted != null)) {
+        private void OnGetVw_GBCVisaDetailJSONOperationCompleted(object arg) {
+            if ((this.GetVw_GBCVisaDetailJSONCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getVw_GBCVisaDetailJSONCompleted(this, new getVw_GBCVisaDetailJSONCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetVw_GBCVisaDetailJSONCompleted(this, new GetVw_GBCVisaDetailJSONCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -681,17 +681,17 @@ namespace Acc_WebService.GBC_WebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void getVw_GBCVisaDetailCompletedEventHandler(object sender, getVw_GBCVisaDetailCompletedEventArgs e);
+    public delegate void GetVw_GBCVisaDetailCompletedEventHandler(object sender, GetVw_GBCVisaDetailCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getVw_GBCVisaDetailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetVw_GBCVisaDetailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal getVw_GBCVisaDetailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetVw_GBCVisaDetailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -707,17 +707,17 @@ namespace Acc_WebService.GBC_WebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void getVw_GBCVisaDetailXMLCompletedEventHandler(object sender, getVw_GBCVisaDetailXMLCompletedEventArgs e);
+    public delegate void GetVw_GBCVisaDetailXMLCompletedEventHandler(object sender, GetVw_GBCVisaDetailXMLCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getVw_GBCVisaDetailXMLCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetVw_GBCVisaDetailXMLCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal getVw_GBCVisaDetailXMLCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetVw_GBCVisaDetailXMLCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -733,17 +733,17 @@ namespace Acc_WebService.GBC_WebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void getVw_GBCVisaDetailJSONCompletedEventHandler(object sender, getVw_GBCVisaDetailJSONCompletedEventArgs e);
+    public delegate void GetVw_GBCVisaDetailJSONCompletedEventHandler(object sender, GetVw_GBCVisaDetailJSONCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getVw_GBCVisaDetailJSONCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetVw_GBCVisaDetailJSONCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal getVw_GBCVisaDetailJSONCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetVw_GBCVisaDetailJSONCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

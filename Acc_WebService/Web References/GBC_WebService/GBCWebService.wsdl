@@ -2,31 +2,31 @@
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="getVw_GBCVisaDetail">
+      <s:element name="GetVw_GBCVisaDetail">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="acmWordNum" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getVw_GBCVisaDetailResponse">
+      <s:element name="GetVw_GBCVisaDetailResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getVw_GBCVisaDetailResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetVw_GBCVisaDetailResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getVw_GBCVisaDetailXML">
+      <s:element name="GetVw_GBCVisaDetailXML">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="acmWordNum" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getVw_GBCVisaDetailXMLResponse">
+      <s:element name="GetVw_GBCVisaDetailXMLResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getVw_GBCVisaDetailXMLResult" type="tns:ArrayOfVw_GBCVisaDetail" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetVw_GBCVisaDetailXMLResult" type="tns:ArrayOfVw_GBCVisaDetail" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -58,17 +58,17 @@
           <s:element minOccurs="0" maxOccurs="1" name="F_批號" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:element name="getVw_GBCVisaDetailJSON">
+      <s:element name="GetVw_GBCVisaDetailJSON">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="acmWordNum" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getVw_GBCVisaDetailJSONResponse">
+      <s:element name="GetVw_GBCVisaDetailJSONResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getVw_GBCVisaDetailJSONResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetVw_GBCVisaDetailJSONResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -179,23 +179,23 @@
       </s:element>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="getVw_GBCVisaDetailSoapIn">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetail" />
+  <wsdl:message name="GetVw_GBCVisaDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetail" />
   </wsdl:message>
-  <wsdl:message name="getVw_GBCVisaDetailSoapOut">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailResponse" />
+  <wsdl:message name="GetVw_GBCVisaDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetailResponse" />
   </wsdl:message>
-  <wsdl:message name="getVw_GBCVisaDetailXMLSoapIn">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailXML" />
+  <wsdl:message name="GetVw_GBCVisaDetailXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetailXML" />
   </wsdl:message>
-  <wsdl:message name="getVw_GBCVisaDetailXMLSoapOut">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailXMLResponse" />
+  <wsdl:message name="GetVw_GBCVisaDetailXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetailXMLResponse" />
   </wsdl:message>
-  <wsdl:message name="getVw_GBCVisaDetailJSONSoapIn">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailJSON" />
+  <wsdl:message name="GetVw_GBCVisaDetailJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetailJSON" />
   </wsdl:message>
-  <wsdl:message name="getVw_GBCVisaDetailJSONSoapOut">
-    <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailJSONResponse" />
+  <wsdl:message name="GetVw_GBCVisaDetailJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVw_GBCVisaDetailJSONResponse" />
   </wsdl:message>
   <wsdl:message name="FillVouNoSoapIn">
     <wsdl:part name="parameters" element="tns:FillVouNo" />
@@ -240,17 +240,17 @@
     <wsdl:part name="parameters" element="tns:GetByPrimaryKeyResponse" />
   </wsdl:message>
   <wsdl:portType name="GBCWebServiceSoap">
-    <wsdl:operation name="getVw_GBCVisaDetail">
-      <wsdl:input message="tns:getVw_GBCVisaDetailSoapIn" />
-      <wsdl:output message="tns:getVw_GBCVisaDetailSoapOut" />
+    <wsdl:operation name="GetVw_GBCVisaDetail">
+      <wsdl:input message="tns:GetVw_GBCVisaDetailSoapIn" />
+      <wsdl:output message="tns:GetVw_GBCVisaDetailSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailXML">
-      <wsdl:input message="tns:getVw_GBCVisaDetailXMLSoapIn" />
-      <wsdl:output message="tns:getVw_GBCVisaDetailXMLSoapOut" />
+    <wsdl:operation name="GetVw_GBCVisaDetailXML">
+      <wsdl:input message="tns:GetVw_GBCVisaDetailXMLSoapIn" />
+      <wsdl:output message="tns:GetVw_GBCVisaDetailXMLSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailJSON">
-      <wsdl:input message="tns:getVw_GBCVisaDetailJSONSoapIn" />
-      <wsdl:output message="tns:getVw_GBCVisaDetailJSONSoapOut" />
+    <wsdl:operation name="GetVw_GBCVisaDetailJSON">
+      <wsdl:input message="tns:GetVw_GBCVisaDetailJSONSoapIn" />
+      <wsdl:output message="tns:GetVw_GBCVisaDetailJSONSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FillVouNo">
       <wsdl:input message="tns:FillVouNoSoapIn" />
@@ -283,8 +283,8 @@
   </wsdl:portType>
   <wsdl:binding name="GBCWebServiceSoap" type="tns:GBCWebServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="getVw_GBCVisaDetail">
-      <soap:operation soapAction="http://tempuri.org/getVw_GBCVisaDetail" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetail">
+      <soap:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -292,8 +292,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailXML">
-      <soap:operation soapAction="http://tempuri.org/getVw_GBCVisaDetailXML" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetailXML">
+      <soap:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetailXML" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -301,8 +301,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailJSON">
-      <soap:operation soapAction="http://tempuri.org/getVw_GBCVisaDetailJSON" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetailJSON">
+      <soap:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetailJSON" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -376,8 +376,8 @@
   </wsdl:binding>
   <wsdl:binding name="GBCWebServiceSoap12" type="tns:GBCWebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="getVw_GBCVisaDetail">
-      <soap12:operation soapAction="http://tempuri.org/getVw_GBCVisaDetail" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -385,8 +385,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailXML">
-      <soap12:operation soapAction="http://tempuri.org/getVw_GBCVisaDetailXML" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetailXML">
+      <soap12:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetailXML" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -394,8 +394,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getVw_GBCVisaDetailJSON">
-      <soap12:operation soapAction="http://tempuri.org/getVw_GBCVisaDetailJSON" style="document" />
+    <wsdl:operation name="GetVw_GBCVisaDetailJSON">
+      <soap12:operation soapAction="http://tempuri.org/GetVw_GBCVisaDetailJSON" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

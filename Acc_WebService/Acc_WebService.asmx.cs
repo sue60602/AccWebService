@@ -29,7 +29,7 @@ namespace Acc_WebService
             if (fundNo == "010")//醫發服務參考
             {
                 GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-                JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
+                JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
             else if (fundNo == "040")//菸害****尚未加入服務參考****
             {
@@ -38,7 +38,7 @@ namespace Acc_WebService
             else if (fundNo == "090")//家防服務參考
             {
                 DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
-                JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
+                JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
@@ -2440,21 +2440,24 @@ namespace Acc_WebService
          
         //傳票號碼回填
         [WebMethod]
-        public string FillVouNo(string VouNoJSON)
+        public string FillVouNo(string vouNoJSON)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
             List<FillVouScript> fillVouScriptList = new List<FillVouScript>();
             GBCJSONRecordVO gbcJSONRecordVO = new GBCJSONRecordVO();
             GBCVisaDetailAbateDetailVO gbcVisaDetailAbateDetailVO = new GBCVisaDetailAbateDetailVO();
+            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+
             string isVouNo1 = "";
             string isJSON2 = "";
             string isPass = "";
             int count = 0;
+            
 
             try
             {
-                fillVouScriptList = JsonConvert.DeserializeObject<List<FillVouScript>>(VouNoJSON);  //反序列化JSON
+                fillVouScriptList = JsonConvert.DeserializeObject<List<FillVouScript>>(vouNoJSON);  //反序列化JSON
             }
             catch (Exception e)
             {
