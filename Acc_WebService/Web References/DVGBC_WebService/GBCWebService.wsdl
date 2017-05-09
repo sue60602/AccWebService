@@ -72,16 +72,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="FillVouNo">
-        <s:complexType />
-      </s:element>
-      <s:element name="FillVouNoResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="FillVouNoResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="GetYear">
         <s:complexType />
       </s:element>
@@ -197,12 +187,6 @@
   <wsdl:message name="getVw_GBCVisaDetailJSONSoapOut">
     <wsdl:part name="parameters" element="tns:getVw_GBCVisaDetailJSONResponse" />
   </wsdl:message>
-  <wsdl:message name="FillVouNoSoapIn">
-    <wsdl:part name="parameters" element="tns:FillVouNo" />
-  </wsdl:message>
-  <wsdl:message name="FillVouNoSoapOut">
-    <wsdl:part name="parameters" element="tns:FillVouNoResponse" />
-  </wsdl:message>
   <wsdl:message name="GetYearSoapIn">
     <wsdl:part name="parameters" element="tns:GetYear" />
   </wsdl:message>
@@ -252,10 +236,6 @@
       <wsdl:input message="tns:getVw_GBCVisaDetailJSONSoapIn" />
       <wsdl:output message="tns:getVw_GBCVisaDetailJSONSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="FillVouNo">
-      <wsdl:input message="tns:FillVouNoSoapIn" />
-      <wsdl:output message="tns:FillVouNoSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetYear">
       <wsdl:input message="tns:GetYearSoapIn" />
       <wsdl:output message="tns:GetYearSoapOut" />
@@ -303,15 +283,6 @@
     </wsdl:operation>
     <wsdl:operation name="getVw_GBCVisaDetailJSON">
       <soap:operation soapAction="http://tempuri.org/getVw_GBCVisaDetailJSON" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FillVouNo">
-      <soap:operation soapAction="http://tempuri.org/FillVouNo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -403,15 +374,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FillVouNo">
-      <soap12:operation soapAction="http://tempuri.org/FillVouNo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetYear">
       <soap12:operation soapAction="http://tempuri.org/GetYear" style="document" />
       <wsdl:input>
@@ -469,10 +431,10 @@
   </wsdl:binding>
   <wsdl:service name="GBCWebService">
     <wsdl:port name="GBCWebServiceSoap" binding="tns:GBCWebServiceSoap">
-      <soap:address location="http://localhost/GBCWebService/GBCWebService.asmx" />
+      <soap:address location="http://localhost/DVGBCWebService/GBCWebService.asmx" />
     </wsdl:port>
     <wsdl:port name="GBCWebServiceSoap12" binding="tns:GBCWebServiceSoap12">
-      <soap12:address location="http://localhost/GBCWebService/GBCWebService.asmx" />
+      <soap12:address location="http://localhost/DVGBCWebService/GBCWebService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

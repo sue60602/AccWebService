@@ -32,5 +32,15 @@ namespace Acc_WebService.Properties {
                 return ((string)(this["Acc_WebService_GBC_WebService_GBCWebService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/DVGBCWebService/GBCWebService.asmx")]
+        public string Acc_WebService_DVGBC_WebService_GBCWebService {
+            get {
+                return ((string)(this["Acc_WebService_DVGBC_WebService_GBCWebService"]));
+            }
+        }
     }
 }

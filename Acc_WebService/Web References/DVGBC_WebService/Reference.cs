@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace Acc_WebService.GBC_WebService {
+namespace Acc_WebService.DVGBC_WebService {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -35,8 +35,6 @@ namespace Acc_WebService.GBC_WebService {
         
         private System.Threading.SendOrPostCallback getVw_GBCVisaDetailJSONOperationCompleted;
         
-        private System.Threading.SendOrPostCallback FillVouNoOperationCompleted;
-        
         private System.Threading.SendOrPostCallback GetYearOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetAcmWordNumOperationCompleted;
@@ -53,7 +51,7 @@ namespace Acc_WebService.GBC_WebService {
         
         /// <remarks/>
         public GBCWebService() {
-            this.Url = global::Acc_WebService.Properties.Settings.Default.Acc_WebService_GBC_WebService_GBCWebService;
+            this.Url = global::Acc_WebService.Properties.Settings.Default.Acc_WebService_DVGBC_WebService_GBCWebService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -95,9 +93,6 @@ namespace Acc_WebService.GBC_WebService {
         
         /// <remarks/>
         public event getVw_GBCVisaDetailJSONCompletedEventHandler getVw_GBCVisaDetailJSONCompleted;
-        
-        /// <remarks/>
-        public event FillVouNoCompletedEventHandler FillVouNoCompleted;
         
         /// <remarks/>
         public event GetYearCompletedEventHandler GetYearCompleted;
@@ -201,33 +196,6 @@ namespace Acc_WebService.GBC_WebService {
             if ((this.getVw_GBCVisaDetailJSONCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getVw_GBCVisaDetailJSONCompleted(this, new getVw_GBCVisaDetailJSONCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FillVouNo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string FillVouNo() {
-            object[] results = this.Invoke("FillVouNo", new object[0]);
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void FillVouNoAsync() {
-            this.FillVouNoAsync(null);
-        }
-        
-        /// <remarks/>
-        public void FillVouNoAsync(object userState) {
-            if ((this.FillVouNoOperationCompleted == null)) {
-                this.FillVouNoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFillVouNoOperationCompleted);
-            }
-            this.InvokeAsync("FillVouNo", new object[0], this.FillVouNoOperationCompleted, userState);
-        }
-        
-        private void OnFillVouNoOperationCompleted(object arg) {
-            if ((this.FillVouNoCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.FillVouNoCompleted(this, new FillVouNoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -744,32 +712,6 @@ namespace Acc_WebService.GBC_WebService {
         private object[] results;
         
         internal getVw_GBCVisaDetailJSONCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void FillVouNoCompletedEventHandler(object sender, FillVouNoCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class FillVouNoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal FillVouNoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

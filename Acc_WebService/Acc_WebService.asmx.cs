@@ -20,14 +20,43 @@ namespace Acc_WebService
     {
         //輸入條碼,回傳傳票底稿
         [WebMethod]
-        public string GetVw_GBCVisaDetail(string acmWordNum)
+        public string GetVw_GBCVisaDetail(string fundNo,string acmWordNum)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            string JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
+            //宣告接收從預控端取得之JSON字串
+            string JSONReturn = "";
+
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                JSONReturn = ws.getVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+
+            }
+            else
+            {
+                return "基金代號有誤! 號碼為: " + fundNo;
+            }
+
             最外層 vouTop = null; //宣告輸出JSON格式
             最外層 vouTop2 = null; //宣告輸出JSON2格式
             string JSON1 = null; //宣告回傳JSON1
-            //string JSON2 = null;
+
             Vw_GBCVisaDetail vw_GBCVisaDetail = new Vw_GBCVisaDetail();
             List<Vw_GBCVisaDetail> vwList = new List<Vw_GBCVisaDetail>();
             try
@@ -2481,72 +2510,236 @@ namespace Acc_WebService
         //3.public List<string> GetAccKind(string accYear, string acmWordNum)
         //4.public List<string> GetAccCount(string accYear, string acmWordNum, string accKind)
         //5.public List<string> GetAccDetail(string accYear, string acmWordNum, string accKind, string accCount)
-        //6.public List<string> GetByPrimaryKey(string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
+        //6.public string GetByPrimaryKey(string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
 
         [WebMethod]
         //取年度
-        public List<string> GetYear()
+        public List<string> GetYear(string fundNo)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            List<string> yearList = new List<string>(ws.GetYear());
 
-            return yearList;
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                List<string> yearList = new List<string>(ws.GetYear());
+
+                return yearList;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> yearList = new List<string>(ws.GetYear());
+
+                return yearList;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         [WebMethod]
         //取動支號
-        public List<string> GetAcmWordNum(string accYear)
+        public List<string> GetAcmWordNum(string fundNo, string accYear)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            List<string> acmNoList = new List<string>(
-                ws.GetAcmWordNum(accYear)
-                );
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                List<string> acmNoList = new List<string>(
+                    ws.GetAcmWordNum(accYear));
 
-            return acmNoList;
+                return acmNoList;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> acmNoList = new List<string>(
+                    ws.GetAcmWordNum(accYear));
+
+                return acmNoList;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         [WebMethod]
         //取種類
-        public List<string> GetAccKind(string accYear, string acmWordNum)
+        public List<string> GetAccKind(string fundNo, string accYear, string acmWordNum)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            List<string> accKindList = new List<string>(
-                ws.GetAccKind(accYear, acmWordNum)
-                );
-            return accKindList;
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                List<string> accKindList = new List<string>(
+                    ws.GetAccKind(accYear, acmWordNum));
+                return accKindList;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> accKindList = new List<string>(
+                    ws.GetAccKind(accYear, acmWordNum));
+                return accKindList;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         [WebMethod]
         //取次數
-        public List<string> GetAccCount(string accYear, string acmWordNum, string accKind)
+        public List<string> GetAccCount(string fundNo, string accYear, string acmWordNum, string accKind)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            List<string> accDetailList = new List<string>(
-                ws.GetAccCount(accYear, acmWordNum, accKind)
-                );
-            return accDetailList;
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccCount(accYear, acmWordNum, accKind));
+                return accDetailList;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccCount(accYear, acmWordNum, accKind));
+                return accDetailList;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         [WebMethod]
         //取明細號
-        public List<string> GetAccDetail(string accYear, string acmWordNum, string accKind, string accCount)
+        public List<string> GetAccDetail(string fundNo, string accYear, string acmWordNum, string accKind, string accCount)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            List<string> accDetailList = new List<string>(
-                ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
-                );
-            return accDetailList;
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccDetail(accYear, acmWordNum, accKind, accCount));
+                return accDetailList;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccDetail(accYear, acmWordNum, accKind, accCount));
+                return accDetailList;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         [WebMethod]
         //依據KEY值取View
-        public string GetByPrimaryKey(string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
+        public string GetByPrimaryKey(string fundNo, string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
         {
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
-            return getGBCVisaDetail;
-        }
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
+                return getGBCVisaDetail;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
+                return getGBCVisaDetail;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                return null;
+            }
+            else
+            {
+                return null;
+            }
 
+        }
 
     }
 }
