@@ -828,28 +828,7 @@ namespace Acc_WebService
                         return jsonDAO.FindJSON2(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別);
                     }
 
-                    try
-                    {
-                        isLog = dao.FindLog(vw_GBCVisaDetail);
-                        isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
-                        if ((isLog > 0) && isPass.Equals("1"))
-                        {
-                            return "此筆資料已轉入過,並且結案。";
-                        }
-                        else if ((isLog > 0) && isPass.Equals("0"))
-                        {
-                            dao.Update(vw_GBCVisaDetail);
-                            jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
-                        }
-                        else
-                        {
-                            dao.Insert(vw_GBCVisaDetail);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return e.Message;
-                    }
+                    
 
                     try
                     {
@@ -883,6 +862,29 @@ namespace Acc_WebService
                             vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                             vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                             vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
+                            try
+                            {
+                                isLog = dao.FindLog(vw_GBCVisaDetail);
+                                isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                if ((isLog > 0) && isPass.Equals("1"))
+                                {
+                                    return "此筆資料已轉入過,並且結案。";
+                                }
+                                else if ((isLog > 0) && isPass.Equals("0"))
+                                {
+                                    dao.Update(vw_GBCVisaDetail);
+                                    jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                }
+                                else
+                                {
+                                    dao.Insert(vw_GBCVisaDetail);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                return e.Message;
+                            }
 
                             傳票明細 vouDtl_D = new 傳票明細()
                             {
@@ -1004,6 +1006,7 @@ namespace Acc_WebService
                             prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號);
                             prePayMoneyAbate = prePayMoneyAbate + dao.PrePayMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                         }
+
                         //預付沖銷餘額 = 已預付 - 已轉正
                         prePayBalance = prePayMoney - prePayMoneyAbate;
 
@@ -1014,6 +1017,7 @@ namespace Acc_WebService
                             estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號);
                             estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                         }
+
                         //估列沖銷餘額 = 已估列 - 已轉正
                         estimateBalance = estimateMoney - estimateMoneyAbate;
 
@@ -1025,13 +1029,13 @@ namespace Acc_WebService
                         var abateEstimateVouNo = from estvou in estimateNouNoList select estvou.傳票號;
                         var abateEstimateVouDtlNo = from estvou in estimateNouNoList select estvou.傳票明細號;
 
+                        int abateCnt = 0;
+
                         //判斷核銷傳票
                         //狀況1: 預付沖銷餘額<=0 ----實支
-
                         //狀況2: 預付沖銷餘額>0 && 估列沖銷餘額<=0 -----無估列之轉正
                         //  2-1: 核銷數<預付沖銷餘額----分轉(貸預付 借費用)
                         //  2-2: 核銷數>預付沖銷餘額----分轉(貸預借 借費用) + 支(借費用 貸銀行)
-
                         //狀況3: 預付沖銷餘額>0 && 估列沖銷餘額>0  -----有估列的轉正
                         //  3-1: 預付沖銷餘額>Y ---分轉(貸預付 借應付 借費用)
                         //       核銷數>預付沖銷餘額 ---增加 支(借費用 貸銀行)
@@ -1061,7 +1065,29 @@ namespace Acc_WebService
                                 vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                 vw_GBCVisaDetail.F_批號 = payCash.F_批號;
 
-                               
+                                try
+                                {
+                                    isLog = dao.FindLog(vw_GBCVisaDetail);
+                                    isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                    if ((isLog > 0) && isPass.Equals("1"))
+                                    {
+                                        return "此筆資料已轉入過,並且結案。";
+                                    }
+                                    else if ((isLog > 0) && isPass.Equals("0"))
+                                    {
+                                        dao.Update(vw_GBCVisaDetail);
+                                        jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                    }
+                                    else
+                                    {
+                                        dao.Insert(vw_GBCVisaDetail);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    return e.Message;
+                                }
+
                                 傳票明細 vouDtl_D = new 傳票明細()
                                 {
                                     借貸別 = "借",
@@ -1170,7 +1196,7 @@ namespace Acc_WebService
                         else if (prePayBalance > 0 && estimateBalance <= 0) //無估列之轉正
                         {
                             if (vw_GBCVisaDetail.F_核定金額 <= prePayBalance) //分轉(貸預付 借費用) only
-                            {
+                            {                                
                                 foreach (var payCash in vwList)
                                 {
                                     vw_GBCVisaDetail.PK_會計年度 = payCash.PK_會計年度;
@@ -1192,6 +1218,29 @@ namespace Acc_WebService
                                     vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                     vw_GBCVisaDetail.F_批號 = payCash.F_批號;
 
+                                    try
+                                    {
+                                        isLog = dao.FindLog(vw_GBCVisaDetail);
+                                        isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                        if ((isLog > 0) && isPass.Equals("1"))
+                                        {
+                                            return "此筆資料已轉入過,並且結案。";
+                                        }
+                                        else if ((isLog > 0) && isPass.Equals("0"))
+                                        {
+                                            dao.Update(vw_GBCVisaDetail);
+                                            jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                        }
+                                        else
+                                        {
+                                            dao.Insert(vw_GBCVisaDetail);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        return e.Message;
+                                    }
+
                                     傳票明細 vouDtl_C = new 傳票明細()
                                     {
                                         借貸別 = "貸",
@@ -1201,7 +1250,7 @@ namespace Acc_WebService
                                         金額 = vw_GBCVisaDetail.F_核定金額,
                                         計畫代碼 = "",
                                         用途別代碼 = "",
-                                        沖轉字號 = abatePrePayVouNo.ElementAt(0) + "-" + abatePrePayVouDtlNo.ElementAt(0), //沖轉支出傳票 from prePayNouNoList
+                                        沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                         對象代碼 = "",
                                         對象說明 = ""
                                     };
@@ -1232,6 +1281,7 @@ namespace Acc_WebService
                                         帳戶名稱 = ""
                                     };
                                     vouPayList.Add(vouPay);
+                                    //abateCnt++;
                                 }
                                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                 var vouPayGroup = from xxx in vouPayList
@@ -1317,6 +1367,29 @@ namespace Acc_WebService
                                     vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                     vw_GBCVisaDetail.F_批號 = payCash.F_批號;
 
+                                    try
+                                    {
+                                        isLog = dao.FindLog(vw_GBCVisaDetail);
+                                        isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                        if ((isLog > 0) && isPass.Equals("1"))
+                                        {
+                                            return "此筆資料已轉入過,並且結案。";
+                                        }
+                                        else if ((isLog > 0) && isPass.Equals("0"))
+                                        {
+                                            dao.Update(vw_GBCVisaDetail);
+                                            jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                        }
+                                        else
+                                        {
+                                            dao.Insert(vw_GBCVisaDetail);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        return e.Message;
+                                    }
+
                                     傳票明細 vouDtl_C = new 傳票明細()
                                     {
                                         借貸別 = "貸",
@@ -1326,7 +1399,7 @@ namespace Acc_WebService
                                         金額 = prePayBalance,
                                         計畫代碼 = "",
                                         用途別代碼 = "",
-                                        沖轉字號 = abatePrePayVouNo.ElementAt(0) + "-" + abatePrePayVouDtlNo.ElementAt(0), //沖轉支出傳票 from prePayNouNoList
+                                        沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                         對象代碼 = "",
                                         對象說明 = ""
                                     };
@@ -1357,6 +1430,7 @@ namespace Acc_WebService
                                         帳戶名稱 = ""
                                     };
                                     vouPayList.Add(vouPay);
+                                    //abateCnt++;
                                 }
                                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                 var vouPayGroup = from xxx in vouPayList
@@ -1424,6 +1498,7 @@ namespace Acc_WebService
                                     vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                     vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                     vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
                                     傳票明細 vouDtl_D2 = new 傳票明細()
                                     {
                                         借貸別 = "借",
@@ -1560,6 +1635,30 @@ namespace Acc_WebService
                                         vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                         vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                         vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
+                                        try
+                                        {
+                                            isLog = dao.FindLog(vw_GBCVisaDetail);
+                                            isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                            if ((isLog > 0) && isPass.Equals("1"))
+                                            {
+                                                return "此筆資料已轉入過,並且結案。";
+                                            }
+                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            {
+                                                dao.Update(vw_GBCVisaDetail);
+                                                jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                            }
+                                            else
+                                            {
+                                                dao.Insert(vw_GBCVisaDetail);
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            return e.Message;
+                                        }
+
                                         傳票明細 vouDtl_C = new 傳票明細()
                                         {
                                             借貸別 = "貸",
@@ -1569,7 +1668,7 @@ namespace Acc_WebService
                                             金額 = vw_GBCVisaDetail.F_核定金額,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(0) + "-" + abatePrePayVouDtlNo.ElementAt(0), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -1614,6 +1713,7 @@ namespace Acc_WebService
                                             帳戶名稱 = ""
                                         };
                                         vouPayList.Add(vouPay);
+                                        //abateCnt++;
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -1697,6 +1797,30 @@ namespace Acc_WebService
                                         vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                         vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                         vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
+                                        try
+                                        {
+                                            isLog = dao.FindLog(vw_GBCVisaDetail);
+                                            isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                            if ((isLog > 0) && isPass.Equals("1"))
+                                            {
+                                                return "此筆資料已轉入過,並且結案。";
+                                            }
+                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            {
+                                                dao.Update(vw_GBCVisaDetail);
+                                                jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                            }
+                                            else
+                                            {
+                                                dao.Insert(vw_GBCVisaDetail);
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            return e.Message;
+                                        }
+
                                         傳票明細 vouDtl_C = new 傳票明細()
                                         {
                                             借貸別 = "貸",
@@ -1706,7 +1830,7 @@ namespace Acc_WebService
                                             金額 = prePayBalance,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(0) + "-" + abatePrePayVouDtlNo.ElementAt(0), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -1751,6 +1875,7 @@ namespace Acc_WebService
                                             帳戶名稱 = ""
                                         };
                                         vouPayList.Add(vouPay);
+                                        //abateCnt++;
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -1950,6 +2075,30 @@ namespace Acc_WebService
                                         vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                         vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                         vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
+                                        try
+                                        {
+                                            isLog = dao.FindLog(vw_GBCVisaDetail);
+                                            isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                            if ((isLog > 0) && isPass.Equals("1"))
+                                            {
+                                                return "此筆資料已轉入過,並且結案。";
+                                            }
+                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            {
+                                                dao.Update(vw_GBCVisaDetail);
+                                                jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                            }
+                                            else
+                                            {
+                                                dao.Insert(vw_GBCVisaDetail);
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            return e.Message;
+                                        }
+
                                         傳票明細 vouDtl_C = new 傳票明細()
                                         {
                                             借貸別 = "貸",
@@ -1959,7 +2108,7 @@ namespace Acc_WebService
                                             金額 = vw_GBCVisaDetail.F_核定金額,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(0) + "-" + abatePrePayVouDtlNo.ElementAt(0), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -1990,6 +2139,7 @@ namespace Acc_WebService
                                             帳戶名稱 = ""
                                         };
                                         vouPayList.Add(vouPay);
+                                        //abateCnt++;
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -2074,6 +2224,30 @@ namespace Acc_WebService
                                         vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                                         vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                                         vw_GBCVisaDetail.F_批號 = payCash.F_批號;
+
+                                        try
+                                        {
+                                            isLog = dao.FindLog(vw_GBCVisaDetail);
+                                            isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                            if ((isLog > 0) && isPass.Equals("1"))
+                                            {
+                                                return "此筆資料已轉入過,並且結案。";
+                                            }
+                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            {
+                                                dao.Update(vw_GBCVisaDetail);
+                                                jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                            }
+                                            else
+                                            {
+                                                dao.Insert(vw_GBCVisaDetail);
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            return e.Message;
+                                        }
+
                                         傳票明細 vouDtl_C = new 傳票明細()
                                         {
                                             借貸別 = "貸",
@@ -2314,7 +2488,30 @@ namespace Acc_WebService
                             vw_GBCVisaDetail.F_受款人編號 = payCash.F_受款人編號;
                             vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                             vw_GBCVisaDetail.F_批號 = payCash.F_批號;
-                            
+
+                            try
+                            {
+                                isLog = dao.FindLog(vw_GBCVisaDetail);
+                                isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+                                if ((isLog > 0) && isPass.Equals("1"))
+                                {
+                                    return "此筆資料已轉入過,並且結案。";
+                                }
+                                else if ((isLog > 0) && isPass.Equals("0"))
+                                {
+                                    dao.Update(vw_GBCVisaDetail);
+                                    jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
+                                }
+                                else
+                                {
+                                    dao.Insert(vw_GBCVisaDetail);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                return e.Message;
+                            }
+
                             傳票明細 vouDtl_D = new 傳票明細()
                             {
                                 借貸別 = "借",
