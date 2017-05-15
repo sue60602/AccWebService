@@ -206,22 +206,24 @@ namespace Acc_WebService.DVGBC_WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FillVouNo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string FillVouNo() {
-            object[] results = this.Invoke("FillVouNo", new object[0]);
+        public string FillVouNo(string fillVouJSON) {
+            object[] results = this.Invoke("FillVouNo", new object[] {
+                        fillVouJSON});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void FillVouNoAsync() {
-            this.FillVouNoAsync(null);
+        public void FillVouNoAsync(string fillVouJSON) {
+            this.FillVouNoAsync(fillVouJSON, null);
         }
         
         /// <remarks/>
-        public void FillVouNoAsync(object userState) {
+        public void FillVouNoAsync(string fillVouJSON, object userState) {
             if ((this.FillVouNoOperationCompleted == null)) {
                 this.FillVouNoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFillVouNoOperationCompleted);
             }
-            this.InvokeAsync("FillVouNo", new object[0], this.FillVouNoOperationCompleted, userState);
+            this.InvokeAsync("FillVouNo", new object[] {
+                        fillVouJSON}, this.FillVouNoOperationCompleted, userState);
         }
         
         private void OnFillVouNoOperationCompleted(object arg) {

@@ -2637,14 +2637,14 @@ namespace Acc_WebService
          
         //傳票號碼回填
         [WebMethod]
-        public string FillVouNo(string vouNoJSON)
+        public string FillVouNo(string fundNo, string vouNoJSON)
         {
+
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
             List<FillVouScript> fillVouScriptList = new List<FillVouScript>();
             GBCJSONRecordVO gbcJSONRecordVO = new GBCJSONRecordVO();
             GBCVisaDetailAbateDetailVO gbcVisaDetailAbateDetailVO = new GBCVisaDetailAbateDetailVO();
-            GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
 
             string isVouNo1 = "";
             string isJSON2 = "";
@@ -2696,12 +2696,35 @@ namespace Acc_WebService
                 }
                 else
                 {
-                    return fillVouScriptListItem.動支編號 + "-" + fillVouScriptListItem.種類 + "-" + fillVouScriptListItem.次別 + "...回填失敗!  請確認是否已回填完畢。";
+                    return fillVouScriptListItem.動支編號 + "-" + fillVouScriptListItem.種類 + "-" + fillVouScriptListItem.次別 + "...回填失敗!  請確認是否已回填。";
                 }
             }
+            
+            //判斷基金代號,回填至對應的預控系統
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                ws.FillVouNo(vouNoJSON);
 
-            //回填至預控
-            ws.FillVouNo(vouNoJSON);
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                ws.FillVouNo(vouNoJSON);
+
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+
+            }
 
             return "回填完畢";
         }
