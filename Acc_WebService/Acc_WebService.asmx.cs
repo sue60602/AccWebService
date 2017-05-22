@@ -2700,31 +2700,32 @@ namespace Acc_WebService
                 }
             }
             
+            //先拿掉回寫預控的方法
             //判斷基金代號,回填至對應的預控系統
-            if (fundNo == "010")//醫發服務參考
-            {
-                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-                ws.FillVouNo(vouNoJSON);
+            //if (fundNo == "010")//醫發服務參考
+            //{
+            //    GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+            //    ws.FillVouNo(vouNoJSON);
 
-            }
-            else if (fundNo == "040")//菸害****尚未加入服務參考****
-            {
+            //}
+            //else if (fundNo == "040")//菸害****尚未加入服務參考****
+            //{
 
-            }
-            else if (fundNo == "090")//家防服務參考
-            {
-                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
-                ws.FillVouNo(vouNoJSON);
+            //}
+            //else if (fundNo == "090")//家防服務參考
+            //{
+            //    DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+            //    ws.FillVouNo(vouNoJSON);
 
-            }
-            else if (fundNo == "100")//長照****尚未加入服務參考****
-            {
+            //}
+            //else if (fundNo == "100")//長照****尚未加入服務參考****
+            //{
 
-            }
-            else if (fundNo == "110")//生產****尚未加入服務參考****
-            {
+            //}
+            //else if (fundNo == "110")//生產****尚未加入服務參考****
+            //{
 
-            }
+            //}
 
             return "回填完畢";
         }
