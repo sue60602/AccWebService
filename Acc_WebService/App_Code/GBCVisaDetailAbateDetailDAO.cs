@@ -24,6 +24,9 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     private const string FIND_LOG_STMT =
         "select count(*) from GBCVisaDetailAbateDetail where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
+    private const string FIND_FILL_STMT =
+        "SELECT [基金代碼],[PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],[F_傳票年度],[F_傳票號1],[F_傳票明細號1],[F_製票日期1],[F_傳票號2],[F_傳票明細號2],[F_製票日期2],[F_受款人],[F_受款人編號] FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別";
+
     private const string FIND_PREPAY_STMT =
         //"select PK_會計年度, PK_動支編號, PK_種類, PK_次別, PK_明細號, F_核定金額, F_傳票年度, F_傳票號1, F_傳票明細號1, F_製票日期1, F_傳票號2, F_傳票明細號2, F_製票日期2,F_受款人,F_受款人編號 from GBCVisaDetailAbateDetail where PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and F_受款人編號=@F_受款人編號";
         "select count(*) from GBCVisaDetailAbateDetail where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and F_受款人編號=@F_受款人編號";
@@ -143,6 +146,73 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         con.Close();
 
         return prePayCnt;
+    }
+
+    public List<GBCVisaDetailAbateDetailVO> FindFill(string fundNo, string acmWordNum)
+    {
+        string[] strs = acmWordNum.Split('-'); //以"-"區分種類及次號
+        string acmWordNumOut = strs[0]; //動支編號(8碼)
+        string acmKind = null; //種類
+        switch (strs[1])
+        {
+            case "1":
+                acmKind = "預付";
+                break;
+            case "2":
+                acmKind = "核銷";
+                break;
+            case "3":
+                acmKind = "估列";
+                break;
+            case "4":
+                acmKind = "估列收回";
+                break;
+            case "5":
+                acmKind = "預撥收回";
+                break;
+            case "6":
+                acmKind = "核銷收回";
+                break;
+            default:
+                acmKind = "無";
+                break;
+        }
+        string acmNo = strs[2]; //次別
+
+        GBCVisaDetailAbateDetailVO gbcVisaDetailAbateDetailVO = null;
+        List<GBCVisaDetailAbateDetailVO> list = new List<GBCVisaDetailAbateDetailVO>();
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlCommand com = new SqlCommand(FIND_FILL_STMT, con);
+        com.Parameters.AddWithValue("@基金代碼", fundNo);
+        com.Parameters.AddWithValue("@PK_會計年度", acmWordNumOut.Substring(0,3));
+        com.Parameters.AddWithValue("@PK_動支編號", acmWordNumOut);
+        com.Parameters.AddWithValue("@PK_種類", acmKind);
+        com.Parameters.AddWithValue("@PK_次別", acmNo);
+        con.Open();
+
+        SqlDataReader dr = com.ExecuteReader();
+        while (dr.Read())
+        {
+            gbcVisaDetailAbateDetailVO = new GBCVisaDetailAbateDetailVO();
+            gbcVisaDetailAbateDetailVO.set基金代碼(dr["基金代碼"].ToString());
+            gbcVisaDetailAbateDetailVO.setPK_會計年度(dr["PK_會計年度"].ToString());
+            gbcVisaDetailAbateDetailVO.setPK_動支編號(dr["PK_動支編號"].ToString());
+            gbcVisaDetailAbateDetailVO.setPK_種類(dr["PK_種類"].ToString());
+            gbcVisaDetailAbateDetailVO.setPK_次別(dr["PK_次別"].ToString());
+            gbcVisaDetailAbateDetailVO.setPK_明細號(dr["PK_明細號"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_傳票年度(dr["F_傳票年度"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_傳票號1(dr["F_傳票號1"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_傳票明細號1(dr["F_傳票明細號1"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_製票日期1(dr["F_製票日期1"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_傳票號2(dr["F_傳票號2"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_傳票明細號2(dr["F_傳票明細號2"].ToString());
+            gbcVisaDetailAbateDetailVO.setF_製票日期2(dr["F_製票日期2"].ToString());
+            list.Add(gbcVisaDetailAbateDetailVO);
+        }
+
+        con.Close();
+
+        return list;
     }
 
     /// <summary>

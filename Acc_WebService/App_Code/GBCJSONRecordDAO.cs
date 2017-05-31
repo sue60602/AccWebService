@@ -18,7 +18,7 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         "select 傳票JSON2 from GBCJSONRecord where 基金代碼=@基金代碼 and PFK_會計年度=@PFK_會計年度 and PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
 
     private const string INSERT_VOU_JSON1_STMT =
-                    "insert into GBCJSONRecord(基金代碼, PFK_會計年度, PFK_動支編號, PFK_種類, PFK_次別, 傳票JSON1,是否結案) values(@基金代碼,@PFK_會計年度,@PFK_動支編號,@PFK_種類,@PFK_次別,@傳票JSON1,'0')";
+        "insert into GBCJSONRecord(基金代碼, PFK_會計年度, PFK_動支編號, PFK_種類, PFK_次別, 傳票JSON1,是否結案) values(@基金代碼,@PFK_會計年度,@PFK_動支編號,@PFK_種類,@PFK_次別,@傳票JSON1,'0')";
 
     private const string IS_PASS_STMT =
         "select isNull(是否結案,'') as 是否結案 from GBCJSONRecord where 基金代碼=@基金代碼 and PFK_會計年度=@PFK_會計年度 and PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
@@ -27,7 +27,7 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         "update GBCJSONRecord set 是否結案 = '1' where 基金代碼=@基金代碼 and PFK_會計年度=@PFK_會計年度 and PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
 
     private const string UPDATE_VOU_JSON2_STMT =
-            "update GBCJSONRecord set 傳票JSON2 = @傳票JSON2 where 基金代碼=@基金代碼 and  PFK_會計年度=@PFK_會計年度 and  PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
+        "update GBCJSONRecord set 傳票JSON2 = @傳票JSON2 where 基金代碼=@基金代碼 and  PFK_會計年度=@PFK_會計年度 and  PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
 
     /// <summary>
     /// 移除傳票底稿1
@@ -212,3 +212,4 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         conn.Close();
     }
 }
+

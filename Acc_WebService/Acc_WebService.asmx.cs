@@ -61,7 +61,8 @@ namespace Acc_WebService
             List<Vw_GBCVisaDetail> vwList = new List<Vw_GBCVisaDetail>();
             try
             {
-                vwList = JsonConvert.DeserializeObject<List<Vw_GBCVisaDetail>>(JSONReturn);  //反序列化JSON
+                vwList = JsonConvert.DeserializeObject<List<Vw_GBCVisaDetail>>(JSONReturn);  //反序列化JSON               
+                
             }
             catch (Exception)
             {
@@ -102,6 +103,8 @@ namespace Acc_WebService
              * 1.預付    、2.核銷    、3.估列、
              * 4.估列收回、5.預撥收回、6.核銷收回
              */
+
+            //vwList = vwList.OrderBy(x => x.PK_明細號).ToList();
 
             /*--------------------------------1.預付作業------------------------------------------*/
             if ("預付".Equals(accKind))
@@ -2635,71 +2638,55 @@ namespace Acc_WebService
             return JSON1;
         }
          
-        //傳票號碼回填
         [WebMethod]
-        public string FillVouNo(string fundNo, string vouNoJSON)
+        //傳票號碼回填(輸入條碼)
+        public string FillVouNo(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
-
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
-            List<FillVouScript> fillVouScriptList = new List<FillVouScript>();
-            GBCJSONRecordVO gbcJSONRecordVO = new GBCJSONRecordVO();
-            GBCVisaDetailAbateDetailVO gbcVisaDetailAbateDetailVO = new GBCVisaDetailAbateDetailVO();
-
+            List<GBCVisaDetailAbateDetailVO> gbcList = new List<GBCVisaDetailAbateDetailVO>();
             string isVouNo1 = "";
             string isJSON2 = "";
             string isPass = "";
             int count = 0;
-            
-            try
-            {
-                fillVouScriptList = JsonConvert.DeserializeObject<List<FillVouScript>>(vouNoJSON);  //反序列化JSON
-            }
-            catch (Exception e)
-            {
-                return e.StackTrace;
-            }
+            int vouDtlCnt = 1;
 
-            foreach (var fillVouScriptListItem in fillVouScriptList)
-            {
-                isVouNo1 = dao.FindVouNo(fillVouScriptListItem.基金代碼, fillVouScriptListItem.會計年度, fillVouScriptListItem.動支編號, fillVouScriptListItem.種類, fillVouScriptListItem.次別, fillVouScriptListItem.傳票明細號);
-                isPass = jsonDAO.IsPass(fillVouScriptListItem.基金代碼, fillVouScriptListItem.會計年度, fillVouScriptListItem.動支編號, fillVouScriptListItem.種類, fillVouScriptListItem.次別);
-                isJSON2 = jsonDAO.FindJSON2(fillVouScriptListItem.基金代碼, fillVouScriptListItem.會計年度, fillVouScriptListItem.動支編號, fillVouScriptListItem.種類, fillVouScriptListItem.次別);
+            gbcList = dao.FindFill(fundNo, acmWordNum);
 
-                gbcVisaDetailAbateDetailVO.set基金代碼(fillVouScriptListItem.基金代碼);
-                gbcVisaDetailAbateDetailVO.setPK_會計年度(fillVouScriptListItem.會計年度);
-                gbcVisaDetailAbateDetailVO.setPK_動支編號(fillVouScriptListItem.動支編號);
-                gbcVisaDetailAbateDetailVO.setPK_種類(fillVouScriptListItem.種類);
-                gbcVisaDetailAbateDetailVO.setPK_次別(fillVouScriptListItem.次別);
-                gbcVisaDetailAbateDetailVO.setPK_明細號(fillVouScriptListItem.明細號);
-                gbcVisaDetailAbateDetailVO.setF_傳票年度(fillVouScriptListItem.傳票年度);
-                gbcVisaDetailAbateDetailVO.setF_傳票號1(fillVouScriptListItem.傳票號);
-                gbcVisaDetailAbateDetailVO.setF_傳票明細號1(fillVouScriptListItem.傳票明細號);
-                gbcVisaDetailAbateDetailVO.setF_製票日期1(fillVouScriptListItem.製票日期);
-                //gbcVisaDetailAbateDetailVO.setF_傳票號2(fillVouScriptListItem.傳票號2);
-                //gbcVisaDetailAbateDetailVO.setF_傳票明細號2(fillVouScriptListItem.傳票明細號2);
-                //gbcVisaDetailAbateDetailVO.setF_製票日期2(fillVouScriptListItem.製票日期2);
+            foreach (var gbcListItem in gbcList)
+            {
+                isVouNo1 = dao.FindVouNo(gbcListItem.get基金代碼(), gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號());
+                isPass = jsonDAO.IsPass(gbcListItem.get基金代碼(), gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別());
+                isJSON2 = jsonDAO.FindJSON2(gbcListItem.get基金代碼(), gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別());
+
+                gbcListItem.setF_傳票年度(vouYear);
+                gbcListItem.setF_傳票號1(makeVouNo);
+                gbcListItem.setF_傳票明細號1(vouDtlCnt.ToString());
+                gbcListItem.setF_製票日期1(makeVouDate);
+
+                vouDtlCnt++;
 
                 if (((isVouNo1.Trim()).Length == 0) && (isPass == "0")) //傳票1未回填 AND 未結案 --回填至傳票1
                 {
-                    dao.UpdateVouNo1(gbcVisaDetailAbateDetailVO);
+                    dao.UpdateVouNo1(gbcListItem);
                     count++;
-                    if ((isJSON2.Trim().Length == 0) && (count == fillVouScriptList.Count))
+                    if ((isJSON2.Trim().Length == 0) && (count == gbcList.Count))
                     {
-                        jsonDAO.UpdatePassFlg(fillVouScriptListItem.基金代碼, fillVouScriptListItem.會計年度, fillVouScriptListItem.動支編號, fillVouScriptListItem.種類, fillVouScriptListItem.次別);
+                        jsonDAO.UpdatePassFlg(gbcListItem.get基金代碼(), gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別());
                     }
                 }
                 else if (((isVouNo1.Trim()).Length != 0) && (isPass == "0"))//傳票1已回填 AND 未結案 --回填至傳票2
                 {
-                    dao.UpdateVouNo2(gbcVisaDetailAbateDetailVO);
-                    jsonDAO.UpdatePassFlg(fillVouScriptListItem.基金代碼, fillVouScriptListItem.會計年度, fillVouScriptListItem.動支編號, fillVouScriptListItem.種類, fillVouScriptListItem.次別);
+                    dao.UpdateVouNo2(gbcListItem);
+                    jsonDAO.UpdatePassFlg(gbcListItem.get基金代碼(), gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別());
                 }
                 else
                 {
-                    return fillVouScriptListItem.動支編號 + "-" + fillVouScriptListItem.種類 + "-" + fillVouScriptListItem.次別 + "...回填失敗!  請確認是否已回填。";
+                    return gbcListItem.getPK_動支編號() + "-" + gbcListItem.getPK_種類() + "-" + gbcListItem.getPK_次別() + "...回填失敗!  請確認是否已回填。";
                 }
+
             }
-            
+
             //先拿掉回寫預控的方法
             //判斷基金代號,回填至對應的預控系統
             //if (fundNo == "010")//醫發服務參考
@@ -2731,12 +2718,12 @@ namespace Acc_WebService
         }
 
         //==================手動搜尋功能===================
-        //1.public List<string> GetYear()
-        //2.public List<string> GetAcmWordNum(string accYear)
-        //3.public List<string> GetAccKind(string accYear, string acmWordNum)
-        //4.public List<string> GetAccCount(string accYear, string acmWordNum, string accKind)
-        //5.public List<string> GetAccDetail(string accYear, string acmWordNum, string accKind, string accCount)
-        //6.public string GetByPrimaryKey(string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
+        //1.public List<string> GetYear(string fundNo)
+        //2.public List<string> GetAcmWordNum(string fundNo, string accYear)
+        //3.public List<string> GetAccKind(string fundNo, string accYear, string acmWordNum)
+        //4.public List<string> GetAccCount(string fundNo, string accYear, string acmWordNum, string accKind)
+        //5.public List<string> GetAccDetail(string fundNo, string accYear, string acmWordNum, string accKind, string accCount)
+        //6.public string GetByPrimaryKey(string fundNo, string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
 
         [WebMethod]
         //取年度
