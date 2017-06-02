@@ -3,6 +3,11 @@
 /// </summary>
 public class GBCVisaDetailAbateDetailVO
 {
+    private string 基金代碼;
+    private string PK_會計年度;
+    private string PK_動支編號;
+    private string PK_種類;
+    private string PK_次別;
     private string F_核定金額;
     private string F_傳票年度;
     private string F_傳票明細號1;
@@ -12,12 +17,8 @@ public class GBCVisaDetailAbateDetailVO
     private string F_傳票種類;
     private string F_製票日期1;
     private string F_製票日期2;
-    private string PK_次別;
     private string PK_明細號;
-    private string PK_動支編號;
-    private string PK_會計年度;
-    private string PK_種類;
-    private string 基金代碼;
+
 
     public string getF_金額()
     {

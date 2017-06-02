@@ -2639,11 +2639,12 @@ namespace Acc_WebService
         }
          
         [WebMethod]
-        //傳票號碼回填(輸入條碼)
+        //傳票號碼回填至GBC(輸入條碼)
         public string FillVouNo(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
+            //List<FillVouScript> fillToGBCList = new List<FillVouScript>();
             List<GBCVisaDetailAbateDetailVO> gbcList = new List<GBCVisaDetailAbateDetailVO>();
             string isVouNo1 = "";
             string isJSON2 = "";
@@ -2689,30 +2690,38 @@ namespace Acc_WebService
 
             //先拿掉回寫預控的方法
             //判斷基金代號,回填至對應的預控系統
-            //if (fundNo == "010")//醫發服務參考
-            //{
-            //    GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-            //    ws.FillVouNo(vouNoJSON);
+            if (fundNo == "010")//醫發服務參考
+            {
+                
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                foreach (var gbcListItem in gbcList)
+                {
+                    ws.FillVouNo(gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1());
+                }
 
-            //}
-            //else if (fundNo == "040")//菸害****尚未加入服務參考****
-            //{
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
 
-            //}
-            //else if (fundNo == "090")//家防服務參考
-            //{
-            //    DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
-            //    ws.FillVouNo(vouNoJSON);
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                foreach (var gbcListItem in gbcList)
+                {
+                   // ws.FillVouNo(gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1());
+                }
 
-            //}
-            //else if (fundNo == "100")//長照****尚未加入服務參考****
-            //{
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
 
-            //}
-            //else if (fundNo == "110")//生產****尚未加入服務參考****
-            //{
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
 
-            //}
+            }
+            
 
             return "回填完畢";
         }
