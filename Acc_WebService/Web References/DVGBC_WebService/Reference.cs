@@ -206,24 +206,40 @@ namespace Acc_WebService.DVGBC_WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/FillVouNo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string FillVouNo(string fillVouJSON) {
+        public string FillVouNo(string accYear, string acmWordNum, string accKind, string accCount, string accDetail, string vouNo, string vouDate, string passNo, string passDate) {
             object[] results = this.Invoke("FillVouNo", new object[] {
-                        fillVouJSON});
+                        accYear,
+                        acmWordNum,
+                        accKind,
+                        accCount,
+                        accDetail,
+                        vouNo,
+                        vouDate,
+                        passNo,
+                        passDate});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void FillVouNoAsync(string fillVouJSON) {
-            this.FillVouNoAsync(fillVouJSON, null);
+        public void FillVouNoAsync(string accYear, string acmWordNum, string accKind, string accCount, string accDetail, string vouNo, string vouDate, string passNo, string passDate) {
+            this.FillVouNoAsync(accYear, acmWordNum, accKind, accCount, accDetail, vouNo, vouDate, passNo, passDate, null);
         }
         
         /// <remarks/>
-        public void FillVouNoAsync(string fillVouJSON, object userState) {
+        public void FillVouNoAsync(string accYear, string acmWordNum, string accKind, string accCount, string accDetail, string vouNo, string vouDate, string passNo, string passDate, object userState) {
             if ((this.FillVouNoOperationCompleted == null)) {
                 this.FillVouNoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnFillVouNoOperationCompleted);
             }
             this.InvokeAsync("FillVouNo", new object[] {
-                        fillVouJSON}, this.FillVouNoOperationCompleted, userState);
+                        accYear,
+                        acmWordNum,
+                        accKind,
+                        accCount,
+                        accDetail,
+                        vouNo,
+                        vouDate,
+                        passNo,
+                        passDate}, this.FillVouNoOperationCompleted, userState);
         }
         
         private void OnFillVouNoOperationCompleted(object arg) {

@@ -11,10 +11,10 @@ Create Table GBCVisaDetailAbateDetail(
  F_傳票年度 varchar(3),
  F_傳票號1 varchar(20) null,
  F_傳票明細號1 int null,
- F_製票日期1 datetime null,
+ F_製票日期1 char(10) null,
  F_傳票號2 varchar(20) null,
  F_傳票明細號2 int null,
- F_製票日期2 datetime null,
+ F_製票日期2 char(10) null,
  F_受款人 varchar(255) null,
  F_受款人編號 varchar(20) null
 
