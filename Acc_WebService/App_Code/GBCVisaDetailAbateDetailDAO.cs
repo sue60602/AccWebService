@@ -15,11 +15,18 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         "select ISNULL(sum(Amount),0) as 已估列數 from VouDetail where FundNo=@基金代碼 and AccYear=@PK_會計年度 and DC='貸' and SubNo='2125' and AccMainNo=ISNULL((select AccMainno from VouMain where FundNo=@基金代碼 and AccYear=@PK_會計年度 and VouNo=@F_傳票號碼),'0')";
 
     private const string FILL_VOU_1_STMT =
-        "update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號1=@傳票號1, F_傳票明細號1=@傳票明細號1, F_製票日期1=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
+        //"update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號1=@傳票號1, F_傳票明細號1=@傳票明細號1, F_製票日期1=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
+        "update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號1=@傳票號1, F_製票日期1=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
     private const string FILL_VOU_2_STMT =
         //"update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號2=@傳票號2, F_傳票明細號2=@傳票明細號2, F_製票日期2=@製票日期2 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
-        "update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號2=@傳票號1, F_傳票明細號2=@傳票明細號1, F_製票日期2=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
+        "update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號2=@傳票號1, F_製票日期2=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
+
+    private const string FILL_VOU_DTL_1_STMT =
+        "update GBCVisaDetailAbateDetail set F_傳票明細號1=@F_傳票明細號1 where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
+
+    private const string FILL_VOU_DTL_2_STMT =
+    "update GBCVisaDetailAbateDetail set F_傳票明細號2=@F_傳票明細號1 where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
     private const string FIND_LOG_STMT =
         "select count(*) from GBCVisaDetailAbateDetail where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
@@ -33,6 +40,9 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
 
     private const string FIND_VOUNO =
         "select F_傳票號1,F_傳票明細號1 FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and F_受款人編號=@F_受款人編號";
+
+    private const string FIND_VOUNO_PAY_STMT =
+    "select F_傳票號1,F_傳票明細號1 FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
     private const string INSERT_STMT =
         //"INSERT INTO GBCVisaDetailAbateDetail ([PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],F_傳票種類,F_傳票號1,F_傳票明細號1,F_製票日期1,F_傳票號2,F_傳票明細號2,F_製票日期2) values(@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_傳票種類,@F_傳票號1,@F_傳票明細號1,@F_製票日期1,@F_傳票號2,@F_傳票明細號2,@F_製票日期2)";
@@ -125,6 +135,38 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     }
 
     /// <summary>
+    /// 尋找實支傳票號
+    /// </summary>
+    /// <param name="vw_GBCVisaDetail"></param>
+    /// <returns></returns>
+    public List<VouDetailVO> FindPayVouNo(Vw_GBCVisaDetail vw_GBCVisaDetail)
+    {
+        List<VouDetailVO> vouNoList = new List<VouDetailVO>();
+        VouDetailVO vouDetailVO = null;
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlCommand com = new SqlCommand(FIND_VOUNO_PAY_STMT, con);
+        com.Parameters.AddWithValue("@基金代碼", vw_GBCVisaDetail.基金代碼);
+        com.Parameters.AddWithValue("@PK_會計年度", vw_GBCVisaDetail.PK_會計年度);
+        com.Parameters.AddWithValue("@PK_動支編號", vw_GBCVisaDetail.PK_動支編號);
+        com.Parameters.AddWithValue("@PK_種類", "核銷");
+        com.Parameters.AddWithValue("@PK_次別", vw_GBCVisaDetail.PK_次別);
+        com.Parameters.AddWithValue("@PK_明細號", vw_GBCVisaDetail.PK_明細號);
+        con.Open();
+
+        SqlDataReader dr = com.ExecuteReader();
+        while (dr.Read())
+        {
+            vouDetailVO = new VouDetailVO();
+            vouDetailVO.傳票號 = dr["F_傳票號1"].ToString();
+            vouDetailVO.傳票明細號 = dr["F_傳票明細號1"].ToString();
+            vouNoList.Add(vouDetailVO);
+        }
+
+        con.Close();
+        return vouNoList;
+    }
+
+    /// <summary>
     /// 尋找有無寫入紀錄
     /// </summary>
     /// <param name="vw_GBCVisaDetail"></param>
@@ -148,7 +190,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         return prePayCnt;
     }
 
-    public List<GBCVisaDetailAbateDetailVO> FindFill(string fundNo, string acmWordNum)
+    public List<GBCVisaDetailAbateDetailVO> FindGBCReco(string fundNo, string acmWordNum)
     {
         string[] strs = acmWordNum.Split('-'); //以"-"區分種類及次號
         string acmWordNumOut = strs[0]; //動支編號(8碼)
@@ -297,6 +339,66 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     }
 
     /// <summary>
+    /// 回填傳票明細號1
+    /// </summary>
+    /// <param name="基金代碼"></param>
+    /// <param name="會計年度"></param>
+    /// <param name="動支編號"></param>
+    /// <param name="種類"></param>
+    /// <param name="次別"></param>
+    /// <param name="明細號"></param>
+    /// <param name="傳票明細號"></param>
+    public void FillVouDtl1(string 基金代碼, string 會計年度, string 動支編號, string 種類, string 次別, string 明細號, int 傳票明細號)
+    {
+
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlCommand com = new SqlCommand(FILL_VOU_DTL_1_STMT, con);
+        com.Parameters.AddWithValue("@基金代碼", 基金代碼);
+        com.Parameters.AddWithValue("@PK_會計年度", 會計年度);
+        com.Parameters.AddWithValue("@PK_動支編號", 動支編號);
+        com.Parameters.AddWithValue("@PK_種類", 種類);
+        com.Parameters.AddWithValue("@PK_次別", 次別);
+        com.Parameters.AddWithValue("@PK_明細號", 明細號);
+        com.Parameters.AddWithValue("@F_傳票明細號1", 傳票明細號);
+        con.Open();
+
+        com.CommandType = CommandType.Text;
+        com.ExecuteNonQuery();
+
+        con.Close();
+    }
+
+    /// <summary>
+    /// 回填傳票明細號2
+    /// </summary>
+    /// <param name="基金代碼"></param>
+    /// <param name="會計年度"></param>
+    /// <param name="動支編號"></param>
+    /// <param name="種類"></param>
+    /// <param name="次別"></param>
+    /// <param name="明細號"></param>
+    /// <param name="傳票明細號"></param>
+    public void FillVouDtl2(string 基金代碼, string 會計年度, string 動支編號, string 種類, string 次別, string 明細號, int 傳票明細號)
+    {
+
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlCommand com = new SqlCommand(FILL_VOU_DTL_2_STMT, con);
+        com.Parameters.AddWithValue("@基金代碼", 基金代碼);
+        com.Parameters.AddWithValue("@PK_會計年度", 會計年度);
+        com.Parameters.AddWithValue("@PK_動支編號", 動支編號);
+        com.Parameters.AddWithValue("@PK_種類", 種類);
+        com.Parameters.AddWithValue("@PK_次別", 次別);
+        com.Parameters.AddWithValue("@PK_明細號", 明細號);
+        com.Parameters.AddWithValue("@F_傳票明細號1", 傳票明細號);
+        con.Open();
+
+        com.CommandType = CommandType.Text;
+        com.ExecuteNonQuery();
+
+        con.Close();
+    }
+
+    /// <summary>
     /// 寫入沖銷對應紀錄表
     /// </summary>
     /// <param name="vw_GBCVisaDetail"></param>
@@ -416,7 +518,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         com.Parameters.AddWithValue("@PK_明細號", gbcVisaDetailAbateDetailVO.getPK_明細號());
         com.Parameters.AddWithValue("@傳票年度", gbcVisaDetailAbateDetailVO.getF_傳票年度());
         com.Parameters.AddWithValue("@傳票號1", gbcVisaDetailAbateDetailVO.getF_傳票號1());
-        com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
+        //com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
         com.Parameters.AddWithValue("@製票日期1", gbcVisaDetailAbateDetailVO.getF_製票日期1());
         //com.Parameters.AddWithValue("@傳票號2", gbcVisaDetailAbateDetailVO.getF_傳票號2());
         //com.Parameters.AddWithValue("@傳票明細號2", gbcVisaDetailAbateDetailVO.getF_傳票明細號2());
@@ -449,7 +551,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         com.Parameters.AddWithValue("@PK_明細號", gbcVisaDetailAbateDetailVO.getPK_明細號());
         com.Parameters.AddWithValue("@傳票年度", gbcVisaDetailAbateDetailVO.getF_傳票年度());
         com.Parameters.AddWithValue("@傳票號1", gbcVisaDetailAbateDetailVO.getF_傳票號1());
-        com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
+        //com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
         com.Parameters.AddWithValue("@製票日期1", gbcVisaDetailAbateDetailVO.getF_製票日期1());
         //com.Parameters.AddWithValue("@傳票號2", gbcVisaDetailAbateDetailVO.getF_傳票號2());
         //com.Parameters.AddWithValue("@傳票明細號2", gbcVisaDetailAbateDetailVO.getF_傳票明細號2());
