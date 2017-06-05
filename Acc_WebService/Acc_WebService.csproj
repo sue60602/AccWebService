@@ -103,11 +103,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\AccWebService.pubxml" />
+    <None Include="Web References\BAGBC_WebService\GBCWebService.wsdl" />
+    <Content Include="Web References\BAGBC_WebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\BAGBC_WebService\Vw_GBCVisaDetail.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web References\DVGBC_WebService\GBCWebService.wsdl" />
     <None Include="Web References\DVGBC_WebService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Web References\BAGBC_WebService\GBCWebService.disco" />
     <Content Include="Web References\DVGBC_WebService\Vw_GBCVisaDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -158,6 +167,11 @@
     </Compile>
     <Compile Include="App_Code\VouDetailVO.cs" />
     <Compile Include="App_Code\Vw_GBCVisaDetail.cs" />
+    <Compile Include="Web References\BAGBC_WebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\DVGBC_WebService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,6 +193,17 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://localhost/BAGBCWebService/GBCWebService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\BAGBC_WebService\</RelPath>
+      <UpdateFromURL>http://localhost/BAGBCWebService/GBCWebService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Acc_WebService_BAGBC_WebService_GBCWebService</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://localhost/DVGBCWebService/GBCWebService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\DVGBC_WebService\</RelPath>

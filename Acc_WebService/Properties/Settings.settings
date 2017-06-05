@@ -8,5 +8,8 @@
     <Setting Name="Acc_WebService_DVGBC_WebService_GBCWebService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://localhost/DVGBCWebService/GBCWebService.asmx</Value>
     </Setting>
+    <Setting Name="Acc_WebService_BAGBC_WebService_GBCWebService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/BAGBCWebService/GBCWebService.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
