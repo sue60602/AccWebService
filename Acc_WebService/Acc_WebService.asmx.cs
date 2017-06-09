@@ -168,7 +168,8 @@ namespace Acc_WebService
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                         沖轉字號 = "",
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                        對象說明 = vw_GBCVisaDetail.F_受款人
+                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                        明細號 = vw_GBCVisaDetail.PK_明細號
                     };
                     vouDtlList.Add(vouDtl_D);
                     傳票受款人 vouPay = new 傳票受款人()
@@ -185,7 +186,7 @@ namespace Acc_WebService
                     vouPayList.Add(vouPay);
 
                     //填傳票明細號1
-                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                 }
                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                 var vouPayGroup = from xxx in vouPayList
@@ -317,7 +318,8 @@ namespace Acc_WebService
                         用途別代碼 = "",
                         沖轉字號 = "",
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                        對象說明 = vw_GBCVisaDetail.F_受款人
+                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                        明細號 = vw_GBCVisaDetail.PK_明細號
                     };
                     vouDtlList.Add(vouDtl_C);
 
@@ -335,7 +337,7 @@ namespace Acc_WebService
                     vouPayList.Add(vouPay);
 
                     //填傳票明細號1
-                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
 
                 }
                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
@@ -468,7 +470,8 @@ namespace Acc_WebService
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                         沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                        對象說明 = vw_GBCVisaDetail.F_受款人
+                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                        明細號 = vw_GBCVisaDetail.PK_明細號
                     };
                     vouDtlList.Add(vouDtl_C);
 
@@ -488,7 +491,7 @@ namespace Acc_WebService
                     abateCnt++;
 
                     //填傳票明細號1
-                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                 }
                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                 var vouPayGroup = from xxx in vouPayList
@@ -635,7 +638,8 @@ namespace Acc_WebService
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                         沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                        對象說明 = vw_GBCVisaDetail.F_受款人
+                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                        明細號 = vw_GBCVisaDetail.PK_明細號
                     };
                     vouDtlList.Add(vouDtl_D);
 
@@ -691,7 +695,7 @@ namespace Acc_WebService
                     abateCnt++;
 
                     //填傳票明細號1
-                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                 }
                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                 //var vouPayGroup = from xxx in vouPayList
@@ -826,7 +830,8 @@ namespace Acc_WebService
                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                             沖轉字號 = payVouNo.ElementAt(abateCnt) + "-" + payVouDtlNo.ElementAt(abateCnt),
                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                            對象說明 = vw_GBCVisaDetail.F_受款人
+                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                            明細號 = vw_GBCVisaDetail.PK_明細號
                         };
                         vouDtlList.Add(vouDtl_C);
                     }
@@ -846,7 +851,7 @@ namespace Acc_WebService
                     abateCnt++;
 
                     //填傳票明細號1
-                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                 }
                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                 var vouPayGroup = from xxx in vouPayList
@@ -995,7 +1000,8 @@ namespace Acc_WebService
                                 用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                 沖轉字號 = "",
                                 對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                對象說明 = vw_GBCVisaDetail.F_受款人
+                                對象說明 = vw_GBCVisaDetail.F_受款人,
+                                明細號 = vw_GBCVisaDetail.PK_明細號
                             };
                             vouDtlList.Add(vouDtl_D);
                             傳票受款人 vouPay = new 傳票受款人()
@@ -1012,7 +1018,7 @@ namespace Acc_WebService
                             vouPayList.Add(vouPay);
 
                             //填傳票明細號1
-                            dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                            //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                         }
                         //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                         var vouPayGroup = from xxx in vouPayList
@@ -1211,7 +1217,8 @@ namespace Acc_WebService
                                     用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                     沖轉字號 = "",
                                     對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                    對象說明 = vw_GBCVisaDetail.F_受款人
+                                    對象說明 = vw_GBCVisaDetail.F_受款人,
+                                    明細號 = vw_GBCVisaDetail.PK_明細號
                                 };
                                 //是否為以前年度
                                 if (int.Parse(vw_GBCVisaDetail.PK_動支編號.Substring(0, 3)) < int.Parse(vw_GBCVisaDetail.PK_會計年度))
@@ -1236,7 +1243,7 @@ namespace Acc_WebService
                                 abateCnt++;
 
                                 //填傳票明細號1
-                                dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                             }
                             //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                             var vouPayGroup = from xxx in vouPayList
@@ -1383,7 +1390,8 @@ namespace Acc_WebService
                                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                         沖轉字號 = "",
                                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                        對象說明 = vw_GBCVisaDetail.F_受款人
+                                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                                        明細號 = vw_GBCVisaDetail.PK_明細號
                                     };
                                     vouDtlList.Add(vouDtl_D);
                                     傳票受款人 vouPay = new 傳票受款人()
@@ -1402,7 +1410,7 @@ namespace Acc_WebService
                                     abateCnt++;
 
                                     //填傳票明細號1
-                                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                 }
                                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                 var vouPayGroup = from xxx in vouPayList
@@ -1536,7 +1544,8 @@ namespace Acc_WebService
                                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                         沖轉字號 = "",
                                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                        對象說明 = vw_GBCVisaDetail.F_受款人
+                                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                                        明細號 = vw_GBCVisaDetail.PK_明細號
                                     };
                                     vouDtlList.Add(vouDtl_D);
                                     傳票受款人 vouPay = new 傳票受款人()
@@ -1555,7 +1564,7 @@ namespace Acc_WebService
                                     abateCnt++;
 
                                     //填傳票明細號1
-                                    dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                    //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                 }
                                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                 var vouPayGroup = from xxx in vouPayList
@@ -1635,7 +1644,8 @@ namespace Acc_WebService
                                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                         沖轉字號 = "",
                                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                        對象說明 = vw_GBCVisaDetail.F_受款人
+                                        對象說明 = vw_GBCVisaDetail.F_受款人,
+                                        明細號 = vw_GBCVisaDetail.PK_明細號
                                     };
                                     vouDtlList2.Add(vouDtl_D2);
                                     傳票受款人 vouPay2 = new 傳票受款人()
@@ -1812,7 +1822,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D);
                                         傳票明細 vouDtl_D2 = new 傳票明細()
@@ -1826,7 +1837,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D2);
                                         傳票受款人 vouPay = new 傳票受款人()
@@ -1845,7 +1857,7 @@ namespace Acc_WebService
                                         abateCnt++;
 
                                         //填傳票明細號1
-                                        dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -1978,7 +1990,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D);
                                         傳票明細 vouDtl_D2 = new 傳票明細()
@@ -1992,7 +2005,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D2);
                                         傳票受款人 vouPay = new 傳票受款人()
@@ -2011,7 +2025,7 @@ namespace Acc_WebService
                                         abateCnt++;
 
                                         //填傳票明細號1
-                                        dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -2089,7 +2103,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList2.Add(vouDtl_D2);
                                         傳票受款人 vouPay2 = new 傳票受款人()
@@ -2263,7 +2278,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D);
                                         傳票受款人 vouPay = new 傳票受款人()
@@ -2282,7 +2298,7 @@ namespace Acc_WebService
                                         abateCnt++;
 
                                         //填傳票明細號1
-                                        dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -2409,14 +2425,15 @@ namespace Acc_WebService
                                         {
                                             借貸別 = "借",
                                             科目代號 = "2125",
-                                            科目名稱 = "預付費用",
+                                            科目名稱 = "應付費用",
                                             摘要 = vw_GBCVisaDetail.F_摘要,
                                             金額 = prePayBalance,
                                             計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList.Add(vouDtl_D);
                                         傳票受款人 vouPay = new 傳票受款人()
@@ -2433,7 +2450,7 @@ namespace Acc_WebService
                                         vouPayList.Add(vouPay);
 
                                         //填傳票明細號1
-                                        dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup = from xxx in vouPayList
@@ -2511,7 +2528,8 @@ namespace Acc_WebService
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                            對象說明 = vw_GBCVisaDetail.F_受款人
+                                            對象說明 = vw_GBCVisaDetail.F_受款人,
+                                            明細號 = vw_GBCVisaDetail.PK_明細號
                                         };
                                         vouDtlList2.Add(vouDtl_D2);
                                         傳票受款人 vouPay2 = new 傳票受款人()
@@ -2672,7 +2690,8 @@ namespace Acc_WebService
                                 用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                 沖轉字號 = "",
                                 對象代碼 = vw_GBCVisaDetail.F_受款人編號,
-                                對象說明 = vw_GBCVisaDetail.F_受款人
+                                對象說明 = vw_GBCVisaDetail.F_受款人,
+                                明細號 = vw_GBCVisaDetail.PK_明細號
                             };
 
                             //是否為以前年度
@@ -2695,7 +2714,7 @@ namespace Acc_WebService
                             vouPayList.Add(vouPay);
 
                             //填傳票明細號1
-                            dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                            //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                         }
                         //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                         var vouPayGroup = from xxx in vouPayList
