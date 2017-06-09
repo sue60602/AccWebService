@@ -47,7 +47,8 @@ namespace Acc_WebService
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
             else
             {
@@ -933,14 +934,7 @@ namespace Acc_WebService
 
                     
 
-                    try
-                    {
-                        isPrePay = dao.FindPrePay(vw_GBCVisaDetail);
-                    }
-                    catch (Exception e)
-                    {
-                        return e.Message;
-                    }
+
 
                     //是否為暫付及待結轉帳項
                     if (vw_GBCVisaDetail.F_計畫代碼 == "1315")
@@ -1092,6 +1086,16 @@ namespace Acc_WebService
                         return JSON1;
                     }
 
+                    //判斷是否有預付(基金代號-動支編號-預付-受編)
+                    try
+                    {
+                        isPrePay = dao.FindPrePay(vw_GBCVisaDetail);
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+
                     //有預付
                     if (isPrePay > 0)
                     {
@@ -1105,12 +1109,13 @@ namespace Acc_WebService
                         int estimateMoneyAbate = 0;
                         int estimateBalance = 0;
 
-                        //計算預付沖銷餘額
+                        //開始計算預付沖銷餘額
+                        //找預付傳票號
                         List<VouDetailVO> prePayNouNoList = dao.FindPrePayVouNo(vw_GBCVisaDetail);
                         foreach (var prePayVouNo in prePayNouNoList)
                         {
-                            prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號);
-                            prePayMoneyAbate = prePayMoneyAbate + dao.PrePayMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
+                            prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, prePayVouNo.傳票年度, prePayVouNo.傳票號);
+                            prePayMoneyAbate = prePayMoneyAbate + dao.PrePayMoneyAbate(vwListItem.基金代碼, prePayVouNo.傳票年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                         }
 
                         //預付沖銷餘額 = 已預付 - 已轉正
@@ -1120,8 +1125,8 @@ namespace Acc_WebService
                         List<VouDetailVO> estimateNouNoList = dao.FindEstimateVouNo(vw_GBCVisaDetail);
                         foreach (var estimateVouNo in estimateNouNoList)
                         {
-                            estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號);
-                            estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
+                            estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號);
+                            estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                         }
 
                         //估列沖銷餘額 = 已估列 - 已轉正
@@ -2855,7 +2860,7 @@ namespace Acc_WebService
                     DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
                     foreach (var gbcListItem in gbcList)
                     {
-                        // ws.FillVouNo(gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1());
+                        ws.FillVouNo(gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1());
                     }
 
                 }
@@ -2865,7 +2870,11 @@ namespace Acc_WebService
                 }
                 else if (fundNo == "110")//生產****尚未加入服務參考****
                 {
-
+                    BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                    foreach (var gbcListItem in gbcList)
+                    {
+                        ws.FillVouNo(gbcListItem.getPK_會計年度(), gbcListItem.getPK_動支編號(), gbcListItem.getPK_種類(), gbcListItem.getPK_次別(), gbcListItem.getPK_明細號(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1(), gbcListItem.getF_傳票號1(), gbcListItem.getF_製票日期1());
+                    }
                 }
             }
             

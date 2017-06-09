@@ -50,4 +50,5 @@ public class 傳票明細
     public string 沖轉字號 { get; set; }
     public string 對象代碼 { get; set; }
     public string 對象說明 { get; set; }
+    public string 明細號 { get; set; }
 }
