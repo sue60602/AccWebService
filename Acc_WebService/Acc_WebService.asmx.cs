@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Data;
 using Newtonsoft.Json;
 using System.Web.Configuration;
+using static FillVouScript;
 
 namespace Acc_WebService
 {
@@ -2785,10 +2786,74 @@ namespace Acc_WebService
 
             return JSON1;
         }
-         
+
         [WebMethod]
+        public string FillVouNo(string vouNoJSON)
+        {
+            GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
+            GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
+            FillVouScript fillVouScript = new FillVouScript();
+            GBCJSONRecordVO gbcJSONRecordVO = new GBCJSONRecordVO();
+            GBCVisaDetailAbateDetailVO gbcVisaDetailAbateDetailVO = new GBCVisaDetailAbateDetailVO();
+
+            string isVouNo1 = "";
+            string isJSON2 = "";
+            string isPass = "";
+            int count = 0;
+
+            try
+            {
+                fillVouScript = JsonConvert.DeserializeObject<FillVouScript>(vouNoJSON);  //反序列化JSON
+            }
+            catch (Exception e)
+            {
+                return e.StackTrace;
+            }
+           
+            isPass = jsonDAO.IsPass(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+            isJSON2 = jsonDAO.FindJSON2(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+
+            gbcVisaDetailAbateDetailVO.set基金代碼(fillVouScript.基金代碼);
+            gbcVisaDetailAbateDetailVO.setPK_會計年度(fillVouScript.會計年度);
+            gbcVisaDetailAbateDetailVO.setPK_動支編號(fillVouScript.動支編號);
+            gbcVisaDetailAbateDetailVO.setPK_種類(fillVouScript.種類);
+            gbcVisaDetailAbateDetailVO.setPK_次別(fillVouScript.次別);
+            gbcVisaDetailAbateDetailVO.setF_傳票年度(fillVouScript.傳票年度);
+            gbcVisaDetailAbateDetailVO.setF_傳票號1(fillVouScript.傳票號);
+            gbcVisaDetailAbateDetailVO.setF_製票日期1(fillVouScript.製票日期);
+
+            foreach (var 傳票明細Item in fillVouScript.傳票明細)
+            {
+                isVouNo1 = dao.FindVouNo(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別, 傳票明細Item.傳票明細號);
+                gbcVisaDetailAbateDetailVO.setPK_明細號(傳票明細Item.明細號);
+                gbcVisaDetailAbateDetailVO.setF_傳票明細號1(傳票明細Item.傳票明細號);
+
+                if (((isVouNo1.Trim()).Length == 0) && (isPass == "0")) //傳票1未回填 AND 未結案 --回填至傳票1
+                {
+                    dao.UpdateVouNo1(gbcVisaDetailAbateDetailVO);
+                    count++;
+                    if ((isJSON2.Trim().Length == 0) && (count == fillVouScript.傳票明細.Count))
+                    {
+                        jsonDAO.UpdatePassFlg(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+                    }
+                }
+                else if (((isVouNo1.Trim()).Length != 0) && (isPass == "0"))//傳票1已回填 AND 未結案 --回填至傳票2
+                {
+                    dao.UpdateVouNo2(gbcVisaDetailAbateDetailVO);
+                    jsonDAO.UpdatePassFlg(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+                }
+                else
+                {
+                    return fillVouScript.動支編號 + "-" + fillVouScript.種類 + "-" + fillVouScript.次別 + "...回填失敗!  請確認是否已回填完畢。";
+                }
+            }
+            //    //回填至預控
+            //    //ws.FillVouNo(vouNoJSON);
+            return "回填完畢";
+        }
+         
         //傳票號碼回填至GBC(輸入條碼)
-        public string FillVouNo(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
+        public string FillVouNo2(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
