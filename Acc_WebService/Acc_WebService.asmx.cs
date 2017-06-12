@@ -6,7 +6,7 @@ using System.Web.Services;
 using System.Data;
 using Newtonsoft.Json;
 using System.Web.Configuration;
-using static FillVouScript;
+
 
 namespace Acc_WebService
 {
@@ -44,7 +44,8 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
@@ -2865,9 +2866,41 @@ namespace Acc_WebService
                 {
                     return fillVouScript.動支編號 + "-" + fillVouScript.種類 + "-" + fillVouScript.次別 + "...回填失敗!  請確認是否已回填完畢。";
                 }
+
+                //傳票號回寫至預控系統
+                //由Web.Config來開關是否回填至預控系統
+                string isFillToGBC = WebConfigurationManager.AppSettings["isFillToGBC"];
+
+                if ((isFillToGBC.Trim()).Equals("1"))
+                {
+                    //判斷基金代號,回填至對應的預控系統(GBC)
+                    if (gbcVisaDetailAbateDetailVO.get基金代碼() == "010")//醫發服務參考
+                    {
+                        GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                        ws.FillVouNo(gbcVisaDetailAbateDetailVO.getPK_會計年度(), gbcVisaDetailAbateDetailVO.getPK_動支編號(), gbcVisaDetailAbateDetailVO.getPK_種類(), gbcVisaDetailAbateDetailVO.getPK_次別(), gbcVisaDetailAbateDetailVO.getPK_明細號(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1());
+                    }
+                    else if (gbcVisaDetailAbateDetailVO.get基金代碼() == "040")//菸害****尚未加入服務參考****
+                    {
+
+                    }
+                    else if (gbcVisaDetailAbateDetailVO.get基金代碼() == "090")//家防服務參考
+                    {
+                        DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                        ws.FillVouNo(gbcVisaDetailAbateDetailVO.getPK_會計年度(), gbcVisaDetailAbateDetailVO.getPK_動支編號(), gbcVisaDetailAbateDetailVO.getPK_種類(), gbcVisaDetailAbateDetailVO.getPK_次別(), gbcVisaDetailAbateDetailVO.getPK_明細號(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1());
+                    }
+                    else if (gbcVisaDetailAbateDetailVO.get基金代碼() == "100")//長照
+                    {
+                        LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                        ws.FillVouNo(gbcVisaDetailAbateDetailVO.getPK_會計年度(), gbcVisaDetailAbateDetailVO.getPK_動支編號(), gbcVisaDetailAbateDetailVO.getPK_種類(), gbcVisaDetailAbateDetailVO.getPK_次別(), gbcVisaDetailAbateDetailVO.getPK_明細號(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1());
+                    }
+                    else if (gbcVisaDetailAbateDetailVO.get基金代碼() == "110")//生產
+                    {
+                        BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                        ws.FillVouNo(gbcVisaDetailAbateDetailVO.getPK_會計年度(), gbcVisaDetailAbateDetailVO.getPK_動支編號(), gbcVisaDetailAbateDetailVO.getPK_種類(), gbcVisaDetailAbateDetailVO.getPK_次別(), gbcVisaDetailAbateDetailVO.getPK_明細號(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1(), gbcVisaDetailAbateDetailVO.getF_傳票號1(), gbcVisaDetailAbateDetailVO.getF_製票日期1());
+                    }
+                }
             }
-            //    //回填至預控
-            //    //ws.FillVouNo(vouNoJSON);
+         
             return "回填完畢";
         }
          
@@ -2876,7 +2909,6 @@ namespace Acc_WebService
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
-            //List<FillVouScript> fillToGBCList = new List<FillVouScript>();
             List<GBCVisaDetailAbateDetailVO> gbcList = new List<GBCVisaDetailAbateDetailVO>();
             string isVouNo1 = "";
             string isJSON2 = "";
@@ -2999,11 +3031,17 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> yearList = new List<string>(ws.GetYear());
+
+                return yearList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> yearList = new List<string>(ws.GetYear());
+
+                return yearList;
             }
             else
             {
@@ -3039,11 +3077,19 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> acmNoList = new List<string>(
+                    ws.GetAcmWordNum(accYear));
+
+                return acmNoList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> acmNoList = new List<string>(
+                    ws.GetAcmWordNum(accYear));
+
+                return acmNoList;
             }
             else
             {
@@ -3077,11 +3123,17 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> accKindList = new List<string>(
+                    ws.GetAccKind(accYear, acmWordNum));
+                return accKindList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> accKindList = new List<string>(
+                    ws.GetAccKind(accYear, acmWordNum));
+                return accKindList;
             }
             else
             {
@@ -3115,11 +3167,17 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccCount(accYear, acmWordNum, accKind));
+                return accDetailList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccCount(accYear, acmWordNum, accKind));
+                return accDetailList;
             }
             else
             {
@@ -3153,11 +3211,17 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccDetail(accYear, acmWordNum, accKind, accCount));
+                return accDetailList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    ws.GetAccDetail(accYear, acmWordNum, accKind, accCount));
+                return accDetailList;
             }
             else
             {
@@ -3189,11 +3253,15 @@ namespace Acc_WebService
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
-                return null;
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
+                return getGBCVisaDetail;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
-                return null;
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
+                return getGBCVisaDetail;
             }
             else
             {

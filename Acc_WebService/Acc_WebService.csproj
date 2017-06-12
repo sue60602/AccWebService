@@ -104,10 +104,10 @@
     </Content>
     <None Include="Properties\PublishProfiles\AccWebService.pubxml" />
     <None Include="Web References\BAGBC_WebService\GBCWebService.wsdl" />
-    <Content Include="Web References\BAGBC_WebService\Reference.map">
+    <None Include="Web References\BAGBC_WebService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Web References\BAGBC_WebService\Vw_GBCVisaDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -129,6 +129,14 @@
     <Content Include="Web References\GBC_WebService\Vw_GBCVisaDetail.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <None Include="Web References\LCGBC_WebService\GBCwebService.wsdl" />
+    <None Include="Web References\LCGBC_WebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web References\LCGBC_WebService\Vw_GBCVisaDetail.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -144,6 +152,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Web References\GBC_WebService\GBCWebService.disco" />
+    <None Include="Web References\LCGBC_WebService\GBCwebService.disco" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +187,11 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="Web References\GBC_WebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\LCGBC_WebService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -225,6 +239,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Acc_WebService_GBC_WebService_GBCWebService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost/LCGBCWebService/GBCwebService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\LCGBC_WebService\</RelPath>
+      <UpdateFromURL>http://localhost/LCGBCWebService/GBCwebService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Acc_WebService_LCGBC_WebService_GBCWebService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <PropertyGroup>
