@@ -165,10 +165,14 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         try
         {
             isPass = com.ExecuteScalar().ToString();
+            if (isPass.Length == 0)
+            {
+                isPass = "0";
+            }
         }
         catch (Exception)
         {
-            isPass = "error";
+            isPass = "0";
         }
 
         con.Close();

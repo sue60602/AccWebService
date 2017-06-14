@@ -144,7 +144,8 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                        else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -280,7 +281,8 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                        else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -424,7 +426,8 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                        else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -590,7 +593,8 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                        else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -777,7 +781,8 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                        else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -935,10 +940,10 @@ namespace Acc_WebService
                     string isVouNo1 = dao.FindVouNo(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別, vwListItem.PK_明細號);
                     string isPass = jsonDAO.IsPass(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別);
 
-                    if (isPass.Equals("error"))
-                    {
-                        return "此動支已開立完畢， 傳票號碼為： " + isVouNo1;
-                    }
+                    //if (isPass.Equals("error"))
+                    //{
+                    //    return "此動支已開立完畢， 傳票號碼為： " + isVouNo1;
+                    //}
 
                     if (((isVouNo1.Trim()).Length != 0) && isPass == "0")
                     {
@@ -977,7 +982,8 @@ namespace Acc_WebService
                                 {
                                     return "此筆資料已轉入過,並且結案。";
                                 }
-                                else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                else if (((isLog > 0) && isPass.Equals("0")))
                                 {
                                     dao.Update(vw_GBCVisaDetail);
                                     jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1194,7 +1200,8 @@ namespace Acc_WebService
                                     {
                                         return "此筆資料已轉入過,並且結案。";
                                     }
-                                    else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                    //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                    else if (((isLog > 0) && isPass.Equals("0")))
                                     {
                                         dao.Update(vw_GBCVisaDetail);
                                         jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1353,7 +1360,8 @@ namespace Acc_WebService
                                         {
                                             return "此筆資料已轉入過,並且結案。";
                                         }
-                                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                        else if (((isLog > 0) && isPass.Equals("0")))
                                         {
                                             dao.Update(vw_GBCVisaDetail);
                                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1507,7 +1515,8 @@ namespace Acc_WebService
                                         {
                                             return "此筆資料已轉入過,並且結案。";
                                         }
-                                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                        else if (((isLog > 0) && isPass.Equals("0")))
                                         {
                                             dao.Update(vw_GBCVisaDetail);
                                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1790,7 +1799,8 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                            //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                            else if (((isLog > 0) && isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1959,7 +1969,8 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                            //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                            else if (((isLog > 0) && isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2249,7 +2260,8 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                            //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                            else if (((isLog > 0) && isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2403,7 +2415,8 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                            //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                            else if (((isLog > 0) && isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2680,7 +2693,8 @@ namespace Acc_WebService
                                 {
                                     return "此筆資料已轉入過,並且結案。";
                                 }
-                                else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
+                                //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
+                                else if (((isLog > 0) && isPass.Equals("0")))
                                 {
                                     dao.Update(vw_GBCVisaDetail);
                                     jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
