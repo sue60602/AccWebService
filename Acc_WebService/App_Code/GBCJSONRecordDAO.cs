@@ -107,21 +107,39 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
     {
         SqlConnection conn = null;
         SqlCommand com = null;
-
         conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlTransaction transtation;
+
         conn.Open();
-        com = new SqlCommand(INSERT_VOU_JSON1_STMT, conn);
-        com.Parameters.AddWithValue("@傳票JSON1", vouJoson);
-        com.Parameters.AddWithValue("@基金代碼", vw_GBCVisaDetail.基金代碼);
-        com.Parameters.AddWithValue("@PFK_會計年度", vw_GBCVisaDetail.PK_會計年度);
-        com.Parameters.AddWithValue("@PFK_動支編號", vw_GBCVisaDetail.PK_動支編號);
-        com.Parameters.AddWithValue("@PFK_種類", vw_GBCVisaDetail.PK_種類);
-        com.Parameters.AddWithValue("@PFK_次別", vw_GBCVisaDetail.PK_次別);
+        transtation = conn.BeginTransaction();
+        //com.Transaction = transtation;
 
-        com.CommandType = CommandType.Text;
-        com.ExecuteNonQuery();
+        try
+        {
+            
+            com = new SqlCommand(INSERT_VOU_JSON1_STMT, conn, transtation);
+            com.Parameters.AddWithValue("@傳票JSON1", vouJoson);
+            com.Parameters.AddWithValue("@基金代碼", vw_GBCVisaDetail.基金代碼);
+            com.Parameters.AddWithValue("@PFK_會計年度", vw_GBCVisaDetail.PK_會計年度);
+            com.Parameters.AddWithValue("@PFK_動支編號", vw_GBCVisaDetail.PK_動支編號);
+            com.Parameters.AddWithValue("@PFK_種類", vw_GBCVisaDetail.PK_種類);
+            com.Parameters.AddWithValue("@PFK_次別", vw_GBCVisaDetail.PK_次別);
 
-        conn.Close();
+            com.CommandType = CommandType.Text;
+            com.ExecuteNonQuery();
+
+            transtation.Commit();
+
+            conn.Close();
+        }
+        catch (Exception)
+        {
+            transtation.Rollback();
+            conn.Close();
+
+            throw;
+        }
+
     }
 
     /// <summary>
@@ -150,7 +168,7 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         }
         catch (Exception)
         {
-            isPass = "0";
+            isPass = "error";
         }
 
         con.Close();
@@ -197,19 +215,35 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
         SqlCommand com = null;
 
         conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
-        conn.Open();
-        com = new SqlCommand(UPDATE_PASS_STMT, conn);
+        SqlTransaction transtation;
 
-        com.Parameters.AddWithValue("@基金代碼", 基金代碼);
-        com.Parameters.AddWithValue("@PFK_會計年度", 會計年度);
-        com.Parameters.AddWithValue("@PFK_動支編號", 動支編號);
-        com.Parameters.AddWithValue("@PFK_種類", 種類);
-        com.Parameters.AddWithValue("@PFK_次別", 次別);
+        transtation = conn.BeginTransaction();
+        com.Transaction = transtation;
+        try
+        {
+            conn.Open();
+            com = new SqlCommand(UPDATE_PASS_STMT, conn);
 
-        com.CommandType = CommandType.Text;
-        com.ExecuteNonQuery();
+            com.Parameters.AddWithValue("@基金代碼", 基金代碼);
+            com.Parameters.AddWithValue("@PFK_會計年度", 會計年度);
+            com.Parameters.AddWithValue("@PFK_動支編號", 動支編號);
+            com.Parameters.AddWithValue("@PFK_種類", 種類);
+            com.Parameters.AddWithValue("@PFK_次別", 次別);
 
-        conn.Close();
+            com.CommandType = CommandType.Text;
+            com.ExecuteNonQuery();
+
+            transtation.Commit();
+
+            conn.Close();
+        }
+        catch (Exception)
+        {
+            transtation.Rollback();
+            conn.Close();
+            throw;
+        }
+
     }
 }
 

@@ -139,11 +139,12 @@ namespace Acc_WebService
                     {
                         isLog = dao.FindLog(vw_GBCVisaDetail);
                         string isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
+
                         if ((isLog > 0) && isPass.Equals("1"))
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if ((isLog > 0) && isPass.Equals("0"))
+                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -210,7 +211,7 @@ namespace Acc_WebService
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = vouKind,
-                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                    製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
                 };
@@ -279,7 +280,7 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if ((isLog > 0) && isPass.Equals("0"))
+                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -362,7 +363,7 @@ namespace Acc_WebService
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = "3",
-                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                    製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
                 };
@@ -423,7 +424,7 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if ((isLog > 0) && isPass.Equals("0"))
+                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -515,7 +516,7 @@ namespace Acc_WebService
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = "1",
-                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                    製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
                 };
@@ -589,7 +590,7 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if ((isLog > 0) && isPass.Equals("0"))
+                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -719,7 +720,7 @@ namespace Acc_WebService
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = "3",
-                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                    製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
                 };
@@ -776,7 +777,7 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        else if ((isLog > 0) && isPass.Equals("0"))
+                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -875,7 +876,7 @@ namespace Acc_WebService
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = vouKind,
-                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                    製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
                 };
@@ -934,14 +935,15 @@ namespace Acc_WebService
                     string isVouNo1 = dao.FindVouNo(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別, vwListItem.PK_明細號);
                     string isPass = jsonDAO.IsPass(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別);
 
+                    if (isPass.Equals("error"))
+                    {
+                        return "此動支已開立完畢， 傳票號碼為： " + isVouNo1;
+                    }
+
                     if (((isVouNo1.Trim()).Length != 0) && isPass == "0")
                     {
                         return jsonDAO.FindJSON2(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別);
-                    }
-
-                    
-
-
+                    }                    
 
                     //是否為暫付及待結轉帳項
                     if (vw_GBCVisaDetail.F_計畫代碼 == "1315")
@@ -975,7 +977,7 @@ namespace Acc_WebService
                                 {
                                     return "此筆資料已轉入過,並且結案。";
                                 }
-                                else if ((isLog > 0) && isPass.Equals("0"))
+                                else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                 {
                                     dao.Update(vw_GBCVisaDetail);
                                     jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1042,7 +1044,7 @@ namespace Acc_WebService
                         傳票主檔 vouMain = new 傳票主檔()
                         {
                             傳票種類 = vouKind,
-                            製票日期 = vw_GBCVisaDetail.F_製票日,
+                            製票日期 = "",
                             主摘要 = vw_GBCVisaDetail.F_摘要,
                             交付方式 = "1"
                         };
@@ -1192,7 +1194,7 @@ namespace Acc_WebService
                                     {
                                         return "此筆資料已轉入過,並且結案。";
                                     }
-                                    else if ((isLog > 0) && isPass.Equals("0"))
+                                    else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                     {
                                         dao.Update(vw_GBCVisaDetail);
                                         jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1267,7 +1269,7 @@ namespace Acc_WebService
                             傳票主檔 vouMain = new 傳票主檔()
                             {
                                 傳票種類 = vouKind,
-                                製票日期 = vw_GBCVisaDetail.F_製票日,
+                                製票日期 = "",
                                 主摘要 = vw_GBCVisaDetail.F_摘要,
                                 交付方式 = "1"
                             };
@@ -1351,7 +1353,7 @@ namespace Acc_WebService
                                         {
                                             return "此筆資料已轉入過,並且結案。";
                                         }
-                                        else if ((isLog > 0) && isPass.Equals("0"))
+                                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                         {
                                             dao.Update(vw_GBCVisaDetail);
                                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1434,7 +1436,7 @@ namespace Acc_WebService
                                 傳票主檔 vouMain = new 傳票主檔()
                                 {
                                     傳票種類 = "4",
-                                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                                    製票日期 = "",
                                     主摘要 = vw_GBCVisaDetail.F_摘要,
                                     交付方式 = "1"
                                 };
@@ -1505,7 +1507,7 @@ namespace Acc_WebService
                                         {
                                             return "此筆資料已轉入過,並且結案。";
                                         }
-                                        else if ((isLog > 0) && isPass.Equals("0"))
+                                        else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                         {
                                             dao.Update(vw_GBCVisaDetail);
                                             jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1588,7 +1590,8 @@ namespace Acc_WebService
                                 傳票主檔 vouMain = new 傳票主檔()
                                 {
                                     傳票種類 = "4",
-                                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                                    //製票日期 = vw_GBCVisaDetail.F_製票日,
+                                    製票日期 = "",
                                     主摘要 = vw_GBCVisaDetail.F_摘要,
                                     交付方式 = "1"
                                 };
@@ -1663,7 +1666,7 @@ namespace Acc_WebService
                                     vouPayList2.Add(vouPay2);
 
                                     //填傳票明細號2
-                                    dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                    //dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                 }
                                 //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                 var vouPayGroup2 = from xxx in vouPayList2
@@ -1686,7 +1689,7 @@ namespace Acc_WebService
                                 傳票主檔 vouMain2 = new 傳票主檔()
                                 {
                                     傳票種類 = vouKind,
-                                    製票日期 = vw_GBCVisaDetail.F_製票日,
+                                    製票日期 = "",
                                     主摘要 = vw_GBCVisaDetail.F_摘要,
                                     交付方式 = "1"
                                 };
@@ -1744,7 +1747,11 @@ namespace Acc_WebService
                                     return e.Message;
                                 }
 
-                                return JsonConvert.SerializeObject(vouTop);
+                                //return JsonConvert.SerializeObject(vouTop);
+
+                                //回傳第一張傳票底稿
+                                JSON1 = jsonDAO.FindJSON1(vw_GBCVisaDetail);
+                                return JSON1;
                             }
                         }
                         else if (prePayBalance > 0 && estimateBalance > 0) //有估列的轉正
@@ -1783,7 +1790,7 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -1881,7 +1888,8 @@ namespace Acc_WebService
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        //製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -1951,7 +1959,7 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2049,7 +2057,8 @@ namespace Acc_WebService
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        //製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -2122,7 +2131,7 @@ namespace Acc_WebService
                                         vouPayList2.Add(vouPay2);
 
                                         //填傳票明細號2
-                                        dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup2 = from xxx in vouPayList2
@@ -2145,7 +2154,7 @@ namespace Acc_WebService
                                     傳票主檔 vouMain2 = new 傳票主檔()
                                     {
                                         傳票種類 = vouKind,
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -2202,7 +2211,8 @@ namespace Acc_WebService
                                         return e.Message;
                                     }
 
-                                    return JsonConvert.SerializeObject(vouTop2);
+                                    //return JsonConvert.SerializeObject(vouTop2);
+                                    return JSON1;
                                 }
                             }
                             else //分轉(貸預付 借應付) 無借方費用
@@ -2239,7 +2249,7 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2322,7 +2332,7 @@ namespace Acc_WebService
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -2393,7 +2403,7 @@ namespace Acc_WebService
                                             {
                                                 return "此筆資料已轉入過,並且結案。";
                                             }
-                                            else if ((isLog > 0) && isPass.Equals("0"))
+                                            else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                             {
                                                 dao.Update(vw_GBCVisaDetail);
                                                 jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2474,7 +2484,7 @@ namespace Acc_WebService
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -2547,7 +2557,7 @@ namespace Acc_WebService
                                         vouPayList2.Add(vouPay2);
 
                                         //填傳票明細號2
-                                        dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
+                                        //dao.FillVouDtl2(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
                                     }
                                     //重新處理受款人清單,如果有重複受款人名稱,則金額加總
                                     var vouPayGroup2 = from xxx in vouPayList2
@@ -2570,7 +2580,7 @@ namespace Acc_WebService
                                     傳票主檔 vouMain2 = new 傳票主檔()
                                     {
                                         傳票種類 = vouKind,
-                                        製票日期 = vw_GBCVisaDetail.F_製票日,
+                                        製票日期 = "",
                                         主摘要 = vw_GBCVisaDetail.F_摘要,
                                         交付方式 = "1"
                                     };
@@ -2627,11 +2637,16 @@ namespace Acc_WebService
                                         return e.Message;
                                     }
 
-                                    return JsonConvert.SerializeObject(vouTop2);
+                                    //return JsonConvert.SerializeObject(vouTop2);
+
+                                    //回傳第一張傳票底稿
+                                    JSON1 = jsonDAO.FindJSON1(vw_GBCVisaDetail);
+                                    return JSON1;
                                 }
                             }
                         }
-                        return JsonConvert.SerializeObject("xxx");
+                        //return JsonConvert.SerializeObject("xxx");
+                        return JSON1;
                     }
                     //無預付立沖(執行實支)
                     else
@@ -2665,7 +2680,7 @@ namespace Acc_WebService
                                 {
                                     return "此筆資料已轉入過,並且結案。";
                                 }
-                                else if ((isLog > 0) && isPass.Equals("0"))
+                                else if (((isLog > 0) && isPass.Equals("error")) || (isPass.Equals("0")))
                                 {
                                     dao.Update(vw_GBCVisaDetail);
                                     jsonDAO.DeleteJsonRecord1(vw_GBCVisaDetail);
@@ -2738,7 +2753,7 @@ namespace Acc_WebService
                         傳票主檔 vouMain = new 傳票主檔()
                         {
                             傳票種類 = vouKind,
-                            製票日期 = vw_GBCVisaDetail.F_製票日,
+                            製票日期 = "",
                             主摘要 = vw_GBCVisaDetail.F_摘要,
                             交付方式 = "1"
                         };
@@ -2808,7 +2823,7 @@ namespace Acc_WebService
         }
 
         [WebMethod]
-        public string FillVouNo(string vouNoJSON)
+        public string FillVouNo(string fundNo, string acmWordNum ,string vouNoJSON)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
@@ -2829,22 +2844,51 @@ namespace Acc_WebService
             {
                 return e.StackTrace;
             }
-           
-            isPass = jsonDAO.IsPass(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
-            isJSON2 = jsonDAO.FindJSON2(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
 
-            gbcVisaDetailAbateDetailVO.set基金代碼(fillVouScript.基金代碼);
-            gbcVisaDetailAbateDetailVO.setPK_會計年度(fillVouScript.會計年度);
-            gbcVisaDetailAbateDetailVO.setPK_動支編號(fillVouScript.動支編號);
-            gbcVisaDetailAbateDetailVO.setPK_種類(fillVouScript.種類);
-            gbcVisaDetailAbateDetailVO.setPK_次別(fillVouScript.次別);
+            string[] strs = acmWordNum.Split('-'); //以"-"區分種類及次號
+            string acmWordNumOut = strs[0]; //動支編號(8碼)
+            string acmKind = null; //種類
+            switch (strs[1])
+            {
+                case "1":
+                    acmKind = "預付";
+                    break;
+                case "2":
+                    acmKind = "核銷";
+                    break;
+                case "3":
+                    acmKind = "估列";
+                    break;
+                case "4":
+                    acmKind = "估列收回";
+                    break;
+                case "5":
+                    acmKind = "預撥收回";
+                    break;
+                case "6":
+                    acmKind = "核銷收回";
+                    break;
+                default:
+                    acmKind = "無";
+                    break;
+            }
+            string acmNo = strs[2]; //次別
+
+            isPass = jsonDAO.IsPass(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+            isJSON2 = jsonDAO.FindJSON2(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+
+            gbcVisaDetailAbateDetailVO.set基金代碼(fundNo);
+            gbcVisaDetailAbateDetailVO.setPK_會計年度(acmWordNumOut.Substring(0, 3));
+            gbcVisaDetailAbateDetailVO.setPK_動支編號(acmWordNumOut);
+            gbcVisaDetailAbateDetailVO.setPK_種類(acmKind);
+            gbcVisaDetailAbateDetailVO.setPK_次別(acmNo);
             gbcVisaDetailAbateDetailVO.setF_傳票年度(fillVouScript.傳票年度);
             gbcVisaDetailAbateDetailVO.setF_傳票號1(fillVouScript.傳票號);
             gbcVisaDetailAbateDetailVO.setF_製票日期1(fillVouScript.製票日期);
 
             foreach (var 傳票明細Item in fillVouScript.傳票明細)
             {
-                isVouNo1 = dao.FindVouNo(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別, 傳票明細Item.傳票明細號);
+                isVouNo1 = dao.FindVouNo(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo, 傳票明細Item.傳票明細號);
                 gbcVisaDetailAbateDetailVO.setPK_明細號(傳票明細Item.明細號);
                 gbcVisaDetailAbateDetailVO.setF_傳票明細號1(傳票明細Item.傳票明細號);
 
@@ -2854,17 +2898,17 @@ namespace Acc_WebService
                     count++;
                     if ((isJSON2.Trim().Length == 0) && (count == fillVouScript.傳票明細.Count))
                     {
-                        jsonDAO.UpdatePassFlg(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+                        jsonDAO.UpdatePassFlg(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
                     }
                 }
                 else if (((isVouNo1.Trim()).Length != 0) && (isPass == "0"))//傳票1已回填 AND 未結案 --回填至傳票2
                 {
                     dao.UpdateVouNo2(gbcVisaDetailAbateDetailVO);
-                    jsonDAO.UpdatePassFlg(fillVouScript.基金代碼, fillVouScript.會計年度, fillVouScript.動支編號, fillVouScript.種類, fillVouScript.次別);
+                    jsonDAO.UpdatePassFlg(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
                 }
                 else
                 {
-                    return fillVouScript.動支編號 + "-" + fillVouScript.種類 + "-" + fillVouScript.次別 + "...回填失敗!  請確認是否已回填完畢。";
+                    return acmWordNumOut + "-" + acmKind + "-" + acmNo + "...回填失敗!  請確認是否已回填完畢。";
                 }
 
                 //傳票號回寫至預控系統
@@ -2904,7 +2948,7 @@ namespace Acc_WebService
             return "回填完畢";
         }
          
-        //傳票號碼回填至GBC(輸入條碼)
+        //傳票號碼回填至GBC(輸入條碼的方式回填，目前無使用)
         public string FillVouNo2(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
