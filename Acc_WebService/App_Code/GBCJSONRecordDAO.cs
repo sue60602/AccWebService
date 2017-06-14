@@ -29,6 +29,10 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
     private const string UPDATE_VOU_JSON2_STMT =
         "update GBCJSONRecord set 傳票JSON2 = @傳票JSON2 where 基金代碼=@基金代碼 and  PFK_會計年度=@PFK_會計年度 and  PFK_動支編號=@PFK_動支編號 and PFK_種類=@PFK_種類 and PFK_次別=@PFK_次別";
 
+    private const string INSERT_JSON_LOG_STMT =
+        "insert into GBCJSONRecordLog (基金代碼,條碼,JSON紀錄,接收時間) values(@基金代碼,@條碼,@JSON紀錄,@接收時間)";
+
+    
     /// <summary>
     /// 移除傳票底稿1
     /// </summary>
@@ -181,6 +185,48 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
     }
 
     /// <summary>
+    /// JSON接收LOG
+    /// </summary>
+    /// <param name="vw_GBCVisaDetail"></param>
+    /// <param name="vouJoson"></param>
+    public void InsertJsonLog(string fundNo, string acmWordNum, string vouJoson)
+    {
+        SqlConnection conn = null;
+        SqlCommand com = null;
+        conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlTransaction transtation;
+
+        conn.Open();
+        transtation = conn.BeginTransaction();
+        //com.Transaction = transtation;
+
+        try
+        {
+
+            com = new SqlCommand(INSERT_JSON_LOG_STMT, conn, transtation);
+            com.Parameters.AddWithValue("@基金代碼", fundNo);
+            com.Parameters.AddWithValue("@條碼", acmWordNum);
+            com.Parameters.AddWithValue("@JSON紀錄", vouJoson);
+            com.Parameters.AddWithValue("@接收時間", DateTime.Now);
+
+            com.CommandType = CommandType.Text;
+            com.ExecuteNonQuery();
+
+            transtation.Commit();
+
+            conn.Close();
+        }
+        catch (Exception)
+        {
+            transtation.Rollback();
+            conn.Close();
+
+            throw;
+        }
+
+    }
+
+    /// <summary>
     /// 寫入傳票底稿2
     /// </summary>
     /// <param name="vw_GBCVisaDetail"></param>
@@ -220,13 +266,12 @@ public class GBCJSONRecordDAO : GBCJSONRecord_Interface
 
         conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
         SqlTransaction transtation;
-
+        conn.Open();
         transtation = conn.BeginTransaction();
-        com.Transaction = transtation;
+        //com.Transaction = transtation;
         try
-        {
-            conn.Open();
-            com = new SqlCommand(UPDATE_PASS_STMT, conn);
+        {            
+            com = new SqlCommand(UPDATE_PASS_STMT, conn, transtation);
 
             com.Parameters.AddWithValue("@基金代碼", 基金代碼);
             com.Parameters.AddWithValue("@PFK_會計年度", 會計年度);

@@ -18,5 +18,5 @@ Create Table GBCVisaDetailAbateDetail(
  F_受款人 varchar(255) null,
  F_受款人編號 varchar(20) null
 
- CONSTRAINT GBCVisaDetailAbateDetail_PK PRIMARY KEY (基金代碼,PK_會計年度,PK_動支編號,PK_種類,PK_次別,PK_明細號)
+ CONSTRAINT GBCVisaDetailAbateDetail_PK PRIMARY KEY (基金代碼,PK_會計年度,PK_動支編號,PK_種類,PK_次別,PK_明細號,F_傳票年度)
 )

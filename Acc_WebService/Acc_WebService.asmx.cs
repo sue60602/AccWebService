@@ -2850,6 +2850,10 @@ namespace Acc_WebService
             string isPass = "";
             int count = 0;
 
+            //-------寫入Log------------------
+            jsonDAO.InsertJsonLog(fundNo, acmWordNum, vouNoJSON);
+            //-------------------------
+
             try
             {
                 fillVouScript = JsonConvert.DeserializeObject<FillVouScript>(vouNoJSON);  //反序列化JSON
@@ -2962,7 +2966,7 @@ namespace Acc_WebService
             return "回填完畢";
         }
          
-        //傳票號碼回填至GBC(輸入條碼的方式回填，目前無使用)
+        //傳票號碼回填至GBC(輸入條碼的方式回填，**目前無使用**)
         public string FillVouNo2(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
