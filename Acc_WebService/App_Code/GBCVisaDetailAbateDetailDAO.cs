@@ -31,9 +31,6 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     private const string FIND_LOG_STMT =
         "select count(*) from GBCVisaDetailAbateDetail where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
-    private const string FIND_RECO_STMT =
-        "select 基金代碼, PK_會計年度, PK_動支編號, PK_種類, PK_次別, PK_明細號, F_核定金額, F_傳票年度, F_傳票號1, F_傳票明細號1, F_製票日期1, F_傳票號2, F_傳票明細號2, F_製票日期2, F_受款人, F_受款人編號 from GBCVisaDetailAbateDetail where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and len(F_傳票號)>0" ;
-
     private const string FIND_FILL_STMT =
         "SELECT [基金代碼],[PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],[F_傳票年度],[F_傳票號1],[F_傳票明細號1],[F_製票日期1],[F_傳票號2],[F_傳票明細號2],[F_製票日期2],[F_受款人],[F_受款人編號] FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別";
 
