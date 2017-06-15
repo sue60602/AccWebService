@@ -2836,6 +2836,7 @@ namespace Acc_WebService
             return JSON1;
         }
 
+        //傳票號碼回填
         [WebMethod]
         public string FillVouNo(string fundNo, string acmWordNum ,string vouNoJSON)
         {
@@ -2850,9 +2851,15 @@ namespace Acc_WebService
             string isPass = "";
             int count = 0;
 
+            
+            vouNoJSON = vouNoJSON.Replace(@"\r\n", ""); //清除\r\n              
+            vouNoJSON = vouNoJSON.Replace(@"\", "");    //清除\        
+            vouNoJSON = vouNoJSON.Replace(@"""[", "["); //將 "[  改為 [
+            vouNoJSON = vouNoJSON.Replace(@"]""", "]"); //將 ["  改為 ]
+
             //-------寫入Log------------------
             jsonDAO.InsertJsonLog(fundNo, acmWordNum, vouNoJSON);
-            //-------------------------
+            //--------------------------------
 
             try
             {
@@ -2862,6 +2869,8 @@ namespace Acc_WebService
             {
                 return e.StackTrace;
             }
+
+
 
             string[] strs = acmWordNum.Split('-'); //以"-"區分種類及次號
             string acmWordNumOut = strs[0]; //動支編號(8碼)
