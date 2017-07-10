@@ -189,7 +189,7 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetEstimate">
+      <s:element name="GetByKind">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="accYear" type="s:string" />
@@ -198,10 +198,10 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetEstimateResponse">
+      <s:element name="GetByKindResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetEstimateResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetByKindResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -267,11 +267,11 @@
   <wsdl:message name="GetByPrimaryKeySoapOut">
     <wsdl:part name="parameters" element="tns:GetByPrimaryKeyResponse" />
   </wsdl:message>
-  <wsdl:message name="GetEstimateSoapIn">
-    <wsdl:part name="parameters" element="tns:GetEstimate" />
+  <wsdl:message name="GetByKindSoapIn">
+    <wsdl:part name="parameters" element="tns:GetByKind" />
   </wsdl:message>
-  <wsdl:message name="GetEstimateSoapOut">
-    <wsdl:part name="parameters" element="tns:GetEstimateResponse" />
+  <wsdl:message name="GetByKindSoapOut">
+    <wsdl:part name="parameters" element="tns:GetByKindResponse" />
   </wsdl:message>
   <wsdl:portType name="GBCWebServiceSoap">
     <wsdl:operation name="GetVw_GBCVisaDetail">
@@ -314,9 +314,9 @@
       <wsdl:input message="tns:GetByPrimaryKeySoapIn" />
       <wsdl:output message="tns:GetByPrimaryKeySoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetEstimate">
-      <wsdl:input message="tns:GetEstimateSoapIn" />
-      <wsdl:output message="tns:GetEstimateSoapOut" />
+    <wsdl:operation name="GetByKind">
+      <wsdl:input message="tns:GetByKindSoapIn" />
+      <wsdl:output message="tns:GetByKindSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GBCWebServiceSoap" type="tns:GBCWebServiceSoap">
@@ -411,8 +411,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetEstimate">
-      <soap:operation soapAction="http://tempuri.org/GetEstimate" style="document" />
+    <wsdl:operation name="GetByKind">
+      <soap:operation soapAction="http://tempuri.org/GetByKind" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -513,8 +513,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetEstimate">
-      <soap12:operation soapAction="http://tempuri.org/GetEstimate" style="document" />
+    <wsdl:operation name="GetByKind">
+      <soap12:operation soapAction="http://tempuri.org/GetByKind" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

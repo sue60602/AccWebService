@@ -3468,7 +3468,7 @@ namespace Acc_WebService
 
         [WebMethod]
         //取估列List
-        public string GetEstimate(string fundNo, string accYear, string accKind, string batch)
+        public string GetByKind(string fundNo, string accYear, string accKind, string batch)
         {
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
@@ -3476,7 +3476,7 @@ namespace Acc_WebService
                 GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
                 //List<string> accDetailList = new List<string>();
                 string accDetail = "";
-                accDetail = ws.GetEstimate(accYear, accKind, batch);
+                accDetail = ws.GetByKind(accYear, accKind, batch);
                 return accDetail;
             }
             else if (fundNo == "040")//菸害****尚未加入服務參考****

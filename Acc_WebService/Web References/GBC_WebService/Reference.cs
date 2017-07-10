@@ -49,7 +49,7 @@ namespace Acc_WebService.GBC_WebService {
         
         private System.Threading.SendOrPostCallback GetByPrimaryKeyOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetEstimateOperationCompleted;
+        private System.Threading.SendOrPostCallback GetByKindOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -120,7 +120,7 @@ namespace Acc_WebService.GBC_WebService {
         public event GetByPrimaryKeyCompletedEventHandler GetByPrimaryKeyCompleted;
         
         /// <remarks/>
-        public event GetEstimateCompletedEventHandler GetEstimateCompleted;
+        public event GetByKindCompletedEventHandler GetByKindCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -447,9 +447,9 @@ namespace Acc_WebService.GBC_WebService {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetEstimate", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string GetEstimate(string accYear, string accKind, string batch) {
-            object[] results = this.Invoke("GetEstimate", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetByKind", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetByKind(string accYear, string accKind, string batch) {
+            object[] results = this.Invoke("GetByKind", new object[] {
                         accYear,
                         accKind,
                         batch});
@@ -457,25 +457,25 @@ namespace Acc_WebService.GBC_WebService {
         }
         
         /// <remarks/>
-        public void GetEstimateAsync(string accYear, string accKind, string batch) {
-            this.GetEstimateAsync(accYear, accKind, batch, null);
+        public void GetByKindAsync(string accYear, string accKind, string batch) {
+            this.GetByKindAsync(accYear, accKind, batch, null);
         }
         
         /// <remarks/>
-        public void GetEstimateAsync(string accYear, string accKind, string batch, object userState) {
-            if ((this.GetEstimateOperationCompleted == null)) {
-                this.GetEstimateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetEstimateOperationCompleted);
+        public void GetByKindAsync(string accYear, string accKind, string batch, object userState) {
+            if ((this.GetByKindOperationCompleted == null)) {
+                this.GetByKindOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetByKindOperationCompleted);
             }
-            this.InvokeAsync("GetEstimate", new object[] {
+            this.InvokeAsync("GetByKind", new object[] {
                         accYear,
                         accKind,
-                        batch}, this.GetEstimateOperationCompleted, userState);
+                        batch}, this.GetByKindOperationCompleted, userState);
         }
         
-        private void OnGetEstimateOperationCompleted(object arg) {
-            if ((this.GetEstimateCompleted != null)) {
+        private void OnGetByKindOperationCompleted(object arg) {
+            if ((this.GetByKindCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetEstimateCompleted(this, new GetEstimateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetByKindCompleted(this, new GetByKindCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -997,17 +997,17 @@ namespace Acc_WebService.GBC_WebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void GetEstimateCompletedEventHandler(object sender, GetEstimateCompletedEventArgs e);
+    public delegate void GetByKindCompletedEventHandler(object sender, GetByKindCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetEstimateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetByKindCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetEstimateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetByKindCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
