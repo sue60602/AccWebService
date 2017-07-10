@@ -49,6 +49,8 @@ namespace Acc_WebService.GBC_WebService {
         
         private System.Threading.SendOrPostCallback GetByPrimaryKeyOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetEstimateOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -116,6 +118,9 @@ namespace Acc_WebService.GBC_WebService {
         
         /// <remarks/>
         public event GetByPrimaryKeyCompletedEventHandler GetByPrimaryKeyCompleted;
+        
+        /// <remarks/>
+        public event GetEstimateCompletedEventHandler GetEstimateCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -438,6 +443,39 @@ namespace Acc_WebService.GBC_WebService {
             if ((this.GetByPrimaryKeyCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetByPrimaryKeyCompleted(this, new GetByPrimaryKeyCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetEstimate", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetEstimate(string accYear, string accKind, string batch) {
+            object[] results = this.Invoke("GetEstimate", new object[] {
+                        accYear,
+                        accKind,
+                        batch});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetEstimateAsync(string accYear, string accKind, string batch) {
+            this.GetEstimateAsync(accYear, accKind, batch, null);
+        }
+        
+        /// <remarks/>
+        public void GetEstimateAsync(string accYear, string accKind, string batch, object userState) {
+            if ((this.GetEstimateOperationCompleted == null)) {
+                this.GetEstimateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetEstimateOperationCompleted);
+            }
+            this.InvokeAsync("GetEstimate", new object[] {
+                        accYear,
+                        accKind,
+                        batch}, this.GetEstimateOperationCompleted, userState);
+        }
+        
+        private void OnGetEstimateOperationCompleted(object arg) {
+            if ((this.GetEstimateCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetEstimateCompleted(this, new GetEstimateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -944,6 +982,32 @@ namespace Acc_WebService.GBC_WebService {
         private object[] results;
         
         internal GetByPrimaryKeyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void GetEstimateCompletedEventHandler(object sender, GetEstimateCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetEstimateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetEstimateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

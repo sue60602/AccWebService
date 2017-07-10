@@ -1,4 +1,6 @@
-﻿drop Table GBCVisaDetailAbateDetail
+﻿use NPSF
+
+drop Table GBCVisaDetailAbateDetail
 
 Create Table GBCVisaDetailAbateDetail(
  基金代碼 varchar(3) not null,

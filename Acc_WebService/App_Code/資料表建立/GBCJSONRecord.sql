@@ -1,4 +1,6 @@
-﻿drop Table GBCJSONRecord
+﻿use NPSF
+
+drop Table GBCJSONRecord
 
 Create Table GBCJSONRecord(
  基金代碼 varchar(3) not null,

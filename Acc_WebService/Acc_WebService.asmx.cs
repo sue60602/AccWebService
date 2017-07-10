@@ -108,8 +108,6 @@ namespace Acc_WebService
              * 4.估列收回、5.預撥收回、6.核銷收回
              */
 
-            //vwList = vwList.OrderBy(x => x.PK_明細號).ToList();
-
             /*--------------------------------1.預付作業------------------------------------------*/
             if ("預付".Equals(accKind))
             {
@@ -144,7 +142,6 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
                         else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
@@ -177,10 +174,18 @@ namespace Acc_WebService
                     vouDtlList.Add(vouDtl_D);
                     傳票受款人 vouPay = new 傳票受款人()
                     {
-                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //地址 = "",
+                        //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        //銀行代號 = "",
+                        //銀行名稱 = "",
+                        //銀行帳號 = "",
+                        //帳戶名稱 = ""
+                        統一編號 = "",
+                        受款人名稱 = "",
                         地址 = "",
-                        實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        實付金額 = 0,
                         銀行代號 = "",
                         銀行名稱 = "",
                         銀行帳號 = "",
@@ -195,20 +200,20 @@ namespace Acc_WebService
                 var vouPayGroup = from xxx in vouPayList
                                   group xxx by new {xxx.統一編號 ,xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號  = g.Key.銀行代號, 銀行名稱  = g.Key.銀行名稱, 銀行帳號  = g.Key.銀行帳號, 帳戶名稱  = g.Key.帳戶名稱, 實付金額  = g.Sum(xxx => xxx.實付金額)};
-                vouPayList = new List<傳票受款人>();
-                foreach (var vouPayGroupItem in vouPayGroup)
-                {
-                    傳票受款人 vouPay = new 傳票受款人();
-                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                    vouPay.地址 = vouPayGroupItem.地址;
-                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                    vouPayList.Add(vouPay);
-                }
+                //vouPayList = new List<傳票受款人>();
+                //foreach (var vouPayGroupItem in vouPayGroup)
+                //{
+                //    傳票受款人 vouPay = new 傳票受款人();
+                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                //    vouPay.地址 = vouPayGroupItem.地址;
+                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                //    vouPayList.Add(vouPay);
+                //}
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = vouKind,
@@ -281,7 +286,6 @@ namespace Acc_WebService
                         {
                             return "此筆資料已轉入過,並且結案。";
                         }
-                        //else if (((isLog > 0) && isPass.Equals("0")) || (isPass.Equals("0")))
                         else if (((isLog > 0) && isPass.Equals("0")))
                         {
                             dao.Update(vw_GBCVisaDetail);
@@ -329,10 +333,18 @@ namespace Acc_WebService
 
                     傳票受款人 vouPay = new 傳票受款人()
                     {
-                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //地址 = "",
+                        //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        //銀行代號 = "",
+                        //銀行名稱 = "",
+                        //銀行帳號 = "",
+                        //帳戶名稱 = ""
+                        統一編號 = "",
+                        受款人名稱 = "",
                         地址 = "",
-                        實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        實付金額 = 0,
                         銀行代號 = "",
                         銀行名稱 = "",
                         銀行帳號 = "",
@@ -482,10 +494,18 @@ namespace Acc_WebService
 
                     傳票受款人 vouPay = new 傳票受款人()
                     {
-                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //地址 = "",
+                        //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        //銀行代號 = "",
+                        //銀行名稱 = "",
+                        //銀行帳號 = "",
+                        //帳戶名稱 = ""
+                        統一編號 = "",
+                        受款人名稱 = "",
                         地址 = "",
-                        實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        實付金額 = 0,
                         銀行代號 = "",
                         銀行名稱 = "",
                         銀行帳號 = "",
@@ -502,20 +522,20 @@ namespace Acc_WebService
                 var vouPayGroup = from xxx in vouPayList
                                   group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                vouPayList = new List<傳票受款人>();
-                foreach (var vouPayGroupItem in vouPayGroup)
-                {
-                    傳票受款人 vouPay = new 傳票受款人();
-                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                    vouPay.地址 = vouPayGroupItem.地址;
-                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                    vouPayList.Add(vouPay);
-                }
+                //vouPayList = new List<傳票受款人>();
+                //foreach (var vouPayGroupItem in vouPayGroup)
+                //{
+                //    傳票受款人 vouPay = new 傳票受款人();
+                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                //    vouPay.地址 = vouPayGroupItem.地址;
+                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                //    vouPayList.Add(vouPay);
+                //}
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = "1",
@@ -844,10 +864,18 @@ namespace Acc_WebService
                     }
                     傳票受款人 vouPay = new 傳票受款人()
                     {
-                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                        //地址 = "",
+                        //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        //銀行代號 = "",
+                        //銀行名稱 = "",
+                        //銀行帳號 = "",
+                        //帳戶名稱 = ""
+                        統一編號 = "",
+                        受款人名稱 = "",
                         地址 = "",
-                        實付金額 = vw_GBCVisaDetail.F_核定金額,
+                        實付金額 = 0,
                         銀行代號 = "",
                         銀行名稱 = "",
                         銀行帳號 = "",
@@ -864,20 +892,20 @@ namespace Acc_WebService
                 var vouPayGroup = from xxx in vouPayList
                                   group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                vouPayList = new List<傳票受款人>();
-                foreach (var vouPayGroupItem in vouPayGroup)
-                {
-                    傳票受款人 vouPay = new 傳票受款人();
-                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                    vouPay.地址 = vouPayGroupItem.地址;
-                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                    vouPayList.Add(vouPay);
-                }
+                //vouPayList = new List<傳票受款人>();
+                //foreach (var vouPayGroupItem in vouPayGroup)
+                //{
+                //    傳票受款人 vouPay = new 傳票受款人();
+                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                //    vouPay.地址 = vouPayGroupItem.地址;
+                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                //    vouPayList.Add(vouPay);
+                //}
                 傳票主檔 vouMain = new 傳票主檔()
                 {
                     傳票種類 = vouKind,
@@ -1015,10 +1043,18 @@ namespace Acc_WebService
                             vouDtlList.Add(vouDtl_D);
                             傳票受款人 vouPay = new 傳票受款人()
                             {
-                                統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                //地址 = "",
+                                //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                //銀行代號 = "",
+                                //銀行名稱 = "",
+                                //銀行帳號 = "",
+                                //帳戶名稱 = ""
+                                統一編號 = "",
+                                受款人名稱 = "",
                                 地址 = "",
-                                實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                實付金額 = 0,
                                 銀行代號 = "",
                                 銀行名稱 = "",
                                 銀行帳號 = "",
@@ -1033,20 +1069,20 @@ namespace Acc_WebService
                         var vouPayGroup = from xxx in vouPayList
                                           group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                           select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                        vouPayList = new List<傳票受款人>();
-                        foreach (var vouPayGroupItem in vouPayGroup)
-                        {
-                            傳票受款人 vouPay = new 傳票受款人();
-                            vouPay.統一編號 = vouPayGroupItem.統一編號;
-                            vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                            vouPay.地址 = vouPayGroupItem.地址;
-                            vouPay.實付金額 = vouPayGroupItem.實付金額;
-                            vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                            vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                            vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                            vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                            vouPayList.Add(vouPay);
-                        }
+                        //vouPayList = new List<傳票受款人>();
+                        //foreach (var vouPayGroupItem in vouPayGroup)
+                        //{
+                        //    傳票受款人 vouPay = new 傳票受款人();
+                        //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                        //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                        //    vouPay.地址 = vouPayGroupItem.地址;
+                        //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                        //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                        //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                        //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                        //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                        //    vouPayList.Add(vouPay);
+                        //}
                         傳票主檔 vouMain = new 傳票主檔()
                         {
                             傳票種類 = vouKind,
@@ -1239,10 +1275,18 @@ namespace Acc_WebService
 
                                 傳票受款人 vouPay = new 傳票受款人()
                                 {
-                                    統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                    受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                    //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                    //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                    //地址 = "",
+                                    //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                    //銀行代號 = "",
+                                    //銀行名稱 = "",
+                                    //銀行帳號 = "",
+                                    //帳戶名稱 = ""
+                                    統一編號 = "",
+                                    受款人名稱 = "",
                                     地址 = "",
-                                    實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                    實付金額 = 0,
                                     銀行代號 = "",
                                     銀行名稱 = "",
                                     銀行帳號 = "",
@@ -1259,20 +1303,20 @@ namespace Acc_WebService
                             var vouPayGroup = from xxx in vouPayList
                                               group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                               select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                            vouPayList = new List<傳票受款人>();
-                            foreach (var vouPayGroupItem in vouPayGroup)
-                            {
-                                傳票受款人 vouPay = new 傳票受款人();
-                                vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                vouPay.地址 = vouPayGroupItem.地址;
-                                vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                vouPayList.Add(vouPay);
-                            }
+                            //vouPayList = new List<傳票受款人>();
+                            //foreach (var vouPayGroupItem in vouPayGroup)
+                            //{
+                            //    傳票受款人 vouPay = new 傳票受款人();
+                            //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                            //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                            //    vouPay.地址 = vouPayGroupItem.地址;
+                            //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                            //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                            //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                            //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                            //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                            //    vouPayList.Add(vouPay);
+                            //}
                             傳票主檔 vouMain = new 傳票主檔()
                             {
                                 傳票種類 = vouKind,
@@ -1407,10 +1451,18 @@ namespace Acc_WebService
                                     vouDtlList.Add(vouDtl_D);
                                     傳票受款人 vouPay = new 傳票受款人()
                                     {
-                                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //地址 = "",
+                                        //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                        //銀行代號 = "",
+                                        //銀行名稱 = "",
+                                        //銀行帳號 = "",
+                                        //帳戶名稱 = ""
+                                        統一編號 = "",
+                                        受款人名稱 = "",
                                         地址 = "",
-                                        實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                        實付金額 = 0,
                                         銀行代號 = "",
                                         銀行名稱 = "",
                                         銀行帳號 = "",
@@ -1427,20 +1479,20 @@ namespace Acc_WebService
                                 var vouPayGroup = from xxx in vouPayList
                                                   group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                vouPayList = new List<傳票受款人>();
-                                foreach (var vouPayGroupItem in vouPayGroup)
-                                {
-                                    傳票受款人 vouPay = new 傳票受款人();
-                                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                    vouPay.地址 = vouPayGroupItem.地址;
-                                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                    vouPayList.Add(vouPay);
-                                }
+                                //vouPayList = new List<傳票受款人>();
+                                //foreach (var vouPayGroupItem in vouPayGroup)
+                                //{
+                                //    傳票受款人 vouPay = new 傳票受款人();
+                                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                //    vouPay.地址 = vouPayGroupItem.地址;
+                                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                //    vouPayList.Add(vouPay);
+                                //}
                                 傳票主檔 vouMain = new 傳票主檔()
                                 {
                                     傳票種類 = "4",
@@ -1562,10 +1614,18 @@ namespace Acc_WebService
                                     vouDtlList.Add(vouDtl_D);
                                     傳票受款人 vouPay = new 傳票受款人()
                                     {
-                                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //地址 = "",
+                                        //實付金額 = prePayBalance,
+                                        //銀行代號 = "",
+                                        //銀行名稱 = "",
+                                        //銀行帳號 = "",
+                                        //帳戶名稱 = ""
+                                        統一編號 = "",
+                                        受款人名稱 = "",
                                         地址 = "",
-                                        實付金額 = prePayBalance,
+                                        實付金額 = 0,
                                         銀行代號 = "",
                                         銀行名稱 = "",
                                         銀行帳號 = "",
@@ -1582,20 +1642,20 @@ namespace Acc_WebService
                                 var vouPayGroup = from xxx in vouPayList
                                                   group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                vouPayList = new List<傳票受款人>();
-                                foreach (var vouPayGroupItem in vouPayGroup)
-                                {
-                                    傳票受款人 vouPay = new 傳票受款人();
-                                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                    vouPay.地址 = vouPayGroupItem.地址;
-                                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                    vouPayList.Add(vouPay);
-                                }
+                                //vouPayList = new List<傳票受款人>();
+                                //foreach (var vouPayGroupItem in vouPayGroup)
+                                //{
+                                //    傳票受款人 vouPay = new 傳票受款人();
+                                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                //    vouPay.地址 = vouPayGroupItem.地址;
+                                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                //    vouPayList.Add(vouPay);
+                                //}
                                 傳票主檔 vouMain = new 傳票主檔()
                                 {
                                     傳票種類 = "4",
@@ -1663,10 +1723,18 @@ namespace Acc_WebService
                                     vouDtlList2.Add(vouDtl_D2);
                                     傳票受款人 vouPay2 = new 傳票受款人()
                                     {
-                                        統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                        受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                        //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                        //地址 = "",
+                                        //實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                        //銀行代號 = "",
+                                        //銀行名稱 = "",
+                                        //銀行帳號 = "",
+                                        //帳戶名稱 = ""
+                                        統一編號 = "",
+                                        受款人名稱 = "",
                                         地址 = "",
-                                        實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                        實付金額 = 0,
                                         銀行代號 = "",
                                         銀行名稱 = "",
                                         銀行帳號 = "",
@@ -1681,20 +1749,20 @@ namespace Acc_WebService
                                 var vouPayGroup2 = from xxx in vouPayList2
                                                   group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                   select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                vouPayList2 = new List<傳票受款人>();
-                                foreach (var vouPayGroupItem in vouPayGroup2)
-                                {
-                                    傳票受款人 vouPay = new 傳票受款人();
-                                    vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                    vouPay.地址 = vouPayGroupItem.地址;
-                                    vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                    vouPayList2.Add(vouPay);
-                                }
+                                //vouPayList2 = new List<傳票受款人>();
+                                //foreach (var vouPayGroupItem in vouPayGroup2)
+                                //{
+                                //    傳票受款人 vouPay = new 傳票受款人();
+                                //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                //    vouPay.地址 = vouPayGroupItem.地址;
+                                //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                //    vouPayList2.Add(vouPay);
+                                //}
                                 傳票主檔 vouMain2 = new 傳票主檔()
                                 {
                                     傳票種類 = vouKind,
@@ -1861,10 +1929,18 @@ namespace Acc_WebService
                                         vouDtlList.Add(vouDtl_D2);
                                         傳票受款人 vouPay = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
@@ -1881,20 +1957,20 @@ namespace Acc_WebService
                                     var vouPayGroup = from xxx in vouPayList
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList.Add(vouPay);
-                                    }
+                                    //vouPayList = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
@@ -2031,10 +2107,18 @@ namespace Acc_WebService
                                         vouDtlList.Add(vouDtl_D2);
                                         傳票受款人 vouPay = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = prePayBalance,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = prePayBalance,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
@@ -2051,20 +2135,20 @@ namespace Acc_WebService
                                     var vouPayGroup = from xxx in vouPayList
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList.Add(vouPay);
-                                    }
+                                    //vouPayList = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
@@ -2130,14 +2214,23 @@ namespace Acc_WebService
                                         vouDtlList2.Add(vouDtl_D2);
                                         傳票受款人 vouPay2 = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
                                             帳戶名稱 = ""
+
                                         };
                                         vouPayList2.Add(vouPay2);
 
@@ -2148,20 +2241,20 @@ namespace Acc_WebService
                                     var vouPayGroup2 = from xxx in vouPayList2
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList2 = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup2)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList2.Add(vouPay);
-                                    }
+                                    //vouPayList2 = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup2)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList2.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain2 = new 傳票主檔()
                                     {
                                         傳票種類 = vouKind,
@@ -2307,10 +2400,18 @@ namespace Acc_WebService
                                         vouDtlList.Add(vouDtl_D);
                                         傳票受款人 vouPay = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
@@ -2327,20 +2428,20 @@ namespace Acc_WebService
                                     var vouPayGroup = from xxx in vouPayList
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList.Add(vouPay);
-                                    }
+                                    //vouPayList = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
@@ -2462,10 +2563,18 @@ namespace Acc_WebService
                                         vouDtlList.Add(vouDtl_D);
                                         傳票受款人 vouPay = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = prePayBalance,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = prePayBalance,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
@@ -2480,20 +2589,20 @@ namespace Acc_WebService
                                     var vouPayGroup = from xxx in vouPayList
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList.Add(vouPay);
-                                    }
+                                    //vouPayList = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain = new 傳票主檔()
                                     {
                                         傳票種類 = "4",
@@ -2558,10 +2667,18 @@ namespace Acc_WebService
                                         vouDtlList2.Add(vouDtl_D2);
                                         傳票受款人 vouPay2 = new 傳票受款人()
                                         {
-                                            統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                            受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                            //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                            //地址 = "",
+                                            //實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                            //銀行代號 = "",
+                                            //銀行名稱 = "",
+                                            //銀行帳號 = "",
+                                            //帳戶名稱 = ""
+                                            統一編號 = "",
+                                            受款人名稱 = "",
                                             地址 = "",
-                                            實付金額 = vw_GBCVisaDetail.F_核定金額 - prePayBalance,
+                                            實付金額 = 0,
                                             銀行代號 = "",
                                             銀行名稱 = "",
                                             銀行帳號 = "",
@@ -2576,20 +2693,20 @@ namespace Acc_WebService
                                     var vouPayGroup2 = from xxx in vouPayList2
                                                       group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                                       select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                                    vouPayList2 = new List<傳票受款人>();
-                                    foreach (var vouPayGroupItem in vouPayGroup2)
-                                    {
-                                        傳票受款人 vouPay = new 傳票受款人();
-                                        vouPay.統一編號 = vouPayGroupItem.統一編號;
-                                        vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                                        vouPay.地址 = vouPayGroupItem.地址;
-                                        vouPay.實付金額 = vouPayGroupItem.實付金額;
-                                        vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                                        vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                                        vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                                        vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                                        vouPayList2.Add(vouPay);
-                                    }
+                                    //vouPayList2 = new List<傳票受款人>();
+                                    //foreach (var vouPayGroupItem in vouPayGroup2)
+                                    //{
+                                    //    傳票受款人 vouPay = new 傳票受款人();
+                                    //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                                    //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                                    //    vouPay.地址 = vouPayGroupItem.地址;
+                                    //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                                    //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                                    //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                                    //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                                    //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                                    //    vouPayList2.Add(vouPay);
+                                    //}
                                     傳票主檔 vouMain2 = new 傳票主檔()
                                     {
                                         傳票種類 = vouKind,
@@ -2732,10 +2849,18 @@ namespace Acc_WebService
                             vouDtlList.Add(vouDtl_D);
                             傳票受款人 vouPay = new 傳票受款人()
                             {
-                                統一編號 = vw_GBCVisaDetail.F_受款人編號,
-                                受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                //統一編號 = vw_GBCVisaDetail.F_受款人編號,
+                                //受款人名稱 = vw_GBCVisaDetail.F_受款人,
+                                //地址 = "",
+                                //實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                //銀行代號 = "",
+                                //銀行名稱 = "",
+                                //銀行帳號 = "",
+                                //帳戶名稱 = ""
+                                統一編號 = "",
+                                受款人名稱 = "",
                                 地址 = "",
-                                實付金額 = vw_GBCVisaDetail.F_核定金額,
+                                實付金額 = 0,
                                 銀行代號 = "",
                                 銀行名稱 = "",
                                 銀行帳號 = "",
@@ -2750,20 +2875,20 @@ namespace Acc_WebService
                         var vouPayGroup = from xxx in vouPayList
                                           group xxx by new { xxx.統一編號, xxx.受款人名稱, xxx.地址, xxx.銀行代號, xxx.銀行名稱, xxx.銀行帳號, xxx.帳戶名稱 } into g
                                           select new { 統一編號 = g.Key.統一編號, 受款人名稱 = g.Key.受款人名稱, 地址 = g.Key.地址, 銀行代號 = g.Key.銀行代號, 銀行名稱 = g.Key.銀行名稱, 銀行帳號 = g.Key.銀行帳號, 帳戶名稱 = g.Key.帳戶名稱, 實付金額 = g.Sum(xxx => xxx.實付金額) };
-                        vouPayList = new List<傳票受款人>();
-                        foreach (var vouPayGroupItem in vouPayGroup)
-                        {
-                            傳票受款人 vouPay = new 傳票受款人();
-                            vouPay.統一編號 = vouPayGroupItem.統一編號;
-                            vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
-                            vouPay.地址 = vouPayGroupItem.地址;
-                            vouPay.實付金額 = vouPayGroupItem.實付金額;
-                            vouPay.銀行代號 = vouPayGroupItem.銀行代號;
-                            vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
-                            vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
-                            vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
-                            vouPayList.Add(vouPay);
-                        }
+                        //vouPayList = new List<傳票受款人>();
+                        //foreach (var vouPayGroupItem in vouPayGroup)
+                        //{
+                        //    傳票受款人 vouPay = new 傳票受款人();
+                        //    vouPay.統一編號 = vouPayGroupItem.統一編號;
+                        //    vouPay.受款人名稱 = vouPayGroupItem.受款人名稱;
+                        //    vouPay.地址 = vouPayGroupItem.地址;
+                        //    vouPay.實付金額 = vouPayGroupItem.實付金額;
+                        //    vouPay.銀行代號 = vouPayGroupItem.銀行代號;
+                        //    vouPay.銀行名稱 = vouPayGroupItem.銀行名稱;
+                        //    vouPay.銀行帳號 = vouPayGroupItem.銀行帳號;
+                        //    vouPay.帳戶名稱 = vouPayGroupItem.帳戶名稱;
+                        //    vouPayList.Add(vouPay);
+                        //}
                         傳票主檔 vouMain = new 傳票主檔()
                         {
                             傳票種類 = vouKind,
@@ -2915,7 +3040,7 @@ namespace Acc_WebService
 
             foreach (var 傳票明細Item in fillVouScript.傳票明細)
             {
-                isVouNo1 = dao.FindVouNo(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo, 傳票明細Item.傳票明細號);
+                isVouNo1 = dao.FindVouNo(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo, 傳票明細Item.明細號);
                 gbcVisaDetailAbateDetailVO.setPK_明細號(傳票明細Item.明細號);
                 gbcVisaDetailAbateDetailVO.setF_傳票明細號1(傳票明細Item.傳票明細號);
 
@@ -3333,6 +3458,54 @@ namespace Acc_WebService
                 BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
                 string getGBCVisaDetail = ws.GetByPrimaryKey(accYear, acmWordNum, accKind, accCount, accDetail);
                 return getGBCVisaDetail;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        [WebMethod]
+        //取估列List
+        public string GetEstimate(string fundNo, string accYear, string accKind, string batch)
+        {
+            //先判斷基金代號
+            if (fundNo == "010")//醫發服務參考
+            {
+                GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
+                //List<string> accDetailList = new List<string>();
+                string accDetail = "";
+                accDetail = ws.GetEstimate(accYear, accKind, batch);
+                return accDetail;
+            }
+            else if (fundNo == "040")//菸害****尚未加入服務參考****
+            {
+                return null;
+            }
+            else if (fundNo == "090")//家防服務參考
+            {
+                DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
+                    );
+                return null;
+            }
+            else if (fundNo == "100")//長照****尚未加入服務參考****
+            {
+                LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
+                    );
+                return null;
+            }
+            else if (fundNo == "110")//生產****尚未加入服務參考****
+            {
+                BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
+                List<string> accDetailList = new List<string>(
+                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
+                    );
+                return null;
             }
             else
             {
