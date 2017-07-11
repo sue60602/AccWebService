@@ -448,12 +448,12 @@ namespace Acc_WebService.GBC_WebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetByKind", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string GetByKind(string accYear, string accKind, string batch) {
+        public string[] GetByKind(string accYear, string accKind, string batch) {
             object[] results = this.Invoke("GetByKind", new object[] {
                         accYear,
                         accKind,
                         batch});
-            return ((string)(results[0]));
+            return ((string[])(results[0]));
         }
         
         /// <remarks/>
@@ -1013,10 +1013,10 @@ namespace Acc_WebService.GBC_WebService {
         }
         
         /// <remarks/>
-        public string Result {
+        public string[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((string[])(this.results[0]));
             }
         }
     }

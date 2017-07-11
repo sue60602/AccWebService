@@ -49,6 +49,8 @@ namespace Acc_WebService.DVGBC_WebService {
         
         private System.Threading.SendOrPostCallback GetByPrimaryKeyOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetByKindOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -116,6 +118,9 @@ namespace Acc_WebService.DVGBC_WebService {
         
         /// <remarks/>
         public event GetByPrimaryKeyCompletedEventHandler GetByPrimaryKeyCompleted;
+        
+        /// <remarks/>
+        public event GetByKindCompletedEventHandler GetByKindCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVw_GBCVisaDetail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -438,6 +443,39 @@ namespace Acc_WebService.DVGBC_WebService {
             if ((this.GetByPrimaryKeyCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetByPrimaryKeyCompleted(this, new GetByPrimaryKeyCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetByKind", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string[] GetByKind(string accYear, string accKind, string batch) {
+            object[] results = this.Invoke("GetByKind", new object[] {
+                        accYear,
+                        accKind,
+                        batch});
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetByKindAsync(string accYear, string accKind, string batch) {
+            this.GetByKindAsync(accYear, accKind, batch, null);
+        }
+        
+        /// <remarks/>
+        public void GetByKindAsync(string accYear, string accKind, string batch, object userState) {
+            if ((this.GetByKindOperationCompleted == null)) {
+                this.GetByKindOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetByKindOperationCompleted);
+            }
+            this.InvokeAsync("GetByKind", new object[] {
+                        accYear,
+                        accKind,
+                        batch}, this.GetByKindOperationCompleted, userState);
+        }
+        
+        private void OnGetByKindOperationCompleted(object arg) {
+            if ((this.GetByKindCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetByKindCompleted(this, new GetByKindCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -953,6 +991,32 @@ namespace Acc_WebService.DVGBC_WebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void GetByKindCompletedEventHandler(object sender, GetByKindCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetByKindCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetByKindCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
             }
         }
     }

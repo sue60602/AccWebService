@@ -3468,16 +3468,16 @@ namespace Acc_WebService
 
         [WebMethod]
         //取估列List
-        public string GetByKind(string fundNo, string accYear, string accKind, string batch)
+        public List<string> GetByKind(string fundNo, string accYear, string accKind, string batch)
         {
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
                 GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
-                //List<string> accDetailList = new List<string>();
-                string accDetail = "";
-                accDetail = ws.GetByKind(accYear, accKind, batch);
-                return accDetail;
+                List<string> accDetailList = new List<string>(
+                            ws.GetByKind(accYear, accKind, batch));
+
+                return accDetailList;
             }
             else if (fundNo == "040")//菸害****尚未加入服務參考****
             {
@@ -3487,25 +3487,25 @@ namespace Acc_WebService
             {
                 DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
                 List<string> accDetailList = new List<string>(
-                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
-                    );
-                return null;
+                            ws.GetByKind(accYear, accKind, batch));
+
+                return accDetailList;
             }
             else if (fundNo == "100")//長照****尚未加入服務參考****
             {
                 LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
                 List<string> accDetailList = new List<string>(
-                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
-                    );
-                return null;
+                            ws.GetByKind(accYear, accKind, batch));
+
+                return accDetailList;
             }
             else if (fundNo == "110")//生產****尚未加入服務參考****
             {
                 BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
                 List<string> accDetailList = new List<string>(
-                    //ws.GetAccDetail(accYear, acmWordNum, accKind, accCount)
-                    );
-                return null;
+                            ws.GetByKind(accYear, accKind, batch));
+
+                return accDetailList;
             }
             else
             {
