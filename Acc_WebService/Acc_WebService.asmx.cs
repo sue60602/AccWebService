@@ -376,7 +376,7 @@ namespace Acc_WebService
                 //}
                 傳票主檔 vouMain = new 傳票主檔()
                 {
-                    傳票種類 = "3",
+                    傳票種類 = "4",
                     製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
@@ -743,7 +743,7 @@ namespace Acc_WebService
                 //}
                 傳票主檔 vouMain = new 傳票主檔()
                 {
-                    傳票種類 = "3",
+                    傳票種類 = "4",
                     製票日期 = "",
                     主摘要 = vw_GBCVisaDetail.F_摘要,
                     交付方式 = "1"
