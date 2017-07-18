@@ -458,7 +458,7 @@ namespace Acc_WebService
                     List<VouDetailVO> prePayNouNoList = dao.FindPrePayVouNo(vw_GBCVisaDetail);
                     foreach (var prePayVouNo in prePayNouNoList)
                     {
-                        prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號);
+                        prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                         prePayMoneyAbate = prePayMoneyAbate + dao.PrePayMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                     }
 
@@ -634,7 +634,7 @@ namespace Acc_WebService
                     foreach (var estimateVouNo in estimateNouNoList)
                     {
                         //算已估列總額(此受款人編號)
-                        estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號);
+                        estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                         //算已沖估列總額(此受款人編號)
                         estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, vwListItem.PK_會計年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                     }
@@ -1166,7 +1166,7 @@ namespace Acc_WebService
                         List<VouDetailVO> prePayNouNoList = dao.FindPrePayVouNo(vw_GBCVisaDetail);
                         foreach (var prePayVouNo in prePayNouNoList)
                         {
-                            prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, prePayVouNo.傳票年度, prePayVouNo.傳票號);
+                            prePayMoney = prePayMoney + dao.PrePayMoney(vwListItem.基金代碼, prePayVouNo.傳票年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                             prePayMoneyAbate = prePayMoneyAbate + dao.PrePayMoneyAbate(vwListItem.基金代碼, prePayVouNo.傳票年度, prePayVouNo.傳票號, prePayVouNo.傳票明細號);
                         }
 
@@ -1177,7 +1177,7 @@ namespace Acc_WebService
                         List<VouDetailVO> estimateNouNoList = dao.FindEstimateVouNo(vw_GBCVisaDetail);
                         foreach (var estimateVouNo in estimateNouNoList)
                         {
-                            estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號);
+                            estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                             estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
                         }
 
@@ -2995,8 +2995,6 @@ namespace Acc_WebService
                 return e.StackTrace;
             }
 
-
-
             string[] strs = acmWordNum.Split('-'); //以"-"區分種類及次號
             string acmWordNumOut = strs[0]; //動支編號(8碼)
             string acmKind = null; //種類
@@ -3026,11 +3024,13 @@ namespace Acc_WebService
             }
             string acmNo = strs[2]; //次別
 
-            isPass = jsonDAO.IsPass(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
-            isJSON2 = jsonDAO.FindJSON2(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+            //isPass = jsonDAO.IsPass(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+            //isJSON2 = jsonDAO.FindJSON2(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+            isPass = jsonDAO.IsPass(fundNo, fillVouScript.傳票年度, acmWordNumOut, acmKind, acmNo);
+            isJSON2 = jsonDAO.FindJSON2(fundNo, fillVouScript.傳票年度, acmWordNumOut, acmKind, acmNo);
 
             gbcVisaDetailAbateDetailVO.set基金代碼(fundNo);
-            gbcVisaDetailAbateDetailVO.setPK_會計年度(acmWordNumOut.Substring(0, 3));
+            gbcVisaDetailAbateDetailVO.setPK_會計年度(fillVouScript.傳票年度);
             gbcVisaDetailAbateDetailVO.setPK_動支編號(acmWordNumOut);
             gbcVisaDetailAbateDetailVO.setPK_種類(acmKind);
             gbcVisaDetailAbateDetailVO.setPK_次別(acmNo);
@@ -3039,8 +3039,8 @@ namespace Acc_WebService
             gbcVisaDetailAbateDetailVO.setF_製票日期1(fillVouScript.製票日期);
 
             foreach (var 傳票明細Item in fillVouScript.傳票明細)
-            {
-                isVouNo1 = dao.FindVouNo(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo, 傳票明細Item.明細號);
+            {                
+                isVouNo1 = dao.FindVouNo(fundNo, fillVouScript.傳票年度, acmWordNumOut, acmKind, acmNo, 傳票明細Item.明細號);
                 gbcVisaDetailAbateDetailVO.setPK_明細號(傳票明細Item.明細號);
                 gbcVisaDetailAbateDetailVO.setF_傳票明細號1(傳票明細Item.傳票明細號);
 
@@ -3048,15 +3048,15 @@ namespace Acc_WebService
                 {
                     dao.UpdateVouNo1(gbcVisaDetailAbateDetailVO);
                     count++;
-                    if ((isJSON2.Trim().Length == 0) && (count == fillVouScript.傳票明細.Count))
+                    if ((isJSON2.Trim().Length == 0) && (count == fillVouScript.傳票明細.Count) && (傳票明細Item.明細號.Trim().Length > 1))
                     {
-                        jsonDAO.UpdatePassFlg(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+                        jsonDAO.UpdatePassFlg(fundNo, fillVouScript.傳票年度, acmWordNumOut, acmKind, acmNo);
                     }
                 }
-                else if (((isVouNo1.Trim()).Length != 0) && (isPass == "0"))//傳票1已回填 AND 未結案 --回填至傳票2
+                else if (((isVouNo1.Trim()).Length > 0) && (isPass == "0"))//傳票1已回填 AND 未結案 --回填至傳票2
                 {
                     dao.UpdateVouNo2(gbcVisaDetailAbateDetailVO);
-                    jsonDAO.UpdatePassFlg(fundNo, acmWordNumOut.Substring(0, 3), acmWordNumOut, acmKind, acmNo);
+                    jsonDAO.UpdatePassFlg(fundNo, fillVouScript.傳票年度, acmWordNumOut, acmKind, acmNo);
                 }
                 else
                 {
@@ -3470,14 +3470,32 @@ namespace Acc_WebService
         //取估列List
         public List<string> GetByKind(string fundNo, string accYear, string accKind, string batch)
         {
+            switch (batch)
+            {
+                case "6月":
+                    batch = "1";
+                    break;
+                case "12月":
+                    batch = "2";
+                    break;
+                default:
+                    batch = "";
+                    break;
+            }
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
                 GBC_WebService.GBCWebService ws = new GBC_WebService.GBCWebService();
                 List<string> accDetailList = new List<string>(
                             ws.GetByKind(accYear, accKind, batch));
+                List<string> resultList = new List<string>();
 
-                return accDetailList;
+                foreach (var accDetailListItem in accDetailList)
+                {
+                    resultList.Add(GetVw_GBCVisaDetail(fundNo, accDetailListItem));
+                }
+
+                return resultList;
             }
             else if (fundNo == "040")//菸害****尚未加入服務參考****
             {

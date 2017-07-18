@@ -5,7 +5,7 @@
 /// </summary>
 public interface GBCVisaDetailAbateDetail_Interface
 {
-    int EstimateMoney(string accNo, string accYear, string vouNo);
+    int EstimateMoney(string accNo, string accYear, string vouNo, string vouNoDtl);
 
     int EstimateMoneyAbate(string accNo, string accYear, string vouNo, string vouNoDtl);
 
@@ -19,7 +19,7 @@ public interface GBCVisaDetailAbateDetail_Interface
 
     void Insert(Vw_GBCVisaDetail vw_GBCVisaDetail);
 
-    int PrePayMoney(string accNo, string accYear, string vouNo);
+    int PrePayMoney(string accNo, string accYear, string vouNo, string vouNoDtl);
 
     int PrePayMoneyAbate(string accNo, string accYear, string vouNo, string vouNoDtl);
 }

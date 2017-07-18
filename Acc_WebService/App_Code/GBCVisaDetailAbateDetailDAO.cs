@@ -12,7 +12,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         "select ISNULL(sum(Amount),0) as 估列沖銷數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='借' and SubNo='2125' and RelatedVouNo = @F_傳票號碼 + '-' + @明細號";
 
     private const string ESTIMATE_MONEY_STMT =
-        "select ISNULL(sum(Amount),0) as 已估列數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='貸' and SubNo='2125' and AccMainNo=ISNULL((select AccMainno from VouMain where FundNo=@基金代碼 and AccYear=@F_傳票年度 and VouNo=@F_傳票號碼),'0')";
+        "select ISNULL(sum(Amount),0) as 已估列數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='貸' and SubNo='2125' and AccMainNo=ISNULL((select AccMainno from VouMain where FundNo=@基金代碼 and AccYear=@F_傳票年度 and VouNo=@F_傳票號碼),'0') and DetailNo=@F_明細號";
 
     private const string FILL_VOU_1_STMT =
         "update GBCVisaDetailAbateDetail set F_傳票年度=@傳票年度, F_傳票號1=@傳票號1, F_傳票明細號1=@傳票明細號1, F_製票日期1=@製票日期1 where 基金代碼=@基金代碼 and  PK_會計年度=@PK_會計年度 and  PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
@@ -55,7 +55,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         "select ISNULL(sum(Amount),0) as 預付轉正數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='貸' and SubNo='1154' and RelatedVouNo = @F_傳票號碼 + '-' + @明細號";
 
     private const string PREPAY_MONEY_STMT =
-        "select ISNULL(sum(Amount),0) as 已預付數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='借' and SubNo='1154' and AccMainNo=ISNULL((select AccMainno from VouMain where FundNo=@基金代碼 and AccYear=@F_傳票年度 and VouNo=@F_傳票號碼),'0')";
+        "select ISNULL(sum(Amount),0) as 已預付數 from VouDetail where FundNo=@基金代碼 and AccYear=@F_傳票年度 and DC='借' and SubNo='1154' and AccMainNo=ISNULL((select AccMainno from VouMain where FundNo=@基金代碼 and AccYear=@F_傳票年度 and VouNo=@F_傳票號碼),'0') and DetailNo=@F_明細號";
 
     private const string UPDATE_STMT =
         //"INSERT INTO GBCVisaDetailAbateDetail ([PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],F_傳票種類,F_傳票號1,F_傳票明細號1,F_製票日期1,F_傳票號2,F_傳票明細號2,F_製票日期2) values(@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_傳票種類,@F_傳票號1,@F_傳票明細號1,@F_製票日期1,@F_傳票號2,@F_傳票明細號2,@F_製票日期2)";
@@ -67,7 +67,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     /// <param name="accYear"></param>
     /// <param name="vouNo"></param>
     /// <returns></returns>
-    public int EstimateMoney(string accNo, string accYear, string vouNo)
+    public int EstimateMoney(string accNo, string accYear, string vouNo, string vouNoDtl)
     {
         int estimateMoney = 0;
         SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
@@ -79,6 +79,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         com.Parameters.AddWithValue("@基金代碼", accNo);
         com.Parameters.AddWithValue("@F_傳票年度", accYear);
         com.Parameters.AddWithValue("@F_傳票號碼", vouNo);
+        com.Parameters.AddWithValue("@F_明細號", vouNoDtl);
 
         try
         {
@@ -475,13 +476,14 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     /// <param name="vouNo"></param>
     /// <param name="vouNoDtl"></param>
     /// <returns></returns>
-    public int PrePayMoney(string accNo, string accYear, string vouNo)
+    public int PrePayMoney(string accNo, string accYear, string vouNo, string vouNoDtl)
     {
         SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
         SqlCommand com = new SqlCommand(PREPAY_MONEY_STMT, con);
         com.Parameters.AddWithValue("@基金代碼", accNo);
         com.Parameters.AddWithValue("@F_傳票年度", accYear);
         com.Parameters.AddWithValue("@F_傳票號碼", vouNo);
+        com.Parameters.AddWithValue("@F_明細號", vouNoDtl);
         con.Open();
         int prePayMoney = int.Parse(com.ExecuteScalar().ToString());
         con.Close();
@@ -592,12 +594,12 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         com.Parameters.AddWithValue("@PK_次別", gbcVisaDetailAbateDetailVO.getPK_次別());
         com.Parameters.AddWithValue("@PK_明細號", gbcVisaDetailAbateDetailVO.getPK_明細號());
         com.Parameters.AddWithValue("@傳票年度", gbcVisaDetailAbateDetailVO.getF_傳票年度());
-        com.Parameters.AddWithValue("@傳票號1", gbcVisaDetailAbateDetailVO.getF_傳票號1());
-        com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
-        com.Parameters.AddWithValue("@製票日期1", gbcVisaDetailAbateDetailVO.getF_製票日期1());
-        //com.Parameters.AddWithValue("@傳票號2", gbcVisaDetailAbateDetailVO.getF_傳票號2());
-        //com.Parameters.AddWithValue("@傳票明細號2", gbcVisaDetailAbateDetailVO.getF_傳票明細號2());
-        //com.Parameters.AddWithValue("@製票日期2", gbcVisaDetailAbateDetailVO.getF_製票日期2());
+        //com.Parameters.AddWithValue("@傳票號1", gbcVisaDetailAbateDetailVO.getF_傳票號1());
+        //com.Parameters.AddWithValue("@傳票明細號1", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
+        //com.Parameters.AddWithValue("@製票日期1", gbcVisaDetailAbateDetailVO.getF_製票日期1());
+        com.Parameters.AddWithValue("@傳票號2", gbcVisaDetailAbateDetailVO.getF_傳票號1());
+        com.Parameters.AddWithValue("@傳票明細號2", gbcVisaDetailAbateDetailVO.getF_傳票明細號1());
+        com.Parameters.AddWithValue("@製票日期2", gbcVisaDetailAbateDetailVO.getF_製票日期1());
 
         com.CommandType = CommandType.Text;
         com.ExecuteNonQuery();
