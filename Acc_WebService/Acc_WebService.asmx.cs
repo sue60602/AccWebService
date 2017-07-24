@@ -305,7 +305,7 @@ namespace Acc_WebService
                         借貸別 = "借",
                         科目代號 = "5",
                         科目名稱 = "基金用途",
-                        摘要 = vw_GBCVisaDetail.F_摘要,
+                        摘要 = vw_GBCVisaDetail.F_摘要 + "-" + vw_GBCVisaDetail.F_受款人,
                         金額 = vw_GBCVisaDetail.F_核定金額,
                         計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
@@ -320,7 +320,7 @@ namespace Acc_WebService
                         借貸別 = "貸",
                         科目代號 = "2125",
                         科目名稱 = "應付費用",
-                        摘要 = vw_GBCVisaDetail.F_摘要,
+                        摘要 = vw_GBCVisaDetail.F_摘要 + "-" + vw_GBCVisaDetail.F_受款人,
                         金額 = vw_GBCVisaDetail.F_核定金額,
                         計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                         用途別代碼 = "",
@@ -3205,7 +3205,6 @@ namespace Acc_WebService
         //取年度
         public List<string> GetYear(string fundNo)
         {
-
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
