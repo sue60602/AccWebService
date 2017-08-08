@@ -42,12 +42,12 @@ namespace Acc_WebService
                 DVGBC_WebService.GBCWebService ws = new DVGBC_WebService.GBCWebService();
                 JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
-            else if (fundNo == "100")//長照****尚未加入服務參考****
+            else if (fundNo == "100")//長照
             {
                 LCGBC_WebService.GBCWebService ws = new LCGBC_WebService.GBCWebService();
                 JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
             }
-            else if (fundNo == "110")//生產****尚未加入服務參考****
+            else if (fundNo == "110")//生產
             {
                 BAGBC_WebService.GBCWebService ws = new BAGBC_WebService.GBCWebService();
                 JSONReturn = ws.GetVw_GBCVisaDetailJSON(acmWordNum); //呼叫預控的服務,取得此動支編號的view資料
@@ -471,6 +471,7 @@ namespace Acc_WebService
                     }
 
                     //找預付沖轉字號
+                    var abatePrePayVouYear = from prevou in prePayNouNoList select prevou.傳票年度;
                     var abatePrePayVouNo = from prevou in prePayNouNoList select prevou.傳票號;
                     var abatePrePayVouDtlNo = from prevou in prePayNouNoList select prevou.傳票明細號;
 
@@ -485,7 +486,7 @@ namespace Acc_WebService
                         金額 = vw_GBCVisaDetail.F_核定金額,
                         計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                        沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
+                        沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                         對象說明 = vw_GBCVisaDetail.F_受款人,
                         明細號 = vw_GBCVisaDetail.PK_明細號
@@ -648,6 +649,7 @@ namespace Acc_WebService
                     }
 
                     //找應付沖轉字號
+                    var abateEstimateVouYear = from estvou in estimateNouNoList select estvou.傳票年度;
                     var abateEstimateVouNo = from estvou in estimateNouNoList select estvou.傳票號;
                     var abateEstimateVouDtlNo = from estvou in estimateNouNoList select estvou.傳票明細號;
 
@@ -662,7 +664,7 @@ namespace Acc_WebService
                         金額 = vw_GBCVisaDetail.F_核定金額,
                         計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                        沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
+                        沖轉字號 = abateEstimateVouYear + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                         對象說明 = vw_GBCVisaDetail.F_受款人,
                         明細號 = vw_GBCVisaDetail.PK_明細號
@@ -1002,7 +1004,7 @@ namespace Acc_WebService
                             vw_GBCVisaDetail.F_原動支編號 = payCash.F_原動支編號;
                             vw_GBCVisaDetail.F_批號 = payCash.F_批號;
 
-                            try
+                                try
                             {
                                 isLog = dao.FindLog(vw_GBCVisaDetail);
                                 isPass = jsonDAO.IsPass(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別);
@@ -1185,10 +1187,12 @@ namespace Acc_WebService
                         estimateBalance = estimateMoney - estimateMoneyAbate;
 
                         //找預付沖轉字號
+                        var abatePrePayVouYear = from prevou in prePayNouNoList select prevou.傳票年度;
                         var abatePrePayVouNo = from prevou in prePayNouNoList select prevou.傳票號;
                         var abatePrePayVouDtlNo = from prevou in prePayNouNoList select prevou.傳票明細號;
 
                         //找應付沖轉字號
+                        var abateEstimateVouYear = from estvou in estimateNouNoList select estvou.傳票年度;
                         var abateEstimateVouNo = from estvou in estimateNouNoList select estvou.傳票號;
                         var abateEstimateVouDtlNo = from estvou in estimateNouNoList select estvou.傳票明細號;
 
@@ -1429,7 +1433,7 @@ namespace Acc_WebService
                                         金額 = vw_GBCVisaDetail.F_核定金額,
                                         計畫代碼 = "",
                                         用途別代碼 = "",
-                                        沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
+                                        沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                         對象代碼 = "",
                                         對象說明 = ""
                                     };
@@ -1592,7 +1596,7 @@ namespace Acc_WebService
                                         金額 = prePayBalance,
                                         計畫代碼 = "",
                                         用途別代碼 = "",
-                                        沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
+                                        沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                         對象代碼 = "",
                                         對象說明 = ""
                                     };
@@ -1892,7 +1896,7 @@ namespace Acc_WebService
                                             金額 = vw_GBCVisaDetail.F_核定金額,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -1906,7 +1910,7 @@ namespace Acc_WebService
                                             金額 = estimateBalance,
                                             計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                                            沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
+                                            沖轉字號 = abateEstimateVouYear.ElementAt(abateCnt) + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                                             對象說明 = vw_GBCVisaDetail.F_受款人,
                                             明細號 = vw_GBCVisaDetail.PK_明細號
@@ -2070,7 +2074,7 @@ namespace Acc_WebService
                                             金額 = prePayBalance,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -2084,7 +2088,7 @@ namespace Acc_WebService
                                             金額 = estimateBalance,
                                             計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                                            沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
+                                            沖轉字號 = abateEstimateVouYear.ElementAt(abateCnt) + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                                             對象說明 = vw_GBCVisaDetail.F_受款人,
                                             明細號 = vw_GBCVisaDetail.PK_明細號
@@ -2378,7 +2382,7 @@ namespace Acc_WebService
                                             金額 = vw_GBCVisaDetail.F_核定金額,
                                             計畫代碼 = "",
                                             用途別代碼 = "",
-                                            沖轉字號 = abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
+                                            沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                             對象代碼 = "",
                                             對象說明 = ""
                                         };
@@ -2392,7 +2396,7 @@ namespace Acc_WebService
                                             金額 = vw_GBCVisaDetail.F_核定金額,
                                             計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                                             用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                                            沖轉字號 = abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
+                                            沖轉字號 = abateEstimateVouYear.ElementAt(abateCnt) + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                                             對象說明 = vw_GBCVisaDetail.F_受款人,
                                             明細號 = vw_GBCVisaDetail.PK_明細號
