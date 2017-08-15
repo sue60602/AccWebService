@@ -44,9 +44,12 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     private const string FIND_VOUNO_PAY_STMT =
         "select F_傳票號1,F_傳票明細號1 FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
 
+    private const string FIND_ORINGINAL_STMT =
+        "SELECT TOP 1 PK_動支編號 FROM GBCVisaDetailAbateDetail where 基金代碼 = @基金代碼 and PK_會計年度=@PK_會計年度 and F_原動支編號 = @F_原動支編號 ";
+
     private const string INSERT_STMT =
         //"INSERT INTO GBCVisaDetailAbateDetail ([PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],F_傳票種類,F_傳票號1,F_傳票明細號1,F_製票日期1,F_傳票號2,F_傳票明細號2,F_製票日期2) values(@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_傳票種類,@F_傳票號1,@F_傳票明細號1,@F_製票日期1,@F_傳票號2,@F_傳票明細號2,@F_製票日期2)";
-        "INSERT INTO GBCVisaDetailAbateDetail ([基金代碼],[PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],[F_受款人],[F_受款人編號],[F_傳票年度]) values(@基金代碼,@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_受款人,@F_受款人編號,'')";
+        "INSERT INTO GBCVisaDetailAbateDetail ([基金代碼],[PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],[F_受款人],[F_受款人編號],[F_傳票年度], [F_原動支編號]) values(@基金代碼,@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_受款人,@F_受款人編號,'',@F_原動支編號)";
 
     private const string IS_VOUNO_STMT =
         "select ISNULL(F_傳票號1,'') AS F_傳票號1 FROM [GBCVisaDetailAbateDetail] where 基金代碼=@基金代碼 and PK_會計年度=@PK_會計年度 and PK_動支編號=@PK_動支編號 and PK_種類=@PK_種類 and PK_次別=@PK_次別 and PK_明細號=@PK_明細號";
@@ -59,7 +62,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
 
     private const string UPDATE_STMT =
         //"INSERT INTO GBCVisaDetailAbateDetail ([PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],F_傳票種類,F_傳票號1,F_傳票明細號1,F_製票日期1,F_傳票號2,F_傳票明細號2,F_製票日期2) values(@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_傳票種類,@F_傳票號1,@F_傳票明細號1,@F_製票日期1,@F_傳票號2,@F_傳票明細號2,@F_製票日期2)";
-        "UPDATE GBCVisaDetailAbateDetail set [基金代碼] = @基金代碼,[PK_會計年度] = @PK_會計年度,[PK_動支編號] = @PK_動支編號,[PK_種類] = @PK_種類,[PK_次別] = @PK_次別,[PK_明細號] = @PK_明細號,[F_核定金額] = @F_核定金額,[F_受款人] = @F_受款人,[F_受款人編號] = @F_受款人編號 where 基金代碼 = @基金代碼 and PK_會計年度 = @PK_會計年度 and PK_動支編號 = @PK_動支編號 and PK_種類 = @PK_種類 and PK_次別 = @PK_次別 and PK_明細號 = @PK_明細號";
+        "UPDATE GBCVisaDetailAbateDetail set [基金代碼] = @基金代碼,[PK_會計年度] = @PK_會計年度,[PK_動支編號] = @PK_動支編號,[PK_種類] = @PK_種類,[PK_次別] = @PK_次別,[PK_明細號] = @PK_明細號,[F_核定金額] = @F_核定金額,[F_受款人] = @F_受款人,[F_受款人編號] = @F_受款人編號, F_原動支編號 = @F_原動支編號 where 基金代碼 = @基金代碼 and PK_會計年度 = @PK_會計年度 and PK_動支編號 = @PK_動支編號 and PK_種類 = @PK_種類 and PK_次別 = @PK_次別 and PK_明細號 = @PK_明細號";
 
     /// <summary>
     /// 計算已估列數
@@ -450,6 +453,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
             com.Parameters.AddWithValue("@F_核定金額", vw_GBCVisaDetail.F_核定金額);
             com.Parameters.AddWithValue("@F_受款人編號", vw_GBCVisaDetail.F_受款人編號);
             com.Parameters.AddWithValue("@F_受款人", vw_GBCVisaDetail.F_受款人);
+            com.Parameters.AddWithValue("@F_原動支編號", vw_GBCVisaDetail.F_原動支編號);
 
             com.CommandType = CommandType.Text;
             com.ExecuteNonQuery();
@@ -534,6 +538,7 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
         com.Parameters.AddWithValue("@F_核定金額", vw_GBCVisaDetail.F_核定金額);
         com.Parameters.AddWithValue("@F_受款人編號", vw_GBCVisaDetail.F_受款人編號);
         com.Parameters.AddWithValue("@F_受款人", vw_GBCVisaDetail.F_受款人);
+        com.Parameters.AddWithValue("@F_原動支編號", vw_GBCVisaDetail.F_原動支編號);
 
         com.CommandType = CommandType.Text;
         com.ExecuteNonQuery();
@@ -606,4 +611,38 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
 
         conn.Close();
     }
+
+    /// <summary>
+    /// 藉由原動支編號找新動支編號
+    /// </summary>
+    /// <param name="fundNo"></param>
+    /// <param name="accYear"></param>
+    /// <param name="acmWordNum"></param>
+    /// <returns></returns>
+    public string FindGBCRecoOrigin(string fundNo, string accYear, string acmWordNum)
+    {
+        string acmWordNumOut = "";
+        SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SqlDbConnStr"].ConnectionString);
+        SqlCommand com = new SqlCommand(FIND_ORINGINAL_STMT, con);
+        com.Parameters.AddWithValue("@基金代碼", fundNo);
+        com.Parameters.AddWithValue("@PK_會計年度", accYear);
+        com.Parameters.AddWithValue("@F_原動支編號", acmWordNum);
+        con.Open();
+
+        SqlDataReader dr = com.ExecuteReader();
+        while (dr.Read())
+        {
+            acmWordNumOut = dr["PK_動支編號"].ToString();
+        }
+
+        con.Close();
+
+        if (acmWordNumOut.Trim().Length == 0)
+        {
+            acmWordNumOut = acmWordNum;
+        }
+
+        return acmWordNumOut;
+    }
+
 }
