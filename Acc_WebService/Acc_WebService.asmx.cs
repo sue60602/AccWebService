@@ -1003,8 +1003,11 @@ namespace Acc_WebService
                     if (((isVouNo1.Trim()).Length != 0) && isPass == "0")
                     {
                         return jsonDAO.FindJSON2(vwListItem.基金代碼, vwListItem.PK_會計年度, vwListItem.PK_動支編號, vwListItem.PK_種類, vwListItem.PK_次別);
-                    }                    
+                    }
 
+                    #region 暫付及待結轉帳項
+
+                    
                     //是否為暫付及待結轉帳項
                     if (vw_GBCVisaDetail.F_計畫代碼 == "1315")
                     {
@@ -1165,6 +1168,11 @@ namespace Acc_WebService
                         return JSON1;
                     }
 
+                    #endregion
+
+                    #region 補貼息
+
+                    
                     //是否為補貼息
                     if (vw_GBCVisaDetail.F_計畫代碼.Substring(0,2) == "01")
                     {
@@ -1324,6 +1332,7 @@ namespace Acc_WebService
 
                         return JSON1;
                     }
+                    #endregion
 
                     //判斷是否有預付(基金代號-動支編號-預付-受編)
                     try
@@ -1394,6 +1403,9 @@ namespace Acc_WebService
                         //  3-2: 預付沖銷餘額<=Y---分轉(貸預付 借應付)
                         //       核銷數>預付沖銷餘額 ---增加 支(借費用 貸銀行)
 
+                        #region 預付已沖銷完畢,逕行實支
+
+                        
                         if (prePayBalance <= 0) //實支
                         {
                             foreach (var payCash in vwList)
@@ -1560,6 +1572,7 @@ namespace Acc_WebService
 
                             return JSON1;
                         }
+                        #endregion
                         else if (prePayBalance > 0 && estimateBalance <= 0) //無估列之轉正
                         {
                             if (vw_GBCVisaDetail.F_核定金額 <= prePayBalance) //分轉(貸預付 借費用) only
@@ -1616,8 +1629,8 @@ namespace Acc_WebService
                                         科目名稱 = "預付費用",
                                         摘要 = vw_GBCVisaDetail.F_摘要,
                                         金額 = vw_GBCVisaDetail.F_核定金額,
-                                        計畫代碼 = "",
-                                        用途別代碼 = "",
+                                        計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                        用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                         沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                         對象代碼 = "",
                                         對象說明 = ""
@@ -1779,8 +1792,8 @@ namespace Acc_WebService
                                         科目名稱 = "預付費用",
                                         摘要 = vw_GBCVisaDetail.F_摘要,
                                         金額 = prePayBalance,
-                                        計畫代碼 = "",
-                                        用途別代碼 = "",
+                                        計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                        用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                         沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                         對象代碼 = "",
                                         對象說明 = ""
@@ -2079,8 +2092,8 @@ namespace Acc_WebService
                                             科目名稱 = "預付費用",
                                             摘要 = vw_GBCVisaDetail.F_摘要,
                                             金額 = vw_GBCVisaDetail.F_核定金額,
-                                            計畫代碼 = "",
-                                            用途別代碼 = "",
+                                            計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                            用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = "",
                                             對象說明 = ""
@@ -2257,8 +2270,8 @@ namespace Acc_WebService
                                             科目名稱 = "預付費用",
                                             摘要 = vw_GBCVisaDetail.F_摘要,
                                             金額 = prePayBalance,
-                                            計畫代碼 = "",
-                                            用途別代碼 = "",
+                                            計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                            用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt),
                                             對象代碼 = "",
                                             對象說明 = ""
@@ -2565,8 +2578,8 @@ namespace Acc_WebService
                                             科目名稱 = "預付費用",
                                             摘要 = vw_GBCVisaDetail.F_摘要,
                                             金額 = vw_GBCVisaDetail.F_核定金額,
-                                            計畫代碼 = "",
-                                            用途別代碼 = "",
+                                            計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                            用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = abatePrePayVouYear.ElementAt(abateCnt) + "-" + abatePrePayVouNo.ElementAt(abateCnt) + "-" + abatePrePayVouDtlNo.ElementAt(abateCnt), //沖轉支出傳票 from prePayNouNoList
                                             對象代碼 = "",
                                             對象說明 = ""
@@ -2728,8 +2741,8 @@ namespace Acc_WebService
                                             科目名稱 = "預付費用",
                                             摘要 = vw_GBCVisaDetail.F_摘要,
                                             金額 = prePayBalance,
-                                            計畫代碼 = "",
-                                            用途別代碼 = "",
+                                            計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
+                                            用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
                                             沖轉字號 = "",
                                             對象代碼 = "",
                                             對象說明 = ""
