@@ -63,6 +63,8 @@ public class GBCVisaDetailAbateDetailDAO : GBCVisaDetailAbateDetail_Interface
     private const string UPDATE_STMT =
         //"INSERT INTO GBCVisaDetailAbateDetail ([PK_會計年度],[PK_動支編號],[PK_種類],[PK_次別],[PK_明細號],[F_核定金額],F_傳票種類,F_傳票號1,F_傳票明細號1,F_製票日期1,F_傳票號2,F_傳票明細號2,F_製票日期2) values(@PK_會計年度,@PK_動支編號,@PK_種類,@PK_次別,@PK_明細號,@F_核定金額,@F_傳票種類,@F_傳票號1,@F_傳票明細號1,@F_製票日期1,@F_傳票號2,@F_傳票明細號2,@F_製票日期2)";
         "UPDATE GBCVisaDetailAbateDetail set [基金代碼] = @基金代碼,[PK_會計年度] = @PK_會計年度,[PK_動支編號] = @PK_動支編號,[PK_種類] = @PK_種類,[PK_次別] = @PK_次別,[PK_明細號] = @PK_明細號,[F_核定金額] = @F_核定金額,[F_受款人] = @F_受款人,[F_受款人編號] = @F_受款人編號, F_原動支編號 = @F_原動支編號 where 基金代碼 = @基金代碼 and PK_會計年度 = @PK_會計年度 and PK_動支編號 = @PK_動支編號 and PK_種類 = @PK_種類 and PK_次別 = @PK_次別 and PK_明細號 = @PK_明細號";
+    private const string FIND_DONE_STMT =
+        "SELECT 基金代碼, PK_會計年度, PK_動支編號, PK_種類, PK_次別, PK_明細號, F_核定金額, F_傳票年度, F_傳票號1, F_傳票明細號1, F_製票日期1, F_傳票號2, F_傳票明細號2, F_製票日期2, F_受款人, F_受款人編號, F_原動支編號 FROM GBCVisaDetailAbateDetail WHERE 基金代碼 = '010' AND PK_會計年度 = 106 AND LEN(F_傳票號1) > 0";
 
     /// <summary>
     /// 計算已估列數

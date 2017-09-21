@@ -91,7 +91,8 @@ namespace Acc_WebService
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
             int isPrePay = 0; //有無預付
-            int isLog = 0; //有無預付
+            int isEstimate = 0; //有無應付
+            int isLog = 0;
 
             if (vouKind == "090") //如果是家防基金,使用憑單
             {
@@ -680,7 +681,7 @@ namespace Acc_WebService
                         金額 = vw_GBCVisaDetail.F_核定金額,
                         計畫代碼 = vw_GBCVisaDetail.F_計畫代碼,
                         用途別代碼 = vw_GBCVisaDetail.F_用途別代碼,
-                        沖轉字號 = abateEstimateVouYear + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
+                        沖轉字號 = abateEstimateVouYear.ElementAt(abateCnt) + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt),
                         對象代碼 = vw_GBCVisaDetail.F_受款人編號,
                         對象說明 = vw_GBCVisaDetail.F_受款人,
                         明細號 = vw_GBCVisaDetail.PK_明細號
@@ -1344,6 +1345,7 @@ namespace Acc_WebService
                         return e.Message;
                     }
 
+                    #region 有預付                    
                     //有預付
                     if (isPrePay > 0)
                     {
@@ -2980,9 +2982,36 @@ namespace Acc_WebService
                         //return JsonConvert.SerializeObject("xxx");
                         return JSON1;
                     }
+                    #endregion
+
+                    #region 無預付,逕行實支或沖抵估列
                     //無預付立沖(執行實支)
                     else
                     {
+                        //算出"估列未沖銷數"
+
+                        int estimateMoney = 0;
+                        int estimateMoneyAbate = 0;
+                        int estimateBalance = 0;
+
+                        //計算估列沖銷餘額
+                        List<VouDetailVO> estimateNouNoList = dao.FindEstimateVouNo(vw_GBCVisaDetail);
+                        foreach (var estimateVouNo in estimateNouNoList)
+                        {
+                            estimateMoney = estimateMoney + dao.EstimateMoney(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
+                            estimateMoneyAbate = estimateMoneyAbate + dao.EstimateMoneyAbate(vwListItem.基金代碼, estimateVouNo.傳票年度, estimateVouNo.傳票號, estimateVouNo.傳票明細號);
+                        }
+
+                        //估列沖銷餘額 = 已估列 - 已轉正
+                        estimateBalance = estimateMoney - estimateMoneyAbate;
+
+                        //找應付沖轉字號
+                        var abateEstimateVouYear = from estvou in estimateNouNoList select estvou.傳票年度;
+                        var abateEstimateVouNo = from estvou in estimateNouNoList select estvou.傳票號;
+                        var abateEstimateVouDtlNo = from estvou in estimateNouNoList select estvou.傳票明細號;
+
+                        int abateCnt = 0;
+
                         foreach (var payCash in vwList)
                         {
                             vw_GBCVisaDetail.PK_會計年度 = payCash.PK_會計年度;
@@ -3043,6 +3072,15 @@ namespace Acc_WebService
                                 明細號 = vw_GBCVisaDetail.PK_明細號
                             };
 
+                            //若有估列應付則沖抵應付
+                            if (estimateBalance > 0)
+                            {
+                                vouDtl_D.科目代號 = "2125";
+                                vouDtl_D.科目名稱 = "應付費用";
+                                vouDtl_D.用途別代碼 = "";
+                                vouDtl_D.沖轉字號 = abateEstimateVouYear.ElementAt(abateCnt) + "-" + abateEstimateVouNo.ElementAt(abateCnt) + "-" + abateEstimateVouDtlNo.ElementAt(abateCnt);
+                            }
+
                             //是否為以前年度
                             if (int.Parse(vw_GBCVisaDetail.PK_動支編號.Substring(0, 3)) < int.Parse(vw_GBCVisaDetail.PK_會計年度))
                             {
@@ -3069,6 +3107,8 @@ namespace Acc_WebService
                                 帳戶名稱 = ""
                             };
                             vouPayList.Add(vouPay);
+
+                            abateCnt++;
 
                             //填傳票明細號1
                             //dao.FillVouDtl1(vw_GBCVisaDetail.基金代碼, vw_GBCVisaDetail.PK_會計年度, vw_GBCVisaDetail.PK_動支編號, vw_GBCVisaDetail.PK_種類, vw_GBCVisaDetail.PK_次別, vw_GBCVisaDetail.PK_明細號, vouDtlList.Count);
@@ -3131,6 +3171,8 @@ namespace Acc_WebService
                             傳票內容 = vouCollectionList
                         };
                     }
+                    #endregion
+
                     //紀錄第一張傳票底稿
                     try
                     {
