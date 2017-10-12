@@ -1010,7 +1010,7 @@ namespace Acc_WebService
 
                     
                     //是否為暫付及待結轉帳項
-                    if (vw_GBCVisaDetail.F_計畫代碼 == "1315")
+                    if (vw_GBCVisaDetail.F_計畫代碼 == "C1")
                     {
                         foreach (var payCash in vwList)
                         {
@@ -3071,6 +3071,12 @@ namespace Acc_WebService
                                 對象說明 = vw_GBCVisaDetail.F_受款人,
                                 明細號 = vw_GBCVisaDetail.PK_明細號
                             };
+
+                            if (vw_GBCVisaDetail.F_計畫代碼 == "C1")
+                            {
+                                vouDtl_D.科目代號 = "1315";
+                                vouDtl_D.科目名稱 = "暫付及待結轉帳事項";
+                            }
 
                             //若有估列應付則沖抵應付
                             if (estimateBalance > 0)
