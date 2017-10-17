@@ -6,7 +6,9 @@ using System.Web.Services;
 using System.Data;
 using Newtonsoft.Json;
 using System.Web.Configuration;
-
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 namespace Acc_WebService
 {
@@ -20,10 +22,15 @@ namespace Acc_WebService
     // [System.Web.Script.Services.ScriptService]
     public class Acc_WebService : System.Web.Services.WebService
     {
+        public static bool ValidateServerCertificate(Object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
         //輸入條碼,回傳傳票底稿
         [WebMethod]
         public string GetVw_GBCVisaDetail(string fundNo,string acmWordNum)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //宣告接收從預控端取得之JSON字串
             string JSONReturn = "";
 
@@ -3076,6 +3083,7 @@ namespace Acc_WebService
                             {
                                 vouDtl_D.科目代號 = "1315";
                                 vouDtl_D.科目名稱 = "暫付及待結轉帳事項";
+                                vouDtl_D.用途別代碼 = "";
                             }
 
                             //若有估列應付則沖抵應付
@@ -3216,6 +3224,7 @@ namespace Acc_WebService
         [WebMethod]
         public string FillVouNo(string fundNo, string acmWordNum ,string vouNoJSON)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
             FillVouScript fillVouScript = new FillVouScript();
@@ -3359,6 +3368,7 @@ namespace Acc_WebService
         //傳票號碼回填至GBC(輸入條碼的方式回填，**目前無使用**)
         public string FillVouNo2(string fundNo, string acmWordNum, string vouYear, string makeVouNo, string makeVouDate)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             GBCVisaDetailAbateDetailDAO dao = new GBCVisaDetailAbateDetailDAO();
             GBCJSONRecordDAO jsonDAO = new GBCJSONRecordDAO();
             List<GBCVisaDetailAbateDetailVO> gbcList = new List<GBCVisaDetailAbateDetailVO>();
@@ -3461,6 +3471,7 @@ namespace Acc_WebService
         //取年度
         public List<string> GetYear(string fundNo)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3505,6 +3516,7 @@ namespace Acc_WebService
         //取動支號
         public List<string> GetAcmWordNum(string fundNo, string accYear)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3553,6 +3565,7 @@ namespace Acc_WebService
         //取種類
         public List<string> GetAccKind(string fundNo, string accYear, string acmWordNum)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3597,6 +3610,7 @@ namespace Acc_WebService
         //取次數
         public List<string> GetAccCount(string fundNo, string accYear, string acmWordNum, string accKind)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3641,6 +3655,7 @@ namespace Acc_WebService
         //取明細號
         public List<string> GetAccDetail(string fundNo, string accYear, string acmWordNum, string accKind, string accCount)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3685,6 +3700,7 @@ namespace Acc_WebService
         //依據KEY值取View
         public string GetByPrimaryKey(string fundNo, string accYear, string acmWordNum, string accKind, string accCount, string accDetail)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             //先判斷基金代號
             if (fundNo == "010")//醫發服務參考
             {
@@ -3725,6 +3741,7 @@ namespace Acc_WebService
         //取估列List
         public List<string> GetByKind(string fundNo, string accYear, string accKind, string batch)
         {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
             switch (batch)
             {
                 case "6月":
